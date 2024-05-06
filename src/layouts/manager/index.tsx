@@ -1,24 +1,22 @@
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import { SideNav } from "./side-nav";
 import { Box, Container, GlobalStyles, IconButton, Stack, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MobileNav } from "./mobile-nav";
-// import { navItems } from "./config";
 import MenuIcon from '@mui/icons-material/Menu';
-import { localClient } from "../../lib/local/client";
 import StepForm from "../../components/form/modal-step";
 import TopNav from "./top-nav";
 
 const ManagerLayout = () => {
   const [openNav, setOpenNav] = useState(false)
 
-  const navigate = useNavigate()
-  const { data: user } = localClient.getUser()
-  useEffect(() => {
-    if (user?.role !== 'gerente') {
-      navigate('/')
-    }
-  }, [])
+  // const navigate = useNavigate()
+  // const { data: user } = localClient.getUser()
+  // useEffect(() => {
+  //   if (user?.role !== 'gerente') {
+  //     navigate('/')
+  //   }
+  // }, [])
 
   const theme = useTheme()
 

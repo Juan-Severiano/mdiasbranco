@@ -1,30 +1,28 @@
 import { Box, Container } from "@mui/material"
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import TopNav from "./top-nav"
 import StepForm from "../../components/form/modal-step"
-import { useEffect } from "react"
-import { localClient } from "../../lib/local/client"
 import ModalProblem from "../../components/modal"
 // import { useAuth } from "../../contexts/auth-context"
 
 const DefaultLayout = () => {
-  const { data: user } = localClient.getUser()
-  const navigate = useNavigate()
+  // const { data: user } = localClient.getUser()
+  // const navigate = useNavigate()
 
-  useEffect(() => {
-    console.log(user)
-    if (!user) {
-      navigate('/auth/login')
-    }
-  }, [user])
+  // useEffect(() => {
+  //   console.log(user)
+  //   if (!user) {
+  //     navigate('/auth/login')
+  //   }
+  // }, [user])
 
-  useEffect(() => {
-    if (user?.role === 'gerente') {
-      navigate('/manager/home')
-    } else if (user?.role === 'tecnico') {
-      navigate('/technical/home')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (user?.role === 'gerente') {
+  //     navigate('/manager/home')
+  //   } else if (user?.role === 'tecnico') {
+  //     navigate('/technical/home')
+  //   }
+  // }, [])
 
   return (
     <Box>
