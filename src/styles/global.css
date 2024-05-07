@@ -46,14 +46,20 @@ body {
   left: 3.5em;
 }
 
-.active-link-dash {
-  background-color: #14419B;
-  color: #fff!important;
+.nav-link {
+  position: relative;
 }
 
-.active-link {
+.nav-icon::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 4px; /* largura da linha vertical */
+  height: 40px; 
   background-color: #14419B;
-  color: #fff!important;
+  transform: translateY(-50%);
+  border-radius: 0 12px 12px 0;
 }
 
 @keyframes bblFadInOut {
