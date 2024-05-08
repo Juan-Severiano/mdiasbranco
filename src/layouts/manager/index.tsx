@@ -68,7 +68,7 @@ const ManagerLayout = () => {
               <TopNav />
             </Stack>
           </Box>
-          <Container maxWidth="xl" sx={{ py: '64px', minHeight: '100vh' }}>
+          <Container maxWidth="xl" sx={{ pb: '64px', minHeight: '100vh' }}>
             <Outlet />
           <StepForm />
           </Container>
