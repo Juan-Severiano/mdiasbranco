@@ -53,7 +53,6 @@ const ManagerLayout = () => {
           >
             <Stack
               direction="row"
-              spacing={2}
               sx={{ alignItems: 'center', justifyContent: 'space-between', minHeight: '64px', px: 2 }}
             >
               <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
@@ -69,7 +68,7 @@ const ManagerLayout = () => {
               <TopNav />
             </Stack>
           </Box>
-          <Container maxWidth="xl" sx={{ py: '64px', bgcolor: '#F3F5F8', minHeight: '100vh' }}>
+          <Container maxWidth="xl" sx={{ py: '64px', minHeight: '100vh' }}>
             <Outlet />
           <StepForm />
           </Container>
