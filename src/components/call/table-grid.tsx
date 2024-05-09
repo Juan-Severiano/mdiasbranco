@@ -47,7 +47,6 @@ export function ProblemsGrid({
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1.5} columns={{ xs: 4, sm: 8, md: 12 }}>
         {rows.map((row) => {
-          const isSelected = selected?.has(row.id); // Verifica se o item está selecionado
           return (
             <Grid item xs={3} sm={6} md={4} key={row.id}>
               <Card>

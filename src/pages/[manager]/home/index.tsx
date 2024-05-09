@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { CallFilters } from '../../../components/call/filter';
-import { CustomersTable } from '../../../components/call/table-list';
 import { problems } from '../../../mock/problemas';
 import { Problem } from '../../../types/problem';
+import { ProblemsGrid } from '../../../components/call/table-grid';
 
 export default function ManagerHome() {
   const [filteredProblems, setFilteredProblems] = React.useState(problems);
@@ -39,10 +39,6 @@ export default function ManagerHome() {
     applyFilters();
   }, [searchKeyword, selectedDate, selectedPriority, selectedStatus]);
 
-  const page = 0;
-  const rowsPerPage = 10;
-  const paginatedCustomers = applyPagination(filteredProblems, page, rowsPerPage);
-
   return (
     <Stack spacing={3}>
       <CallFilters
@@ -51,11 +47,7 @@ export default function ManagerHome() {
         setSelectedPriority={setSelectedPriority}
         setSelectedStatus={setSelectedStatus}
       />
-      <CustomersTable
-        count={paginatedCustomers.length}
-        page={page}
-        rows={paginatedCustomers}
-        rowsPerPage={rowsPerPage}
+      <ProblemsGrid
       />
     </Stack>
   );

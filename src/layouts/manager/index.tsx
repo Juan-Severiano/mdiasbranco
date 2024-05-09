@@ -6,6 +6,7 @@ import { MobileNav } from "./mobile-nav";
 import MenuIcon from '@mui/icons-material/Menu';
 import StepForm from "../../components/form/modal-step";
 import TopNav from "./top-nav";
+import ModalProblem from "../../components/modal";
 
 const ManagerLayout = () => {
   const [openNav, setOpenNav] = useState(false)
@@ -68,17 +69,20 @@ const ManagerLayout = () => {
               <TopNav />
             </Stack>
           </Box>
-          <Container maxWidth="xl" sx={{ pb: '64px', minHeight: '100vh' }}>
-            <Outlet />
-          <StepForm />
-          </Container>
+          <Box sx={{ pb: 10, pt: 2, backgroundColor: '#F3F5F8', minHeight: '100vh' }}>
+            <Container>
+              <Outlet />
+              <StepForm />
+              <ModalProblem />
+            </Container>
+          </Box>
         </Box>
         <MobileNav
           onClose={() => {
             setOpenNav(false);
           }}
           open={openNav}
-          // items={navItems}
+        // items={navItems}
         />
       </Box>
     </>
