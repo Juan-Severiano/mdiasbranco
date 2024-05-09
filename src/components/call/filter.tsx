@@ -56,16 +56,6 @@ export function CallFilters({
   return (
     <Card sx={{ p: 2, display: 'flex', justifyContent: 'space-between' }}>
       <Grid container spacing={2}>
-        <Grid item sm={12} md={5}>
-          <FormControl fullWidth>
-            <InputLabel>Pesquisar</InputLabel>
-            <OutlinedInput
-              label="Pesquisar"
-              startAdornment={<Search color="disabled" />}
-              onChange={handleKeywordChange}
-            />
-          </FormControl>
-        </Grid>
         <Grid item sm={12} md={3}>
           <FormControl fullWidth>
             <InputLabel>Data</InputLabel>
@@ -116,6 +106,7 @@ export function CallFilters({
             </Select>
           </FormControl>
         </Grid>
+        {/* Botao */}
       </Grid>
     </Card>
   );
