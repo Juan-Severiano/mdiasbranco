@@ -35,7 +35,7 @@ export function CustomersTable({
   return (
     <Card>
       <Box sx={{ overflowX: 'auto' }}>
-        <Table sx={{ minWidth: '800px' }}>
+        <Table sx={{ minWidth: '900px' }}>
           <TableBody>
             {rows.map((row) => {
               const isSelected = selected?.has(row.id);
@@ -55,8 +55,8 @@ export function CustomersTable({
                       </Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell sx={{}}>
-                    <Stack sx={{ display: 'flex', flexDirection: 'column' }} justifyContent="center">
+                  <TableCell>
+                    <Stack flexDirection='column' justifyContent="center">
                       <Stack spacing={1} flexDirection='row'>
                         <Brightness1Icon
                           color={
@@ -71,11 +71,13 @@ export function CustomersTable({
                       <Stack spacing={1} flexDirection='row'><CalendarMonthIcon color='action' />{dayjs(row.resolve_at).format('DD/MM/YYYY')}</Stack>
                     </Stack>
                   </TableCell>
-                  <TableCell sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <TableCell>
                     <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
-                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action' textTransform='uppercase'> {row.setor}</Typography></Stack>
+                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action'  > {row.setor}</Typography></Stack>
                   </TableCell>
-                  {/*  */}
+                  <TableCell>
+                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action'  > asd</Typography></Stack>
+                  </TableCell>
                 </TableRow>
               );
             })}
