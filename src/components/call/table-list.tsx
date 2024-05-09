@@ -50,7 +50,8 @@ export function CustomersTable({
                         {row.title}
                       </Typography>
                       <Typography variant="body1">
-                        {row.user?.name}
+                        {/* Nome Do solicitante */}
+                        {row.title}
                       </Typography>
                     </Stack>
                   </TableCell>
@@ -64,7 +65,9 @@ export function CustomersTable({
                                 : row.status === 'pending' ? 'disabled'
                                   : 'success'
                           }
-                        /><Typography variant='body1' color='action' textTransform='capitalize'>{row.status}</Typography></Stack>
+                        />
+                        <Typography variant='body1' color='action' textTransform='capitalize'>{row.status}</Typography>
+                      </Stack>
                       <Stack spacing={1} flexDirection='row'><CalendarMonthIcon color='action' />{dayjs(row.resolve_at).format('DD/MM/YYYY')}</Stack>
                     </Stack>
                   </TableCell>
@@ -72,6 +75,7 @@ export function CustomersTable({
                     <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
                     <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action' textTransform='uppercase'> {row.setor}</Typography></Stack>
                   </TableCell>
+                  {/*  */}
                 </TableRow>
               );
             })}

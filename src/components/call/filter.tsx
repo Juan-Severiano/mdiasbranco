@@ -2,8 +2,8 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
 import { FormControl, Grid, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
-import { CalendarMonth, Search } from '@mui/icons-material';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import { CalendarMonth, } from '@mui/icons-material';
+import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Amarelo from '../../../public/Status/amarelo.jpeg';
@@ -54,23 +54,14 @@ export function CallFilters({
   };
 
   return (
-    <Card sx={{ p: 2, display: 'flex', justifyContent: 'space-between' }}>
+    
+    <Card sx={{ p: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent'}}>
       <Grid container spacing={2}>
-        <Grid item sm={12} md={5}>
-          <FormControl fullWidth>
-            <InputLabel>Pesquisar</InputLabel>
-            <OutlinedInput
-              label="Pesquisar"
-              startAdornment={<Search color="disabled" />}
-              onChange={handleKeywordChange}
-            />
-          </FormControl>
-        </Grid>
         <Grid item sm={12} md={3}>
-          <FormControl fullWidth>
-            <InputLabel>Data</InputLabel>
+          <FormControl fullWidth sx={{ backgroundColor: 'white' }} >
+            <InputLabel >Filtrar por Data</InputLabel>
             <OutlinedInput
-              label='Filtrar'
+              label='Filtrar por Data'
               type='date'
               startAdornment={<InputAdornment position="start">
                 <CalendarMonth color="disabled" /></InputAdornment>}
@@ -79,12 +70,13 @@ export function CallFilters({
             />
           </FormControl>
         </Grid>
+
         <Grid item sm={12} md={2}>
-          <FormControl fullWidth>
-            <InputLabel>Setor</InputLabel>
+          <FormControl fullWidth sx={{ backgroundColor: 'white'  }}>
+            <InputLabel>Prioridade</InputLabel>
             <Select
-              label='Setor'
-              startAdornment={<WarningAmberIcon color={'disabled'} />}
+              label='Prioridade'
+              startAdornment={<CrisisAlertIcon  color={'disabled'} />}
               onChange={handlePriorityChange}>
               {priority.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -94,8 +86,9 @@ export function CallFilters({
             </Select>
           </FormControl>
         </Grid>
+        
         <Grid item sm={12} md={2}>
-          <FormControl fullWidth>
+          <FormControl fullWidth sx={{ backgroundColor: 'white' }}>
             <InputLabel>Status</InputLabel>
             <Select
               label='Status'

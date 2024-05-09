@@ -111,6 +111,11 @@ export function HistoricoTable({
                       </Menu>
                     </Stack>
                   </TableCell>
+                  <TableCell >
+                    <Typography variant='h6'>
+                      {row.technician}
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               );
             })}
