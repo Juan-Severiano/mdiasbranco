@@ -4,6 +4,7 @@ import { CallFilters } from '../../../components/call/filter';
 import { problems } from '../../../mock/problemas';
 import { Problem } from '../../../types/problem';
 import { ProblemsGrid } from '../../../components/call/table-grid';
+import { CustomersTable } from '../../../components/call/table-list';
 
 export default function ManagerHome() {
   const [filteredProblems, setFilteredProblems] = React.useState(problems);
@@ -41,14 +42,13 @@ export default function ManagerHome() {
 
   return (
     <Stack spacing={3}>
-      <CallFilters
+      {/* <CallFilters
         setSearchKeyword={setSearchKeyword}
         setSelectedDate={setSelectedDate}
         setSelectedPriority={setSelectedPriority}
         setSelectedStatus={setSelectedStatus}
-      />
-      <ProblemsGrid
-      />
+      /> */}
+      <CustomersTable />
     </Stack>
   );
 }

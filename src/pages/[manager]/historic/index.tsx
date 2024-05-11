@@ -4,6 +4,7 @@ import { problems } from '../../../mock/problemas';
 import { CallFilters } from '../../../components/call/filter';
 import { CustomersTable } from '../../../components/call/table-list';
 import { Problem } from '../../../types/problem';
+import { ProblemsGrid } from '../../../components/call/table-grid';
 
 
 export default function ManagerHome(): React.JSX.Element {
@@ -54,12 +55,19 @@ export default function ManagerHome(): React.JSX.Element {
         setSelectedPriority={setSelectedPriority}
         setSelectedStatus={setSelectedStatus}
       />
-      <CustomersTable
-        count={paginatedCustomers.length}
-        page={page}
-        rows={paginatedCustomers}
-        rowsPerPage={rowsPerPage}
-      />
+      {
+        true ? <ProblemsGrid
+          count={paginatedCustomers.length}
+          page={page}
+          rows={paginatedCustomers}
+          rowsPerPage={rowsPerPage}
+        /> : <CustomersTable
+          count={paginatedCustomers.length}
+          page={page}
+          rows={paginatedCustomers}
+          rowsPerPage={rowsPerPage}
+        />
+      }
     </Stack>
   );
 }

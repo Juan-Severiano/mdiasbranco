@@ -43,7 +43,7 @@ const ManagerLayout = () => {
         }}
       >
         <SideNav />
-        <Box sx={{ display: 'flex', flex: '1 1 auto', flexDirection: 'column', pl: { lg: 'var(--SideNav-width)' } }}>
+        <Box sx={{ display: 'flex', flex: '1 1 auto', flexDirection: 'column', pl: { lg: 'var(--SideNav-width)' }, minHeight: '100vh', pb: 10 }}>
           <Box
             component="header"
             sx={{
@@ -69,13 +69,11 @@ const ManagerLayout = () => {
               <TopNav />
             </Stack>
           </Box>
-          <Box sx={{ pb: 10, pt: 2, backgroundColor: '#F3F5F8', minHeight: '100vh' }}>
-            <Container>
-              <Outlet />
-              <StepForm />
-              <ModalProblem />
-            </Container>
-          </Box>
+          <Container>
+            <Outlet />
+            <StepForm />
+            <ModalProblem />
+          </Container>
         </Box>
         <MobileNav
           onClose={() => {
