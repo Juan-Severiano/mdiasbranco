@@ -11,7 +11,9 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Grid
+  Grid,
+  Select,
+  MenuItem
 } from '@mui/material';
 
 import * as Yup from 'yup';
@@ -19,13 +21,13 @@ import { Formik } from 'formik';
 import { RotatingLines } from 'react-loader-spinner'
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useCustomContext } from '../../../contexts/context';
 import { useNavigate } from 'react-router-dom';
 import { registerRequest } from '../../../services/requests/auth';
+import { Sector } from '../../../types/problem';
+import { isAxiosError } from 'axios';
 
 const LoginForm = ({ ...others }) => {
   const theme = useTheme()
-  const { dispatch } = useCustomContext()
   const [showPassword, setShowPassword] = useState(false);
   const [success, setSuccess] = useState(false);
   const handleClickShowPassword = () => {
@@ -42,7 +44,7 @@ const LoginForm = ({ ...others }) => {
           name: '',
           telphone: '',
           mat: '',
-          sector: '',
+          sector: Sector.FINANCIAL,
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -57,23 +59,22 @@ const LoginForm = ({ ...others }) => {
           mat: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').required('Matrícula é obrigatório'),
         })}
         onSubmit={async function (values, { setErrors }) {
-          const response = await registerRequest(values);
-          console.log(response);
-          if (response.error) {
-            setErrors({ submit: 'Erro ao fazer login. Verifique suas credenciais.' })
-            return
-          } else if (response.message === 'Sucesso ao realizar o Login.!') {
-            dispatch({
-              type: 'SIGN_IN', payload: {
-                user: response.data.user,
-                access: response.data.token
+          try {
+            const response = await registerRequest(values);
+            console.log(response);
+            if (response) {
+                setSuccess(true)
+                setTimeout(() => {
+                  navigate('/auth/login');
+                }, 1000)
+                return
               }
-            });
-            setSuccess(true)
-            setTimeout(() => {
-              navigate('/manager/home');
-            }, 1000)
-            return
+          } catch (error) {
+            if (isAxiosError(error)) {
+              if (error.response) {
+                setErrors({ submit: error.response.data.message })
+              }
+            }
           }
         }}
       >
@@ -163,16 +164,20 @@ const LoginForm = ({ ...others }) => {
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth error={Boolean(touched.sector && errors.sector)} sx={{ ...theme.typography.body1, mb: 2 }}>
                   <InputLabel htmlFor="outlined-adornment-sector-login">Setor</InputLabel>
-                  <OutlinedInput
+                  <Select
                     id="outlined-adornment-sector-login"
-                    type="text"
                     value={values.sector}
                     name="sector"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     label="Setor"
-                    inputProps={{}}
-                  />
+                  >
+                    {Object.values(Sector).map(sector => (
+                      <MenuItem key={sector} value={sector}>
+                        {sector}
+                      </MenuItem>
+                    ))}
+                  </Select>
                   {touched.sector && errors.sector && (
                     <FormHelperText error id="standard-weight-helper-text-sector-login">
                       {errors.sector}
@@ -221,7 +226,7 @@ const LoginForm = ({ ...others }) => {
             )}
             {success && (
               <Alert color="success" sx={{ mt: 2 }}>
-                Login efetuado com sucesso, redirecionando
+                Usuário registrado, faça login
               </Alert>
             )}
             <Box sx={{ mt: 5 }}>

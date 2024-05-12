@@ -1,10 +1,11 @@
+import { Sector } from "./problem"
+
 export interface LoginParams {
   email: string
   password: string
 }
 
 export type Role = 'usuario' | 'gerente'
-type Sector = 'tecnologia' | 'rh' | 'vendas' | 'diretoria'
 
 export interface RegisterUser {
   name: string

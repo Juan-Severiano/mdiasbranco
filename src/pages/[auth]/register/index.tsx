@@ -19,7 +19,8 @@ const Register = () => {
             ? '0 5px 22px 0 rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.12)'
             : '0 5px 22px 0 rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.06)',
       },
-      overflow: 'hidden'
+      overflow: 'hidden',
+      minHeight: '60vh'
     }}>
       <Grid container direction="column" justifyContent="flex-end">
         <Grid item xs={12}>

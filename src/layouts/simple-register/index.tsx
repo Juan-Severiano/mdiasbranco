@@ -9,9 +9,7 @@ const SimpleRegister = () => {
         position: 'absolute',
         minWidth: '100vw',
         height: '100vh',
-        overflowY: 'hidden',
         overflowX: 'hidden',
-        overflow: 'hidden',
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Container maxWidth='md'>
