@@ -1,20 +1,21 @@
 import { Box, Container } from "@mui/material"
-import { Logo } from "../../components/core/logo";
 import { Outlet } from "react-router-dom";
 
-const SimpleLogin = () => {
+const SimpleRegister = () => {
   return (
     <>
       <Container maxWidth='md' sx={{
         zIndex: 2,
         position: 'absolute',
         minWidth: '100vw',
-        height: '100vh'
+        height: '100vh',
+        overflowY: 'hidden',
+        overflowX: 'hidden',
+        overflow: 'hidden',
       }}>
-        <Logo width={150} />
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Container maxWidth='sm' sx={{ my: 4 }}>
-            <Box sx={{ mx: 5 }}>
+          <Container maxWidth='md'>
+            <Box>
               <Outlet />
             </Box>
           </Container>
@@ -40,4 +41,4 @@ const SimpleLogin = () => {
   );
 }
 
-export default SimpleLogin
+export default SimpleRegister

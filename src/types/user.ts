@@ -3,7 +3,7 @@ export interface LoginParams {
   password: string
 }
 
-type Role = 'usuario' | 'gerente' | 'tecnico'
+export type Role = 'usuario' | 'gerente'
 type Sector = 'tecnologia' | 'rh' | 'vendas' | 'diretoria'
 
 export interface RegisterUser {
@@ -12,7 +12,6 @@ export interface RegisterUser {
   mat: string
   password: string
   telphone: string
-  role: Role
   sector: Sector
 }
 

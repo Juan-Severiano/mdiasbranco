@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import {
+  Alert,
   Box,
   Button,
   FormControl,
@@ -13,32 +13,20 @@ import {
   OutlinedInput,
 } from '@mui/material';
 
-// third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-
-// assets
+import { RotatingLines } from 'react-loader-spinner'
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useCustomContext } from '../../../contexts/context';
 import { useNavigate } from 'react-router-dom';
-import { isAxiosError } from 'axios';
-
-// ============================|| FIREBASE - LOGIN ||============================ //
-
-interface PasswordConfig {
-  minLength: number;
-  minLowercase: number;
-  minNumbers: number;
-  minSymbols: number;
-  minUppercase: number;
-}
+import { loginRequest } from '../../../services/requests/auth';
 
 const LoginForm = ({ ...others }) => {
   const theme = useTheme()
   const { dispatch } = useCustomContext()
   const [showPassword, setShowPassword] = useState(false);
-  const [errorLogin, setErrorLogin] = useState('');
+  const [success, setSuccess] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -56,37 +44,28 @@ const LoginForm = ({ ...others }) => {
           email: Yup.string().email('Deve ser um email válido').max(255).required('Email é obrigatório'),
           password: Yup.string()
             .required('Senha é obrigatória')
-            .test(
-              'is-strong-password',
-              'Senha não é forte o suficiente',
-              (value: string | undefined) => {
-                if (!value) return false;
-                const config: PasswordConfig = {
-                  minLength: 8,
-                  minLowercase: 1,
-                  minNumbers: 1,
-                  minSymbols: 1,
-                  minUppercase: 1
-                };
-
-                const lowercaseRegex = /[a-z]/;
-                const uppercaseRegex = /[A-Z]/;
-                const numbersRegex = /[0-9]/;
-                const symbolsRegex = /[@$!%*?&]/;
-
-                if (value !== undefined) {
-                  return (
-                    value.length >= config.minLength && value.match(lowercaseRegex)?.length >= config.minLowercase &&
-                    value.match(uppercaseRegex)?.length >= config.minUppercase &&
-                    value.match(numbersRegex)?.length >= config.minNumbers &&
-                    value.match(symbolsRegex)?.length >= config.minSymbols
-                  );
-                }
-              }
-            )
+            .min(6, 'A senha  deve ter no mínimo 6 caracteres')
+            .max(12, 'A senha  deve ter no máximo 12 caracteres')
         })}
-        onSubmit={async (values) => {
-          console.log(values)
+        onSubmit={async function (values, { setErrors }) {
+          const response = await loginRequest(values);
+          console.log(response);
+          if (response.error) {
+            setErrors({ submit: 'Erro ao fazer login. Verifique suas credenciais.' })
+            return
+          } else if (response.message === 'Sucesso ao realizar o Login.!') {
+            dispatch({
+              type: 'SIGN_IN', payload: {
+                user: response.data.user,
+                access: response.data.token
+              }
+            });
+            setSuccess(true)
+            setTimeout(() => {
+              navigate('/manager/home');
+            }, 1000)
+            return
+          }
         }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
@@ -142,18 +121,22 @@ const LoginForm = ({ ...others }) => {
               )}
             </FormControl>
             {errors.submit && (
-              <Box sx={{ mt: 3 }}>
-                <FormHelperText error>{errors.submit}</FormHelperText>
-              </Box>
+              <Alert color="error" sx={{ mt: 2 }}>
+                { errors.submit }
+              </Alert>
             )}
-            {errorLogin && (
-              <Box sx={{ mt: 3 }}>
-                <FormHelperText error>{errorLogin}</FormHelperText>
-              </Box>
+            {success && (
+              <Alert color="success" sx={{ mt: 2 }}>
+                Login efetuado com sucesso, redirecionando
+              </Alert>
             )}
             <Box sx={{ mt: 5 }}>
               <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
-                Entrar
+                {isSubmitting ?
+                  <>
+                    <RotatingLines width='20' strokeColor='#b2cbdc' /> Carregando ...
+                  </>
+                  : 'Entrar'}
               </Button>
             </Box>
           </form>

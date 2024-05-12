@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
-import { Box, Card, Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Box, Card, Divider, Grid, Stack, Typography, paperClasses, useMediaQuery } from '@mui/material';
 import LoginForm from './input-form';
 import { Logo } from '../../../components/core/logo';
 
@@ -12,16 +12,23 @@ const Register = () => {
   return (
     <Card sx={{
       backgroundColor: theme.palette.common.white,
-      minHeight: '60vh',
+      my: '2%',
+      [`&.${paperClasses.elevation1}`]: {
+        boxShadow:
+          theme.palette.mode === 'dark'
+            ? '0 5px 22px 0 rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.12)'
+            : '0 5px 22px 0 rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.06)',
+      },
+      overflow: 'hidden'
     }}>
       <Grid container direction="column" justifyContent="flex-end">
         <Grid item xs={12}>
-          <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 168px)' }}>
-            <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
+          <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 268px)' }}>
+            <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0, }}>
               <Box>
-                <Grid container spacing={2} alignItems="center" justifyContent="center">
-                  <Grid item sx={{ mb: 3 }}>
-                    <Link to="#">
+                <Grid container spacing={2}>
+                  <Grid item sx={{ mb: 3 }} alignItems='start' justifyContent='flex-start'>
+                    <Link to="#" style={{ marginRight: 'auto' }}>
                       <Logo theme='dark' width={200} />
                     </Link>
                   </Grid>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
-import { Box, Card, Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Box, Card, Divider, Grid, Stack, Typography, paperClasses, useMediaQuery } from '@mui/material';
 import LoginForm from './input-form';
 import { Logo } from '../../../components/core/logo';
 
@@ -13,6 +13,12 @@ const Login = () => {
     <Card sx={{
       backgroundColor: theme.palette.common.white,
       minHeight: '50vh',
+      [`&.${paperClasses.elevation1}`]: {
+        boxShadow:
+          theme.palette.mode === 'dark'
+            ? '0 5px 22px 0 rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.12)'
+            : '0 5px 22px 0 rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.06)',
+      },
     }}>
       <Grid container direction="column" justifyContent="flex-end">
         <Grid item xs={12}>

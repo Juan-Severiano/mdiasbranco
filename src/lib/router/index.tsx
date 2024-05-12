@@ -11,6 +11,7 @@ import ManagerHome from "../../pages/[manager]/historic";
 import ManagerStartup from "../../pages/[manager]/startup";
 import ManagerRelatory from "../../pages/[manager]/relatory";
 import DefaultLayout from "../../layouts/user";
+import SimpleRegister from "../../layouts/simple-register";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,11 @@ export const router = createBrowserRouter([
         path: '/auth/login',
         element: <Login />
       },
+    ]
+  },
+  {
+    element: <SimpleRegister />,
+    children: [
       {
         path: '/auth/register',
         element: <Register />
