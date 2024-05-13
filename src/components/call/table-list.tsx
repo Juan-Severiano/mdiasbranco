@@ -73,11 +73,16 @@ export function CustomersTable({
                   </TableCell>
                   <TableCell>
                     <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
-                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action'  > {row.setor}</Typography></Stack>
+                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action'> {row.setor}</Typography></Stack>
                   </TableCell>
                   <TableCell>
                     <Stack spacing={1} flexDirection='row'>
-                      <Typography variant='subtitle1' color='action' >Nome do Tecnico</Typography>
+                      <Typography variant='subtitle1' color='action'>Nome do Tecnico</Typography>
+                      </Stack>
+                  </TableCell>
+                  <TableCell>
+                    <Stack spacing={1} flexDirection='row'>
+                      <Typography variant='subtitle1' color='action'>Botão do input</Typography>
                       </Stack>
                   </TableCell>
                 </TableRow>
