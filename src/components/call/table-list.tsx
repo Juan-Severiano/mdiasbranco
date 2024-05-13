@@ -66,14 +66,14 @@ export function CustomersTable({
                                   : 'success'
                           }
                         />
-                        <Typography variant='body1' color='action' textTransform='capitalize'>{row.status}</Typography>
+                        <Typography variant='body1' color='action' textTransform='capitalize'  >{row.status}</Typography>
                       </Stack>
-                      <Stack spacing={1} flexDirection='row'><CalendarMonthIcon color='action' />{dayjs(row.resolve_at).format('DD/MM/YYYY')}</Stack>
+                      <Stack spacing={1} flexDirection='row'><CalendarMonthIcon color='action' sx={{ width: 23, height: 23, }} />{dayjs(row.resolve_at).format('DD/MM/YYYY') } </Stack>
                     </Stack>
                   </TableCell>
                   <TableCell>
-                    <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
-                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action'> {row.setor}</Typography></Stack>
+                    <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' sx={{ width: 23, height: 23, }} /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
+                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action'  sx={{ width: 23, height: 23, }} /><Typography variant='body1' color='action'>{row.setor}</Typography></Stack>
                   </TableCell>
                   <TableCell>
                     <Stack spacing={1} flexDirection='row'>
