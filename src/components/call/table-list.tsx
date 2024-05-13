@@ -76,7 +76,9 @@ export function CustomersTable({
                     <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action'  > {row.setor}</Typography></Stack>
                   </TableCell>
                   <TableCell>
-                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action'  > asd</Typography></Stack>
+                    <Stack spacing={1} flexDirection='row'>
+                      <Typography variant='subtitle1' color='action' >Nome do Tecnico</Typography>
+                      </Stack>
                   </TableCell>
                 </TableRow>
               );

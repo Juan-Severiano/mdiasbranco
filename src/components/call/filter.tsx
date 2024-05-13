@@ -102,8 +102,10 @@ export function CallFilters({
               }
               onChange={handleStatusChange}>
               {status.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                <MenuItem 
+                key={option.value} 
+                value={option.value} >  
+                {option.label}
                 </MenuItem>
               ))}
             </Select>
