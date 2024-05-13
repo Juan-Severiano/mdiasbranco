@@ -72,8 +72,10 @@ export function CustomersTable({
                     </Stack>
                   </TableCell>
                   <TableCell>
-                    <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' sx={{ width: 23, height: 23, }} /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
-                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action'  sx={{ width: 23, height: 23, }} /><Typography variant='body1' color='action'>{row.setor}</Typography></Stack>
+                    <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' 
+                    sx={{ width: 23, height: 23, }} /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
+                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action'  
+                    sx={{ width: 23, height: 23, }} /><Typography variant='body1' color='action'>{row.setor}</Typography></Stack>
                   </TableCell>
                   <TableCell>
                     <Stack spacing={1} flexDirection='row'>

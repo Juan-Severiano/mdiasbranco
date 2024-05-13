@@ -25,17 +25,17 @@ const status = [
 ];
 
 interface CallProps {
-  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>, 
-  setSelectedDate: React.Dispatch<React.SetStateAction<string>>, 
-  setSelectedPriority: React.Dispatch<React.SetStateAction<string>>, 
-  setSelectedStatus: React.Dispatch<React.SetStateAction<string>> 
+  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>,
+  setSelectedDate: React.Dispatch<React.SetStateAction<string>>,
+  setSelectedPriority: React.Dispatch<React.SetStateAction<string>>,
+  setSelectedStatus: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function CallFilters({ 
-  setSearchKeyword, 
-  setSelectedDate, 
-  setSelectedPriority, 
-  setSelectedStatus 
+export function CallFilters({
+  setSearchKeyword,
+  setSelectedDate,
+  setSelectedPriority,
+  setSelectedStatus
 }: CallProps) {
   const handleKeywordChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setSearchKeyword(event.target.value);
@@ -54,8 +54,8 @@ export function CallFilters({
   };
 
   return (
-    
-    <Card sx={{ p: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent'}}>
+
+    <Card sx={{ p: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2}>
         <Grid item sm={12} md={3}>
           <FormControl fullWidth sx={{ backgroundColor: 'white' }} >
@@ -72,21 +72,21 @@ export function CallFilters({
         </Grid>
 
         <Grid item sm={12} md={2}>
-          <FormControl fullWidth sx={{ backgroundColor: 'white'  }}>
+          <FormControl fullWidth sx={{ backgroundColor: 'white' }}>
             <InputLabel>Prioridade</InputLabel>
             <Select
               label='Prioridade'
-              startAdornment={<CrisisAlertIcon  color={'disabled'} />}
+              startAdornment={<CrisisAlertIcon color={'disabled'} />}
               onChange={handlePriorityChange}>
               {priority.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
+                <MenuItem  sx={{display: 'flex', alignItems: 'center', justifyContent: 'center',}} key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </Grid>
-        
+
         <Grid item sm={12} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white' }}>
             <InputLabel>Status</InputLabel>
@@ -102,11 +102,11 @@ export function CallFilters({
               }
               onChange={handleStatusChange}>
               {status.map((option) => (
-                <MenuItem 
-                key={option.value} 
-                value={option.value} >  
-                {option.label}
-                </MenuItem>
+              <MenuItem key={option.value} value={option.value}
+              sx={{display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
+              <Avatar sx={{ width: 13, height: 13 }} src={Amarelo} />
+              {option.value}
+            </MenuItem>
               ))}
             </Select>
           </FormControl>
