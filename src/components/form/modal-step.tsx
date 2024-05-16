@@ -6,7 +6,7 @@ import { Logo } from '../core/logo';
 
 const setor = [
   { value: 'Tecnologia', label: 'Tecnologia' },
-  { value: 'Industria', label: 'Industria' },
+  { value: 'Industria', label: 'Indústria' },
   { value: 'Vendas', label: 'Vendas' }
 ];
 
@@ -48,23 +48,23 @@ function StepForm() {
             justifyContent: 'center',
           }}
         >
-          <Card sx={{ width: '100%', maxWidth: { md: '600px' }, maxHeight: '90vh', overflow: 'auto', p: 2, borderRadius: 2, boxShadow: 3 }}>
-            <CardHeader
+          <Card sx={{ width: '100%', maxWidth: { md: '600px' }, maxHeight: '90vh', overflow: 'auto', px: 2, borderRadius: 2, boxShadow: 3, pb: 2 }}>
+            {/* <CardHeader
               sx={{ backgroundColor: 'white', textAlign: 'right', padding: '0 8px' }}
               action={
                 <IconButton onClick={handleClose} aria-label="Fechar">
                   <Close />
                 </IconButton>
               }
-            />
+            /> */}
             <CardContent>
-              <Box display="flex" flexDirection="column" alignItems="center" sx={{ mt: 1, mb: 4 }}>
+              <Box display="flex" flexDirection="column" alignItems="center" sx={{ mb: 4, mt: -2 }}>
                 <Logo width={200} />
               </Box>
               <form>
-                <Grid container spacing={2}>
+                <Grid container spacing={1.5}>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard" sx={{ mb: 3 }}>
+                    <FormControl fullWidth variant="standard">
                       <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Título do problema</InputLabel>
                       <Input
                         name="name_user"
@@ -74,7 +74,7 @@ function StepForm() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard" sx={{ mb: 3 }}>
+                    <FormControl fullWidth variant="standard">
                       <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Setor</InputLabel>
                       <Select
                         id="problem"
@@ -89,7 +89,7 @@ function StepForm() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard" sx={{ mb: 3 }}>
+                    <FormControl fullWidth variant="standard">
                       <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Palavras chaves</InputLabel>
                       <Input
                         name="keywords"
@@ -112,7 +112,7 @@ function StepForm() {
                     ))}
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard" sx={{ mb: 3 }}>
+                    <FormControl fullWidth variant="standard">
                       <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Descrição do problema</InputLabel>
                       <Input
                         name="description"
@@ -156,11 +156,11 @@ function StepForm() {
                 sx={{
                   height: 48,
                   width: '45%',
-                  backgroundColor: '#f5f5f5',
                   color: 'black',
                   borderColor: 'transparent',
                 }}
                 variant="contained"
+                color='secondary'
               >
                 Cancelar
               </Button>
@@ -168,7 +168,6 @@ function StepForm() {
                 sx={{
                   height: 48,
                   width: '45%',
-                  '&:hover': { backgroundColor: 'primary.main' },
                 }}
                 variant="contained"
                 color="primary"
