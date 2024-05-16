@@ -20,6 +20,7 @@ function StepForm() {
   const [keywords, setKeywords] = useState<string[]>([]);
   const [keywordInput, setKeywordInput] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const handleKeywordInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && keywordInput.trim() !== '') {
@@ -30,7 +31,14 @@ function StepForm() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      setFile(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
 
@@ -49,14 +57,6 @@ function StepForm() {
           }}
         >
           <Card sx={{ width: '100%', maxWidth: { md: '600px' }, maxHeight: '90vh', overflow: 'auto', px: 2, borderRadius: 2, boxShadow: 3, pb: 2 }}>
-            {/* <CardHeader
-              sx={{ backgroundColor: 'white', textAlign: 'right', padding: '0 8px' }}
-              action={
-                <IconButton onClick={handleClose} aria-label="Fechar">
-                  <Close />
-                </IconButton>
-              }
-            /> */}
             <CardContent>
               <Box display="flex" flexDirection="column" alignItems="center" sx={{ mb: 4, mt: -2 }}>
                 <Logo width={200} />
@@ -112,18 +112,6 @@ function StepForm() {
                     ))}
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Descrição do problema</InputLabel>
-                      <Input
-                        name="description"
-                        multiline
-                        rows={4}
-                        disableUnderline
-                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12}>
                     <Typography variant="body1" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>Anexar imagem</Typography>
                     <FormControl fullWidth>
                       <Button
@@ -140,11 +128,26 @@ function StepForm() {
                           onChange={handleFileChange}
                         />
                       </Button>
+                      {imagePreview && (
+                        <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', marginTop: '1rem' }} />
+                      )}
                       {file && (
                         <Typography variant="body2" sx={{ mt: 1 }}>
                           {file.name}
                         </Typography>
                       )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth variant="standard">
+                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Descrição do problema</InputLabel>
+                      <Input
+                        name="description"
+                        multiline
+                        rows={4}
+                        disableUnderline
+                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
+                      />
                     </FormControl>
                   </Grid>
                 </Grid>
