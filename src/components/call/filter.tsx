@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
 import { FormControl, Grid, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
-import { CalendarMonth, } from '@mui/icons-material';
+import { CalendarMonth } from '@mui/icons-material';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
@@ -32,18 +32,14 @@ interface CallProps {
 }
 
 export function CallFilters({
-  setSearchKeyword,
   setSelectedDate,
   setSelectedPriority,
   setSelectedStatus
 }: CallProps) {
-  const handleKeywordChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setSearchKeyword(event.target.value);
-  };
 
-  const handleDateChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
-  };
+  };  
 
   const handlePriorityChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setSelectedPriority(event.target.value);
@@ -54,18 +50,17 @@ export function CallFilters({
   };
 
   return (
-
     <Card sx={{ p: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2}>
         <Grid item sm={12} md={3}>
-          <FormControl fullWidth sx={{ backgroundColor: 'white' }} >
-            <InputLabel >Filtrar por Data</InputLabel>
+          <FormControl fullWidth sx={{ backgroundColor: 'white' }}>
+            <InputLabel>Filtrar por Data</InputLabel>
             <OutlinedInput
               label='Filtrar por Data'
               type='date'
               startAdornment={<InputAdornment position="start">
-                <CalendarMonth color="disabled" /></InputAdornment>}
-              endAdornment={null}
+                <CalendarMonth color="disabled" />
+              </InputAdornment>}
               onChange={handleDateChange}
             />
           </FormControl>
@@ -79,7 +74,7 @@ export function CallFilters({
               startAdornment={<CrisisAlertIcon color={'disabled'} />}
               onChange={handlePriorityChange}>
               {priority.map((option) => (
-                <MenuItem  sx={{display: 'flex', alignItems: 'center', justifyContent: 'center',}} key={option.value} value={option.value}>
+                <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
@@ -93,8 +88,8 @@ export function CallFilters({
             <Select
               label='Status'
               startAdornment={
-                <AvatarGroup >
-                  <Avatar sx={{ width: 13, height: 13, }} src={Vermelho} />
+                <AvatarGroup>
+                  <Avatar sx={{ width: 13, height: 13 }} src={Vermelho} />
                   <Avatar sx={{ width: 13, height: 13 }} src={Ciano} />
                   <Avatar sx={{ width: 13, height: 13 }} src={Azul} />
                   <Avatar sx={{ width: 13, height: 13 }} src={Amarelo} />
@@ -102,11 +97,9 @@ export function CallFilters({
               }
               onChange={handleStatusChange}>
               {status.map((option) => (
-              <MenuItem key={option.value} value={option.value}
-              sx={{display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
-              <Avatar sx={{ width: 13, height: 13 }} src={Amarelo} />
-              {option.value}
-            </MenuItem>
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
