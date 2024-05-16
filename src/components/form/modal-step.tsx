@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Card, CardHeader, IconButton, Modal, CardContent, CardActions, Button, Grid, FormControl, InputLabel, Input, Select, MenuItem, Chip, Typography, Box } from '@mui/material';
-import { Close, Photo } from '@mui/icons-material';
+import { Close, Collections } from '@mui/icons-material';
 import { useCustomContext } from '../../contexts/context';
 import { Logo } from '../core/logo';
 
@@ -58,24 +58,29 @@ function StepForm() {
               }
             />
             <CardContent>
-              <Box display="flex" flexDirection="column" alignItems="center" sx={{ mt: 1, mb: 4 }}> {/* Reduzi a margem superior para 1 */}
+              <Box display="flex" flexDirection="column" alignItems="center" sx={{ mt: 1, mb: 4 }}>
                 <Logo width={200} />
               </Box>
               <form>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Título do problema</InputLabel>
-                      <Input name="name_user" disableUnderline />
+                    <FormControl fullWidth variant="standard" sx={{ mb: 3 }}>
+                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Título do problema</InputLabel>
+                      <Input
+                        name="name_user"
+                        disableUnderline
+                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
+                      />
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Setor</InputLabel>
+                    <FormControl fullWidth variant="standard" sx={{ mb: 3 }}>
+                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Setor</InputLabel>
                       <Select
                         id="problem"
                         label="Setor"
                         disableUnderline
+                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
                       >
                         {setor.map(problem => (
                           <MenuItem key={problem.value} value={problem.value}>{problem.label}</MenuItem>
@@ -84,14 +89,15 @@ function StepForm() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Palavras chaves</InputLabel>
+                    <FormControl fullWidth variant="standard" sx={{ mb: 3 }}>
+                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Palavras chaves</InputLabel>
                       <Input
                         name="keywords"
                         value={keywordInput}
                         onChange={(event) => setKeywordInput(event.target.value)}
                         onKeyDown={handleKeywordInputKeyDown}
                         disableUnderline
+                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
                       />
                     </FormControl>
                   </Grid>
@@ -106,20 +112,26 @@ function StepForm() {
                     ))}
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Descrição do problema</InputLabel>
-                      <Input name="description" multiline rows={4} disableUnderline />
+                    <FormControl fullWidth variant="standard" sx={{ mb: 3 }}>
+                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Descrição do problema</InputLabel>
+                      <Input
+                        name="description"
+                        multiline
+                        rows={4}
+                        disableUnderline
+                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
+                      />
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="body1" sx={{ mb: 1 }}>Anexar imagem</Typography>
+                    <Typography variant="body1" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>Anexar imagem</Typography>
                     <FormControl fullWidth>
                       <Button
                         variant="outlined"
                         component="label"
                         fullWidth
                         sx={{ height: 60, justifyContent: 'flex-start', borderColor: 'transparent' }}
-                        startIcon={<Photo />}
+                        startIcon={<Collections />}
                       >
                         Upload
                         <input
@@ -144,23 +156,24 @@ function StepForm() {
                 sx={{
                   height: 48,
                   width: '45%',
-                  backgroundColor: 'red', // Alterei a cor de fundo para vermelho
-                  color: 'white', // Alterei a cor do texto para branco
+                  backgroundColor: '#f5f5f5',
+                  color: 'black',
                   borderColor: 'transparent',
-                  '&:hover': {
-                    backgroundColor: 'darkred', // Cor de fundo no hover
-                  }
                 }}
                 variant="contained"
               >
                 Cancelar
               </Button>
               <Button
-                sx={{ height: 48, width: '45%' }}
+                sx={{
+                  height: 48,
+                  width: '45%',
+                  '&:hover': { backgroundColor: 'primary.main' },
+                }}
                 variant="contained"
                 color="primary"
               >
-                Solicitar Resolução
+                Solicitar resolução
               </Button>
             </CardActions>
           </Card>
