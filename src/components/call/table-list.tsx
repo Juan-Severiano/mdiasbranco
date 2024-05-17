@@ -2,15 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useSelection } from '../../hooks/use-selection';
 
-import IconButton from '@mui/material/IconButton';
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 // ICONS
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -19,6 +13,8 @@ import Brightness1Icon from '@mui/icons-material/Brightness1';
 import dayjs from 'dayjs';
 import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
+  
+import {Table, TableBody, TableCell, TableRow } from '@mui/material';
 
 interface CustomersTableProps {
   count?: number;
@@ -38,7 +34,7 @@ export function CustomersTable({
   return (
     <Card>
       <Box sx={{ overflowX: 'auto' }}>
-        <Table sx={{ minWidth: '900px' }}>
+        <Table sx={{ minWidth: '800px' }}>
           <TableBody>
             {rows.map((row) => {
               const isSelected = selected?.has(row.id);
@@ -58,8 +54,8 @@ export function CustomersTable({
                       </Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell>
-                    <Stack flexDirection='column' justifyContent="center">
+                  <TableCell sx={{}}>
+                    <Stack sx={{ display: 'flex', flexDirection: 'column' }} justifyContent="center">
                       <Stack spacing={1} flexDirection='row'>
                         <Brightness1Icon
                           color={
@@ -69,31 +65,16 @@ export function CustomersTable({
                                   : 'success'
                           }
                         />
-                        <Typography variant='body1' color='action' textTransform='capitalize'  >{row.status}</Typography>
+                        <Typography variant='body1' color='action' textTransform='capitalize'>{row.status}</Typography>
                       </Stack>
-                      <Stack spacing={1} flexDirection='row'><CalendarMonthIcon color='action' sx={{ width: 23, height: 23, }} />{dayjs(row.resolve_at).format('DD/MM/YYYY')} </Stack>
+                      <Stack spacing={1} flexDirection='row'><CalendarMonthIcon color='action' />{dayjs(row.resolve_at).format('DD/MM/YYYY')}</Stack>
                     </Stack>
                   </TableCell>
-                  <TableCell>
-                    <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action'
-                      sx={{ width: 23, height: 23, }} /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
-                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action'
-                      sx={{ width: 23, height: 23, }} /><Typography variant='body1' color='action'>{row.setor}</Typography></Stack>
+                  <TableCell sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
+                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action' textTransform='uppercase'> {row.setor}</Typography></Stack>
                   </TableCell>
-                  <TableCell>
-                    <Stack spacing={1} flexDirection='row'>
-                      <Typography variant='subtitle1' color='action'>Nome do Tecnico</Typography>
-                    </Stack>
-                  </TableCell>
-
-                  {/* Botão */}
-                  <TableCell>
-                    <Stack direction="row" spacing={1}>
-                      <IconButton aria-label="delete">
-                        <MoreVertOutlinedIcon />
-                      </IconButton>
-                    </Stack>
-                  </TableCell>
+                  {/*  */}
                 </TableRow>
               );
             })}

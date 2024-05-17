@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 import { SideNav } from "./side-nav";
-import { Box, Container, GlobalStyles, IconButton, Stack, useTheme } from "@mui/material";
+import { Box, Container, GlobalStyles, IconButton, Stack } from "@mui/material";
 import { useState } from "react";
 import { MobileNav } from "./mobile-nav";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -18,8 +18,6 @@ const ManagerLayout = () => {
   //   }
   // }, [])
 
-  const theme = useTheme()
-
   return (
     <>
       <GlobalStyles
@@ -27,7 +25,7 @@ const ManagerLayout = () => {
           body: {
             '--MainNav-height': '56px',
             '--MainNav-zIndex': 1000,
-            '--SideNav-width': '280px',
+            '--SideNav-width': '75px',
             '--SideNav-zIndex': 1100,
             '--MobileNav-width': '320px',
             '--MobileNav-zIndex': 1100,
@@ -40,6 +38,7 @@ const ManagerLayout = () => {
           flexDirection: 'row',
           position: 'relative',
           minHeight: '100%',
+          bgcolor: '#f7f7fd'
         }}
       >
         <SideNav />
@@ -47,8 +46,6 @@ const ManagerLayout = () => {
           <Box
             component="header"
             sx={{
-              borderBottom: '1px solid var(--mui-palette-divider)',
-              backgroundColor: theme.palette.primary.main,
               position: 'sticky',
               top: 0,
               zIndex: 'var(--mui-zIndex-appBar)',
@@ -56,7 +53,6 @@ const ManagerLayout = () => {
           >
             <Stack
               direction="row"
-              spacing={2}
               sx={{ alignItems: 'center', justifyContent: 'space-between', minHeight: '64px', px: 2 }}
             >
               <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
@@ -72,7 +68,7 @@ const ManagerLayout = () => {
               <TopNav />
             </Stack>
           </Box>
-          <Container maxWidth="xl" sx={{ py: '64px', bgcolor: '#F3F5F8', minHeight: '100vh' }}>
+          <Container maxWidth="xl" sx={{ pb: '64px', minHeight: '100vh' }}>
             <Outlet />
           <StepForm />
           </Container>
