@@ -68,6 +68,6 @@ export default function ManagerHome(): React.JSX.Element {
   );
 }
 
-function applyPagination(rows: Problem[], page: number, rowsPerPage: number): Problem[] {
+export function applyPagination(rows: Problem[], page: number, rowsPerPage: number): Problem[] {
   return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 }

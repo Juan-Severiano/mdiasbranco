@@ -13,8 +13,11 @@ import Brightness1Icon from '@mui/icons-material/Brightness1';
 import dayjs from 'dayjs';
 import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
-  
-import {Table, TableBody, TableCell, TableRow } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 
 interface CustomersTableProps {
   count?: number;
@@ -74,7 +77,21 @@ export function CustomersTable({
                     <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
                     <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action' textTransform='uppercase'> {row.setor}</Typography></Stack>
                   </TableCell>
-                  {/*  */}
+                  {/*Tecnico  / david paz */}
+                  <TableCell>
+                    <Stack spacing={1} flexDirection='row'>
+                      <Typography variant='subtitle1' color='action' >Nome do Tecnico</Typography>
+                    </Stack>
+                  </TableCell>
+                  <TableCell>
+                    <Stack spacing={1} flexDirection='row'>
+                      <Tooltip title="Delete">
+                        <IconButton>
+                          <MoreVertIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  </TableCell>
                 </TableRow>
               );
             })}
