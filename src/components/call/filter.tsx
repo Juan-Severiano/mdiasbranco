@@ -82,7 +82,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item sm={12} md={3}>
+        <Grid item sm={12} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white' }}>
             <InputLabel>Status</InputLabel>
             <Select
