@@ -44,7 +44,6 @@ export function CallFilters({
   setToogleRender,
   toogleRender
 }: CallProps) {
-
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
   };
