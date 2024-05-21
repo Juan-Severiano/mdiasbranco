@@ -125,6 +125,18 @@ function StepForm() {
                     ))}
                   </Grid>
                   <Grid item xs={12}>
+                    <FormControl fullWidth variant="standard">
+                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Descrição do problema</InputLabel>
+                      <Input
+                        name="description"
+                        multiline
+                        rows={4}
+                        disableUnderline
+                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
                     <Typography variant="body1" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>Anexar imagens</Typography>
                     <FormControl fullWidth>
                       <Button
@@ -166,18 +178,6 @@ function StepForm() {
                           {files.length} {files.length === 1 ? 'imagem' : 'imagens'} selecionada(s)
                         </Typography>
                       )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Descrição do problema</InputLabel>
-                      <Input
-                        name="description"
-                        multiline
-                        rows={4}
-                        disableUnderline
-                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
-                      />
                     </FormControl>
                   </Grid>
                 </Grid>
