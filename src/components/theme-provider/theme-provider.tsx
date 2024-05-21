@@ -1,24 +1,47 @@
-import * as React from 'react';
+import React, { useState, useMemo, useContext, createContext } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
-
-
-import EmotionCache from './emotion-cache';
 import { createTheme } from '../../styles/theme/create-theme';
+import EmotionCache from './emotion-cache';
 
-export interface ThemeProviderProps {
-  children: React.ReactNode;
+interface ThemeContextType {
+  toggleTheme: () => void;
+  mode: 'light' | 'dark';
 }
 
-export function ThemeProvider({ children }: ThemeProviderProps): React.JSX.Element {
-  const theme = createTheme();
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const useTheme = (): ThemeContextType => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};
+
+export const ThemeProvider = ({ children }: { children: React.ReactNode }): React.JSX.Element => {
+  const [mode, setMode] = useState<'light' | 'dark'>('light');
+
+  const theme = useMemo(() => createTheme(), []);
+
+  const toggleTheme = () => {
+    setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+  };
+
+  const cssVarsProviderConfig = {
+    theme,
+    defaultMode: mode,
+    mode, // Passando o modo para o CssVarsProvider
+  };
 
   return (
-    <EmotionCache options={{ key: 'mui' }}>
-      <CssVarsProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </CssVarsProvider>
-    </EmotionCache>
+    <ThemeContext.Provider value={{ toggleTheme, mode }}>
+      <EmotionCache options={{ key: 'mui' }}>
+        <CssVarsProvider {...cssVarsProviderConfig}>
+          <CssBaseline />
+          {children}
+        </CssVarsProvider>
+      </EmotionCache>
+    </ThemeContext.Provider>
   );
-}
+};
