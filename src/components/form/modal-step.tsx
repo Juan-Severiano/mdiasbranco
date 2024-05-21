@@ -19,8 +19,8 @@ function StepForm() {
 
   const [keywords, setKeywords] = useState<string[]>([]);
   const [keywordInput, setKeywordInput] = useState<string>('');
-  const [file, setFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const handleKeywordInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && keywordInput.trim() !== '') {
@@ -30,16 +30,29 @@ function StepForm() {
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const selectedFile = event.target.files[0];
-      setFile(selectedFile);
+    if (event.target.files) {
+      const selectedFiles = Array.from(event.target.files).slice(0, 10 - files.length); // Limit to 10 files
+      setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(selectedFile);
+      const readerPromises = selectedFiles.map((file) => {
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(readerPromises).then((newPreviews) => {
+        setImagePreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
+      });
     }
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    setImagePreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
   };
 
   return (
@@ -112,7 +125,7 @@ function StepForm() {
                     ))}
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="body1" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>Anexar imagem</Typography>
+                    <Typography variant="body1" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>Anexar imagens</Typography>
                     <FormControl fullWidth>
                       <Button
                         variant="outlined"
@@ -126,14 +139,31 @@ function StepForm() {
                           type="file"
                           hidden
                           onChange={handleFileChange}
+                          multiple
+                          accept="image/*"
                         />
                       </Button>
-                      {imagePreview && (
-                        <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', marginTop: '1rem' }} />
-                      )}
-                      {file && (
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
+                        {imagePreviews.map((preview, index) => (
+                          <Box key={index} sx={{ position: 'relative', width: '100px', height: '100px' }}>
+                            <img src={preview} alt={`Preview ${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px' }} />
+                            <IconButton
+                              sx={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                backgroundColor: 'rgba(255, 255, 255, 0.7)'
+                              }}
+                              onClick={() => handleRemoveImage(index)}
+                            >
+                              <Close />
+                            </IconButton>
+                          </Box>
+                        ))}
+                      </Box>
+                      {files.length > 0 && (
                         <Typography variant="body2" sx={{ mt: 1 }}>
-                          {file.name}
+                          {files.length} {files.length === 1 ? 'imagem' : 'imagens'} selecionada(s)
                         </Typography>
                       )}
                     </FormControl>
