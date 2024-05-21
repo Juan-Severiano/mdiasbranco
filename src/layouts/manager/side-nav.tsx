@@ -5,22 +5,21 @@ import { Logo } from '../../components/core/logo';
 import { navItems } from './config';
 import { NavLink, useLocation } from 'react-router-dom';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunchOutlined';
-
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
 import { House } from '@phosphor-icons/react'
 import RestoreIcon from '@mui/icons-material/Restore';
 import { NavItemConfig } from '../../types/nav';
 import { Button, useTheme } from '@mui/material';
 import { IconLogin2 } from '@tabler/icons-react'
+import { Assignment } from '@mui/icons-material';
 
 export function SideNav(): React.JSX.Element {
   const { pathname } = useLocation();
-  const theme = useTheme()
+  const theme = useTheme();
   return (
     <Box
       sx={{
-        '--SideNav-background': theme.palette.common.white,
-        '--SideNav-color': 'var(--mui-palette-common-white)',
+        '--SideNav-background': theme.palette.primary.dark,
+        '--SideNav-color': theme.palette.common.white,
         '--NavItem-color': 'var(--mui-palette-neutral-950)',
         '--NavItem-hover-background': 'rgba(255, 255, 255, 0.04)',
         '--NavItem-active-background': 'none', // Removendo o background color quando ativo
@@ -42,7 +41,6 @@ export function SideNav(): React.JSX.Element {
         width: 'var(--SideNav-width)',
         zIndex: 'var(--SideNav-zIndex)',
         borderRadius: '0px 24px 24px 0px',
-        backgroundColor: '#fff'
       }}
     >
       <Stack sx={{ py: 3, px: .2 }} alignItems='center' justifyContent='center'>
@@ -61,7 +59,7 @@ export function SideNav(): React.JSX.Element {
             display: 'flex',
             padding: '5px 16px',
             textDecoration: 'none',
-            color: '#323232',
+            color: '#fff',
           }}
         >
           <IconLogin2  />
@@ -100,10 +98,10 @@ function NavItem({ href, icon }: NavItemConfig): React.JSX.Element {
           display: 'flex',
           padding: '5px 16px',
           textDecoration: 'none',
-          color: '#323232',
+          color: '#f0f0f0',
         }}
       >
-        {icon === 'dashboard' && <SignalCellularAltIcon />}
+        {icon === 'clipboard' && <Assignment />}
         {icon === 'home' && <House size={22} weight="fill" />}
         {icon === 'user' && <RocketLaunchIcon />}
         {icon === 'historic' && <RestoreIcon />}

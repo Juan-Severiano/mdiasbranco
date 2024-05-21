@@ -57,7 +57,7 @@ body {
   top: 50%;
   width: 4px; /* largura da linha vertical */
   height: 40px; 
-  background-color: #14419B;
+  background-color: #fff;
   transform: translateY(-50%);
   border-radius: 0 12px 12px 0;
 }

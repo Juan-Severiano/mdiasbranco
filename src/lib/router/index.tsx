@@ -37,11 +37,11 @@ export const router = createBrowserRouter([
     element: <ManagerLayout />,
     children: [
       {
-        path: '/manager/overview',
+        path: '/manager/home',
         element: <ManagerDashboard />
       },
       {
-        path: '/manager/home',
+        path: '/manager/solicitations',
         element: <ManagerHome />
       },
       {
