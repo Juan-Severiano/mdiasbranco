@@ -5,28 +5,55 @@ import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import type { SxProps } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { UserCircle } from '@phosphor-icons/react';
 
 export interface TotalProfitProps {
+  diff?: number;
+  trend: 'up' | 'down';
   sx?: SxProps;
-  value: string;
+  value: string | number;
 }
 
-export function TotalProfit({ value, sx }: TotalProfitProps): React.JSX.Element {
+export function TotalProfit({ value, sx, trend, diff }: TotalProfitProps): React.JSX.Element {
+  const trendColor = trend === 'up' ? 'var(--mui-palette-success-main)' : 'var(--mui-palette-error-main)';
+
   return (
     <Card sx={sx}>
       <CardContent>
-        <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
-          <Stack spacing={1}>
-            <Typography color="text.secondary" variant="overline">
-              Total Profit
-            </Typography>
-            <Typography variant="h4">{value}</Typography>
+        <Stack spacing={2}>
+          <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
+            <Stack spacing={1}>
+              <Typography color="text.secondary" fontSize={12} variant="inherit">
+                Quantidade
+              </Typography>
+              <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={1}>
+                <Typography variant="h3" color="primary" fontWeight={600}>
+                  {value}
+                </Typography>
+                <Typography variant="inherit"  fontSize={12} color="primary">
+                  Colaboradores cadastrados
+                </Typography>
+              </Stack>
+            </Stack>
+            <Avatar sx={{ backgroundColor: '#fff', height: '56px', width: '56px' }}>
+              <UserCircle color='#0B2B70' fontSize={42} />
+            </Avatar>
           </Stack>
-          <Avatar sx={{ backgroundColor: 'var(--mui-palette-primary-main)', height: '56px', width: '56px' }}>
-            
-          </Avatar>
+          {diff ? (
+            <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
+              <Stack sx={{ alignItems: 'center' }} direction="row" spacing={0.5}>
+                <Typography color={trendColor} variant="body2">
+                  {diff}%
+                </Typography>
+              </Stack>
+              <Typography color="text.secondary" variant="caption">
+                Desde o último mês
+              </Typography>
+            </Stack>
+          ) : null}
         </Stack>
       </CardContent>
     </Card>
   );
 }
+

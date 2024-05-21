@@ -4,12 +4,14 @@ import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import type { SxProps } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { Avatar } from '@mui/material';
+import RocketLaunch from '@mui/icons-material/RocketLaunchOutlined';
 
 export interface BudgetProps {
   diff?: number;
   trend: 'up' | 'down';
   sx?: SxProps;
-  value: string;
+  value: string | number;
 }
 
 export function Budget({ diff, trend, sx, value }: BudgetProps): React.JSX.Element {
@@ -18,14 +20,24 @@ export function Budget({ diff, trend, sx, value }: BudgetProps): React.JSX.Eleme
   return (
     <Card sx={sx}>
       <CardContent>
-        <Stack spacing={3}>
+        <Stack spacing={2}>
           <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
             <Stack spacing={1}>
-              <Typography color="text.secondary" variant="overline">
-                Budget
+              <Typography color="text.secondary" fontSize={12} variant="inherit">
+                Quantidade
               </Typography>
-              <Typography variant="h4">{value}</Typography>
+              <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={1}>
+                <Typography variant="h3" color="primary" fontWeight={600}>
+                  {value}
+                </Typography>
+                <Typography variant="inherit"  fontSize={12} color="primary">
+                  Startups Cadastradas
+                </Typography>
+              </Stack>
             </Stack>
+            <Avatar sx={{ backgroundColor: '#fff', height: '56px', width: '56px' }}>
+              <RocketLaunch color='primary' fontSize='large' />
+            </Avatar>
           </Stack>
           {diff ? (
             <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
@@ -35,7 +47,7 @@ export function Budget({ diff, trend, sx, value }: BudgetProps): React.JSX.Eleme
                 </Typography>
               </Stack>
               <Typography color="text.secondary" variant="caption">
-                Since last month
+                Desde o último mês
               </Typography>
             </Stack>
           ) : null}

@@ -5,12 +5,13 @@ import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import type { SxProps } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { Assignment } from '@mui/icons-material';
 
 export interface TotalCustomersProps {
   diff?: number;
   trend: 'up' | 'down';
   sx?: SxProps;
-  value: string;
+  value: string | number;
 }
 
 export function TotalCustomers({ diff, trend, sx, value }: TotalCustomersProps): React.JSX.Element {
@@ -22,13 +23,20 @@ export function TotalCustomers({ diff, trend, sx, value }: TotalCustomersProps):
         <Stack spacing={2}>
           <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
             <Stack spacing={1}>
-              <Typography color="text.secondary" variant="overline">
-                Total Customers
+              <Typography color="text.secondary" fontSize={12} variant="inherit">
+                Quantidade
               </Typography>
-              <Typography variant="h4">{value}</Typography>
+              <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={1}>
+                <Typography variant="h3" color="primary" fontWeight={600}>
+                  {value}
+                </Typography>
+                <Typography variant="inherit"  fontSize={12} color="primary">
+                  Solicitações abertas
+                </Typography>
+              </Stack>
             </Stack>
-            <Avatar sx={{ backgroundColor: 'var(--mui-palette-success-main)', height: '56px', width: '56px' }}>
-              
+            <Avatar sx={{ backgroundColor: '#fff', height: '56px', width: '56px' }}>
+              <Assignment color='primary' fontSize='large' />
             </Avatar>
           </Stack>
           {diff ? (
@@ -39,7 +47,7 @@ export function TotalCustomers({ diff, trend, sx, value }: TotalCustomersProps):
                 </Typography>
               </Stack>
               <Typography color="text.secondary" variant="caption">
-                Since last month
+                Desde o último mês
               </Typography>
             </Stack>
           ) : null}
