@@ -16,6 +16,7 @@ export interface Problem {
 }
 
 export enum Sector {
+  SECTOR = 'Setor',
   FINANCIAL = 'Financeiro',
   HUMAN_RESOURCES = 'Recursos Humanos',
   INFORMATION_TECHNOLOGY = 'Tecnologia da Informação (TI)',

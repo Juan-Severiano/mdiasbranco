@@ -1,68 +1,45 @@
 import { Link } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
-import { Box, Card, Divider, Grid, Stack, Typography, paperClasses, useMediaQuery } from '@mui/material';
-import LoginForm from './input-form';
+import { Box, Card, Grid, Typography } from '@mui/material';
 import { Logo } from '../../../components/core/logo';
+import { StyledLink } from '../../../styles/theme/components/styled-link';
+import RegisterForm from './input-form';
 
 const Register = () => {
   const theme = useTheme();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Card sx={{
-      backgroundColor: theme.palette.common.white,
-      my: '2%',
-      [`&.${paperClasses.elevation1}`]: {
-        boxShadow:
-          theme.palette.mode === 'dark'
-            ? '0 5px 22px 0 rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.12)'
-            : '0 5px 22px 0 rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.06)',
-      },
-      overflow: 'hidden',
-      minHeight: '60vh'
+      my: 'auto',
+      mx: 2,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      p: 3,
+      maxWidth: { xs: '100%', sm: '400px' },
+      boxShadow: theme.shadows[3],
     }}>
-      <Grid container direction="column" justifyContent="flex-end">
-        <Grid item xs={12}>
-          <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 268px)' }}>
-            <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0, }}>
-              <Box>
-                <Grid container spacing={2}>
-                  <Grid item sx={{ mb: 3 }} alignItems='start' justifyContent='flex-start'>
-                    <Link to="#" style={{ marginRight: 'auto' }}>
-                      <Logo theme='dark' width={200} />
-                    </Link>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">
-                      <Grid item>
-                        <Stack alignItems="center" justifyContent="center" spacing={1}>
-                          <Typography color={theme.palette.primary.main} gutterBottom variant='subtitle1' fontWeight={700} fontSize={22}>
-                            Olá, seja bem-vindo
-                          </Typography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <LoginForm />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Divider />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid item container direction="column" alignItems="center" xs={12}>
-                      <Typography component={Link} to="/auth/login" variant="subtitle1" sx={{ textDecoration: 'none' }}>
-                        Já tem uma conta? Entre
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
+      <Box sx={{ width: '100%' }}>
+        <Grid container spacing={1} alignItems="center" justifyContent="center">
+          <Grid item>
+            <Link to="#">
+              <Logo theme='dark' width={150} />
+            </Link>
+          </Grid>
+          <Grid item xs={12}>
+            <RegisterForm />
+          </Grid>
+          <Grid item xs={12}>
+            <StyledLink to="/auth/login">
+              <Typography variant="subtitle1" fontSize={14} sx={{ textDecoration: 'none !important', textAlign: 'center !important' }}>
+                Já tem uma conta? Entre
+              </Typography>
+            </StyledLink>
           </Grid>
         </Grid>
-      </Grid>
+      </Box>
     </Card>
   );
 };

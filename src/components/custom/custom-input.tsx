@@ -16,7 +16,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({ field, form, label, ty
   const { touched, errors } = form;
 
   return (
-    <FormControl fullWidth error={Boolean(touched[name] && errors[name])} sx={{ ...theme.typography.body1, mb: 2 }}>
+    <FormControl fullWidth error={Boolean(touched[name] && errors[name])} sx={{ ...theme.typography.body1, mb: 1 }}>
       <CustomOutlinedInput
         id={`outlined-adornment-${name}`}
         type={type}
@@ -53,7 +53,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({ field, form, label
   };
 
   return (
-    <FormControl fullWidth error={Boolean(touched[name] && errors[name])} sx={{ ...theme.typography.body1, mb: 2 }}>
+    <FormControl fullWidth error={Boolean(touched[name] && errors[name])} sx={{ ...theme.typography.body1, mb: 1 }}>
       <CustomOutlinedInput
         placeholder={label}
         id={`outlined-adornment-${name}`}
