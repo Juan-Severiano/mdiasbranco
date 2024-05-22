@@ -1,11 +1,9 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
-
+import { CustomersTable } from '../../components/call/table-list';
 import { CallFilters } from '../../components/call/filter';
 import { problems } from '../../mock/problemas';
 import { Problem } from '../../types/problem';
-import { ProblemsGrid } from '../../components/call/table-grid';
-
 
 export default function ManagerHome(): React.JSX.Element {
   const [filteredProblems, setFilteredProblems] = React.useState(problems);
@@ -15,33 +13,38 @@ export default function ManagerHome(): React.JSX.Element {
   const [selectedStatus, setSelectedStatus] = React.useState('');
 
   // Função para aplicar todos os filtros
-  const applyFilters = () => {
+  const applyFilters = React.useCallback(() => {
     let filtered = problems.filter(problem => {
       // Filtrar por palavra-chave
-      if (searchKeyword.toLowerCase() && !problem.title.toLowerCase().includes(searchKeyword.toLowerCase())) {
+      if (searchKeyword && !problem.title.toLowerCase().includes(searchKeyword.toLowerCase())) {
         return false;
       }
       // Filtrar por data
-      if (selectedDate.toLowerCase() && problem.resolve_at !== selectedDate.toLowerCase()) {
+      if (selectedDate && !isSameDate(new Date(problem.resolve_at), new Date(selectedDate))) {
         return false;
       }
       // Filtrar por prioridade
-      if (selectedPriority.toLowerCase() && problem.setor !== selectedPriority.toLowerCase()) {
+      if (selectedPriority && problem.setor.toLowerCase() !== selectedPriority.toLowerCase()) {
         return false;
       }
       // Filtrar por status
-      if (selectedStatus.toLowerCase() && problem.status !== selectedStatus.toLowerCase()) {
+      if (selectedStatus && problem.status.toLowerCase() !== selectedStatus.toLowerCase()) {
         return false;
       }
       return true;
     });
     setFilteredProblems(filtered);
-  }
+  }, [searchKeyword, selectedDate, selectedPriority, selectedStatus]);
+
+  // Função para verificar se duas datas são iguais
+  const isSameDate = (date1: Date, date2: Date) => {
+    return date1.toDateString() === date2.toDateString();
+  };
 
   // Chamada para aplicar todos os filtros quando os filtros mudarem
   React.useEffect(() => {
     applyFilters();
-  }, [searchKeyword, selectedDate, selectedPriority, selectedStatus]);
+  }, [applyFilters]);
 
   const page = 0;
   const rowsPerPage = 10;
@@ -55,8 +58,8 @@ export default function ManagerHome(): React.JSX.Element {
         setSelectedPriority={setSelectedPriority}
         setSelectedStatus={setSelectedStatus}
       />
-      <ProblemsGrid
-        count={paginatedCustomers.length}
+      <CustomersTable
+        count={filteredProblems.length}
         page={page}
         rows={paginatedCustomers}
         rowsPerPage={rowsPerPage}
@@ -65,6 +68,6 @@ export default function ManagerHome(): React.JSX.Element {
   );
 }
 
-function applyPagination(rows: Problem[], page: number, rowsPerPage: number): Problem[] {
+export function applyPagination(rows: Problem[], page: number, rowsPerPage: number): Problem[] {
   return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 }

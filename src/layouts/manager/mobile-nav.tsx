@@ -83,7 +83,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
         >
           <Box sx={{ flex: '1 1 auto' }}>
             <Typography color="primary" variant="body2">
-              Olá, { user.name }
+              Olá, { user?.name }
             </Typography>
           </Box>
         </Box>
