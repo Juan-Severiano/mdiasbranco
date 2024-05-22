@@ -130,8 +130,8 @@ export function CallFilters({
           </FormControl>
         </Grid>
         {/* Botao */}
-        <Grid item sm={12} md={2}>
-          <ToggleButtonGroup
+        <Grid item sm={12} md={3}>
+          <ToggleButtonGroup sx={{width: 20}}
             value={toogleRender}
             exclusive
             aria-label="file-toggle-buttons"
