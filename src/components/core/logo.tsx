@@ -6,7 +6,7 @@ export interface LogoProps {
 }
 
 export function Logo({ height, width, theme }: LogoProps) {
-  let logo = '/logo.svg'
+  let logo = '/logo-white.png'
   if (theme === 'dark') {
     logo = '/logo-white.png'
   }
