@@ -16,7 +16,6 @@ import { Problem } from '../../types/problem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 
 interface CustomersTableProps {
@@ -84,13 +83,11 @@ export function CustomersTable({
                     </Stack>
                   </TableCell>
                   <TableCell>
-                    <Stack spacing={1} flexDirection='row'>
-                      <Tooltip title="Delete">
-                        <IconButton>
+                  <Stack alignItems='center' justifyContent='flex-end'>
+                        <IconButton >
                           <MoreVertIcon />
                         </IconButton>
-                      </Tooltip>
-                    </Stack>
+                      </Stack>
                   </TableCell>
                 </TableRow>
               );
