@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useSelection } from '../../hooks/use-selection';
 // ICONS
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -14,8 +13,6 @@ import dayjs from 'dayjs';
 import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
 
-import { experimentalStyled as styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import { CardContent, Grid } from '@mui/material'; 
 
 interface CustomersTableProps {
@@ -25,23 +22,10 @@ interface CustomersTableProps {
   rowsPerPage?: number;
 }
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(2),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
-
 export function ProblemsGrid({
   rows = [],
 }: CustomersTableProps): React.JSX.Element {
-  const rowIds = React.useMemo(() => {
-    return rows.map((customer) => customer.id);
-  }, [rows]);
   const { dispatch } = useCustomContext();
-  const { selected } = useSelection(rowIds);
   
   return (
     <Box sx={{ flexGrow: 1 }}>

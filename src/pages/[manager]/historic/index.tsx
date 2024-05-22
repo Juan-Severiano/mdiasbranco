@@ -6,7 +6,6 @@ import { CustomersTable } from '../../../components/call/table-list';
 import { Problem } from '../../../types/problem';
 import { ProblemsGrid } from '../../../components/call/table-grid';
 
-
 export default function ManagerHome(): React.JSX.Element {
   const [filteredProblems, setFilteredProblems] = React.useState(problems);
   const [searchKeyword, setSearchKeyword] = React.useState('');
