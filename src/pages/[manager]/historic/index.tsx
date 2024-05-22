@@ -12,6 +12,7 @@ export default function ManagerHome(): React.JSX.Element {
   const [selectedDate, setSelectedDate] = React.useState('');
   const [selectedPriority, setSelectedPriority] = React.useState('');
   const [selectedStatus, setSelectedStatus] = React.useState('');
+  const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
 
   // Função para aplicar todos os filtros
   const applyFilters = () => {
@@ -53,9 +54,11 @@ export default function ManagerHome(): React.JSX.Element {
         setSelectedDate={setSelectedDate}
         setSelectedPriority={setSelectedPriority}
         setSelectedStatus={setSelectedStatus}
+        setToogleRender={setToogleRender}
+        toogleRender={toogleRender}
       />
       {
-        true ? <ProblemsGrid
+        toogleRender === 'grid' ? <ProblemsGrid
           count={paginatedCustomers.length}
           page={page}
           rows={paginatedCustomers}

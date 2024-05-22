@@ -4,6 +4,7 @@ import { CustomersTable } from '../../components/call/table-list';
 import { CallFilters } from '../../components/call/filter';
 import { problems } from '../../mock/problemas';
 import { Problem } from '../../types/problem';
+import { ProblemsGrid } from '../../components/call/table-grid';
 
 export default function ManagerHome(): React.JSX.Element {
   const [filteredProblems, setFilteredProblems] = React.useState(problems);
@@ -11,8 +12,9 @@ export default function ManagerHome(): React.JSX.Element {
   const [selectedDate, setSelectedDate] = React.useState('');
   const [selectedPriority, setSelectedPriority] = React.useState('');
   const [selectedStatus, setSelectedStatus] = React.useState('');
+  const [toggleRender, setToggleRender] = React.useState<'list' | 'grid'>('list');
 
-  // Função para aplicar todos os filtros
+  // Função para aplicar todos os filtros 
   const applyFilters = React.useCallback(() => {
     let filtered = problems.filter(problem => {
       // Filtrar por palavra-chave
@@ -57,13 +59,22 @@ export default function ManagerHome(): React.JSX.Element {
         setSelectedDate={setSelectedDate}
         setSelectedPriority={setSelectedPriority}
         setSelectedStatus={setSelectedStatus}
+        setToogleRender={setToggleRender}
+        toogleRender={toggleRender}
       />
-      <CustomersTable
-        count={filteredProblems.length}
-        page={page}
-        rows={paginatedCustomers}
-        rowsPerPage={rowsPerPage}
-      />
+       {
+        toggleRender === 'grid' ?
+          <ProblemsGrid
+            count={paginatedCustomers.length}
+            page={page}
+            rows={paginatedCustomers}
+            rowsPerPage={rowsPerPage}
+          /> : <CustomersTable count={paginatedCustomers.length}
+            page={page}
+            rows={paginatedCustomers}
+            rowsPerPage={rowsPerPage}
+          />
+      }
     </Stack>
   );
 }

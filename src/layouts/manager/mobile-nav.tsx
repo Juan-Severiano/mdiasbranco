@@ -23,7 +23,6 @@ export interface MobileNavProps {
 }
 
 export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element {
-  // const data: User = JSON.parse(localStorage.getItem('user')!)
   const { pathname } = useLocation();
   const { data: user } = localClient.getUser()
 
@@ -72,21 +71,21 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
           }}
         >
           <Box
-          sx={{
-            alignItems: 'center',
-            backgroundColor: '#F3F5F8',
-            borderRadius: '12px',
-            cursor: 'pointer',
-            display: 'flex',
-            p: '15px 14px',
-          }}
-        >
-          <Box sx={{ flex: '1 1 auto' }}>
-            <Typography color="primary" variant="body2">
-              Olá, { user?.name }
-            </Typography>
+            sx={{
+              alignItems: 'center',
+              backgroundColor: '#F3F5F8',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              display: 'flex',
+              p: '15px 14px',
+            }}
+          >
+            <Box sx={{ flex: '1 1 auto' }}>
+              <Typography color="primary" variant="body2">
+                Olá, {user?.name}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
         </Box>
       </Stack>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
@@ -134,7 +133,7 @@ function NavItem({ href, title, icon }: any): React.JSX.Element {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        {icon === 'dashboard' && <SignalCellularAltIcon sx={{ marginRight: 1 }} />}
+          {icon === 'dashboard' && <SignalCellularAltIcon sx={{ marginRight: 1 }} />}
           {icon === 'home' && <HomeIcon sx={{ marginRight: 1 }} />}
           {icon === 'user' && <ExploreIcon sx={{ marginRight: 1 }} />}
           {icon === 'users' && <AccountCircleIcon sx={{ marginRight: 1 }} />}
