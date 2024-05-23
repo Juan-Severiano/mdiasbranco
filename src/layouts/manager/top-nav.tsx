@@ -4,6 +4,7 @@ import { UnloggedPopover } from "./unlogged-popover";
 import { Sun, Bell, Moon } from "@phosphor-icons/react";
 import { Search } from "@mui/icons-material";
 import { useCustomContext } from "../../contexts/context";
+import { localClient } from "../../lib/local/client";
 
 const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
   border: 'none !important',
@@ -27,7 +28,7 @@ const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
 export default function TopNav() {
   // const { toggleTheme, mode } = useTheme();
   const { dispatch, state } = useCustomContext()
-
+  const { data: user } = localClient.getUser();
   const toggleTheme = () => {
     const newTheme = state.theme.theme === 'dark' ? 'light': 'dark'
     dispatch({ type: 'CHANGE_THEME', payload: newTheme })
@@ -81,8 +82,8 @@ export default function TopNav() {
               <Button>
                 <Avatar sx={{ mr: 2, maxWidth: 50 }} />
                 <Stack justifyContent="center">
-                  <Typography align="left" variant="subtitle1" color='#323232' fontSize={12} fontWeight={700}>Isaac Alves</Typography>
-                  <Typography align="left" variant="body2" color='#323232' fontSize={9}>Colaborador</Typography>
+                  <Typography align="left" variant="subtitle1" color='#323232' fontSize={12} fontWeight={700}>{user?.name}</Typography>
+                  <Typography align="left" variant="body2" color='#323232' fontSize={9}>Gerente</Typography>
                 </Stack>
               </Button>
             </Tooltip>

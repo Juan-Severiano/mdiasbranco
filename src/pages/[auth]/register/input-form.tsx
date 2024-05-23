@@ -115,7 +115,7 @@ const RegisterForm = ({ ...others }) => {
               <Grid item xs={12} md={7}>
                 <Field
                   component={CustomInput}
-                  name="tel"
+                  name="telphone"
                   label="Telefone"
                   type="tel"
                   startAdornment={
@@ -174,7 +174,7 @@ const RegisterForm = ({ ...others }) => {
               </Alert>
             )}
             <Box sx={{ mt: 3 }}>
-              <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
+              <Button disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
                 {isSubmitting ?
                   <>
                     <RotatingLines width='20' strokeColor='#b2cbdc' /> Carregando ...

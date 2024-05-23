@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, CardHeader, IconButton, Modal, CardContent, CardActions, Button, Grid, FormControl, InputLabel, Input, Select, MenuItem, Chip, Typography, Box } from '@mui/material';
+import { Card, IconButton, Modal, CardContent, CardActions, Button, Grid, FormControl, InputLabel, Input, Select, MenuItem, Chip, Typography, Box } from '@mui/material';
 import { Close, Collections } from '@mui/icons-material';
 import { useCustomContext } from '../../contexts/context';
 import { Logo } from '../core/logo';
@@ -72,7 +72,7 @@ function StepForm() {
           <Card sx={{ width: '100%', maxWidth: { md: '600px' }, maxHeight: '90vh', overflow: 'auto', px: 2, borderRadius: 2, boxShadow: 3, pb: 2 }}>
             <CardContent>
               <Box display="flex" flexDirection="column" alignItems="center" sx={{ mb: 4, mt: -2 }}>
-                <Logo width={200} />
+                <Logo width={200} theme='dark' />
               </Box>
               <form>
                 <Grid container spacing={1.5}>

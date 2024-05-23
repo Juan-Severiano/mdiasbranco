@@ -7,7 +7,6 @@ import ManagerLayout from "../../layouts/manager";
 import ManagerDashboard from "../../pages/[manager]/dashboard";
 import ManagerHome from "../../pages/[manager]/historic";
 import ManagerStartup from "../../pages/[manager]/startup";
-import ManagerRelatory from "../../pages/[manager]/relatory";
 import DefaultLayout from "../../layouts/user";
 import ForgotPassword from "../../pages/[auth]/forgot-password";
 
@@ -54,8 +53,8 @@ export const router = createBrowserRouter([
         element: <ManagerStartup />
       },
       {
-        path: '/manager/relatorio',
-        element: <ManagerRelatory />
+        path: '/manager/historic',
+        element: <ManagerHome />
       },
     ]
   },

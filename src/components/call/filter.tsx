@@ -1,8 +1,8 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import { FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import { CalendarMonth } from '@mui/icons-material';
+import { Button, FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { CalendarMonth, LibraryAdd } from '@mui/icons-material';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
@@ -16,6 +16,7 @@ import CustomSelect from '../../styles/theme/custom-select';
 //icon do botão de alternancia
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
+import { useCustomContext } from '../../contexts/context';
 
 const priority = [
   { value: 'Tecnologia', label: 'Tecnologia' },
@@ -46,6 +47,7 @@ export function CallFilters({
   setToogleRender,
   toogleRender
 }: CallProps) {
+  const { dispatch } = useCustomContext()
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
   };
@@ -67,7 +69,7 @@ export function CallFilters({
   };
 
   return (
-    <Card sx={{ p: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
+    <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2}>
         <Grid item sm={12} md={3}>
           <FormControl fullWidth>
@@ -135,12 +137,12 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item sm={12} md={4}>
+        <Grid item sm={12} md={2}>
           <ToggleButtonGroup
             value={toogleRender}
             exclusive
             aria-label="file-toggle-buttons"
-            sx={{ height: '100%', bgcolor: '#fff' }}
+            sx={{ bgcolor: '#fff', height: '100%' }}
           >
             <ToggleButton sx={{ border: 'none' }} value="grid" onClick={handleRenderFile1}>
               <WindowOutlinedIcon />
@@ -149,6 +151,22 @@ export function CallFilters({
               <FormatListBulletedOutlinedIcon />
             </ToggleButton>
           </ToggleButtonGroup>
+        </Grid>
+        <Grid item sm={12} md={.5} />
+        <Grid item sm={12} md={2.5}>
+          <Button
+            variant="contained"
+            sx={{
+              height: '100%',
+              width: '100%'
+            }}
+            onClick={() => {
+              dispatch({ type: 'CHANGE-MODAL', payload: true })
+            }}
+            startIcon={<LibraryAdd />}
+          >
+            Solicitar Chamado
+          </Button>
         </Grid>
       </Grid>
     </Card>

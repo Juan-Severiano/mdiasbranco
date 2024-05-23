@@ -30,16 +30,19 @@ const ForgotForm: React.FC = () => {
         try {
           const response = await forgetPasswordSolicitation(values);
           console.log(response);
+          setSuccess(true);
         } catch (error) {
           console.log(error)
           if (isAxiosError(error)) {
             if (error?.response) {
-              setErrors({ submit: 'Erro ao fazer login. Verifique suas credenciais.' });
+              setErrors({ submit: error.response.data.message });
               return;
             }
           }
         } finally {
-          setSuccess(true)
+          setTimeout(() => {
+            setSuccess(false)
+          }, 1500)
         }
       }}
     >

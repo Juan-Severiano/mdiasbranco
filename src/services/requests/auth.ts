@@ -7,7 +7,7 @@ export async function loginRequest(loginParams: LoginParams) {
 }
 
 export async function forgetPasswordSolicitation({ email }: { email: string }) {
-  const response = await api.post('/auth/forget-password', { email });
+  const response = await api.post('/auth/recover-password', { email });
   return response.data
 }
 
