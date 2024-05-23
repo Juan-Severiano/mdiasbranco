@@ -9,11 +9,19 @@ import { loginRequest } from '../../../services/requests/auth';
 import { PasswordInput, CustomInput } from '../../../components/custom/custom-input';
 import { Email } from '@mui/icons-material';
 import { StyledLink } from '../../../styles/theme/components/styled-link';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const LoginForm: React.FC = () => {
   const { dispatch } = useCustomContext();
   const [success, setSuccess] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  const handleRecaptchaChange = (token: string | null) => {
+    if (token !== null) {
+      setRecaptchaToken(token);
+    }
+  };
 
   return (
     <Formik
@@ -27,9 +35,15 @@ const LoginForm: React.FC = () => {
         password: Yup.string()
           .required('Senha é obrigatória')
           .min(6, 'A senha deve ter no mínimo 6 caracteres')
-          .max(12, 'A senha deve ter no máximo 12 caracteres')
+          .max(12, 'A senha deve ter no máximo 12 caracteres'),
+        recaptcha: Yup.string().test('is-recaptcha-checked', 'Por favor, marque o ReCAPTCHA', () => recaptchaToken !== null)
       })}
       onSubmit={async (values, { setErrors }) => {
+        if (!recaptchaToken) {
+          setErrors({ submit: 'Por favor, marque o ReCAPTCHA' });
+          return;
+        }
+
         const response = await loginRequest(values);
         console.log(response);
         if (response.error) {
@@ -66,6 +80,10 @@ const LoginForm: React.FC = () => {
             name="password"
             label="Senha"
           />
+          <ReCAPTCHA
+            sitekey="6LcwpuUpAAAAADb1QSb6SqvS-Md1R2GvPi0SPAhZ"
+            onChange={handleRecaptchaChange}
+          />
           {errors.submit && (
             <Alert color="error" sx={{ mt: 2 }}>
               {errors.submit}
@@ -77,11 +95,11 @@ const LoginForm: React.FC = () => {
             </Alert>
           )}
           <Box sx={{ mt: 2 }}>
-            <StyledLink to="/auth/forget-password" >
-              <Typography variant="subtitle1" fontSize={14} sx={{ textDecoration: 'none !important', textAlign: 'end !important' }}>
+            <Typography variant="subtitle1" fontSize={14} sx={{ textDecoration: 'none !important', textAlign: 'end !important' }}>
+              <StyledLink to="/auth/forget-password" >
                 Esqueceu a senha?
-              </Typography>
-            </StyledLink>
+              </StyledLink>
+            </Typography>
           </Box>
           <Box sx={{ mt: 2 }}>
             <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
