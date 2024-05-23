@@ -6,6 +6,11 @@ export async function loginRequest(loginParams: LoginParams) {
   return response.data
 }
 
+export async function forgetPasswordSolicitation({ email }: { email: string }) {
+  const response = await api.post('/auth/forget-password', { email });
+  return response.data
+}
+
 export async function registerRequest(registerParams: RegisterUser) {
   const response = await api.post('/user', registerParams);
   return response.data
