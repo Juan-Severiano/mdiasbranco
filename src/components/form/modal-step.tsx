@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { Card, CardHeader, IconButton, Modal, CardContent, CardActions, Button, Grid, FormControl, InputLabel, Input, Select, MenuItem, Chip, Typography, Box } from '@mui/material';
-import { Close, Collections } from '@mui/icons-material';
+import { Card, CardHeader, IconButton, Modal, CardContent, CardActions, Button, Grid, FormControl, InputLabel, Input, Select, MenuItem, Chip, Typography, Box, InputAdornment } from '@mui/material';
+import * as Yup from 'yup';
+import { Close, Collections, Email } from '@mui/icons-material';
 import { useCustomContext } from '../../contexts/context';
 import { Logo } from '../core/logo';
+import { Field, Formik } from 'formik';
+import { CustomInput } from '../custom/custom-input';
 
 const setor = [
   { value: 'Tecnologia', label: 'Tecnologia' },
@@ -72,116 +75,141 @@ function StepForm() {
           <Card sx={{ width: '100%', maxWidth: { md: '600px' }, maxHeight: '90vh', overflow: 'auto', px: 2, borderRadius: 2, boxShadow: 3, pb: 2 }}>
             <CardContent>
               <Box display="flex" flexDirection="column" alignItems="center" sx={{ mb: 4, mt: -2 }}>
-                <Logo width={200} />
+                <Logo width={200} theme='dark' />
               </Box>
-              <form>
-                <Grid container spacing={1.5}>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Título do problema</InputLabel>
-                      <Input
-                        name="name_user"
-                        disableUnderline
-                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Setor</InputLabel>
-                      <Select
-                        id="problem"
-                        label="Setor"
-                        disableUnderline
-                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
-                      >
-                        {setor.map(problem => (
-                          <MenuItem key={problem.value} value={problem.value}>{problem.label}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Palavras chaves</InputLabel>
-                      <Input
-                        name="keywords"
-                        value={keywordInput}
-                        onChange={(event) => setKeywordInput(event.target.value)}
-                        onKeyDown={handleKeywordInputKeyDown}
-                        disableUnderline
-                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12}>
-                    {keywords.map((keyword, index) => (
-                      <Chip
-                        key={index}
-                        label={keyword}
-                        onDelete={() => setKeywords(keywords.filter((_, i) => i !== index))}
-                        sx={{ m: 0.5 }}
-                      />
-                    ))}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Descrição do problema</InputLabel>
-                      <Input
-                        name="description"
-                        multiline
-                        rows={4}
-                        disableUnderline
-                        sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="body1" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>Anexar imagens</Typography>
-                    <FormControl fullWidth>
-                      <Button
-                        variant="outlined"
-                        component="label"
-                        fullWidth
-                        sx={{ height: 60, justifyContent: 'flex-start', borderColor: 'transparent' }}
-                        startIcon={<Collections />}
-                      >
-                        Upload
-                        <input
-                          type="file"
-                          hidden
-                          onChange={handleFileChange}
-                          multiple
-                          accept="image/*"
+              <Formik
+                initialValues={{
+                  email: '',
+                  password: '',
+                  submit: null
+                }}
+                validationSchema={Yup.object().shape({
+                  email: Yup.string().email('Deve ser um email válido').max(255).required('Email é obrigatório'),
+                  password: Yup.string()
+                    .required('Senha é obrigatória')
+                    .min(6, 'A senha deve ter no mínimo 6 caracteres')
+                    .max(12, 'A senha deve ter no máximo 12 caracteres')
+                })}
+                onSubmit={async (values) => {
+                }}
+              >
+                {({ errors, handleSubmit, isSubmitting }) => (
+                  <form noValidate onSubmit={handleSubmit}>
+                    <Grid container spacing={1.5}>
+                      <Grid item xs={12}>
+                        {/* <FormControl fullWidth variant="standard">
+                          <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Título do problema</InputLabel>
+                          <Input
+                            name="name_user"
+                            disableUnderline
+                            sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
+                          />
+                        </FormControl> */}
+                        <Field
+                          component={CustomInput}
+                          name="title"
+                          label="Título do problema"
+                          type="text"
                         />
-                      </Button>
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
-                        {imagePreviews.map((preview, index) => (
-                          <Box key={index} sx={{ position: 'relative', width: '100px', height: '100px' }}>
-                            <img src={preview} alt={`Preview ${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px' }} />
-                            <IconButton
-                              sx={{
-                                position: 'absolute',
-                                top: 0,
-                                right: 0,
-                                backgroundColor: 'rgba(255, 255, 255, 0.7)'
-                              }}
-                              onClick={() => handleRemoveImage(index)}
-                            >
-                              <Close />
-                            </IconButton>
-                          </Box>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl fullWidth variant="standard">
+                          <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Setor</InputLabel>
+                          <Select
+                            id="problem"
+                            label="Setor"
+                            disableUnderline
+                            sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
+                          >
+                            {setor.map(problem => (
+                              <MenuItem key={problem.value} value={problem.value}>{problem.label}</MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl fullWidth variant="standard">
+                          <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Palavras chaves</InputLabel>
+                          <Input
+                            name="keywords"
+                            value={keywordInput}
+                            onChange={(event) => setKeywordInput(event.target.value)}
+                            onKeyDown={handleKeywordInputKeyDown}
+                            disableUnderline
+                            sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        {keywords.map((keyword, index) => (
+                          <Chip
+                            key={index}
+                            label={keyword}
+                            onDelete={() => setKeywords(keywords.filter((_, i) => i !== index))}
+                            sx={{ m: 0.5 }}
+                          />
                         ))}
-                      </Box>
-                      {files.length > 0 && (
-                        <Typography variant="body2" sx={{ mt: 1 }}>
-                          {files.length} {files.length === 1 ? 'imagem' : 'imagens'} selecionada(s)
-                        </Typography>
-                      )}
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </form>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl fullWidth variant="standard">
+                          <InputLabel shrink sx={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'text.primary' }}>Descrição do problema</InputLabel>
+                          <Input
+                            name="description"
+                            multiline
+                            rows={4}
+                            disableUnderline
+                            sx={{ backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' }}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Typography variant="body1" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>Anexar imagens</Typography>
+                        <FormControl fullWidth>
+                          <Button
+                            variant="outlined"
+                            component="label"
+                            fullWidth
+                            sx={{ height: 60, justifyContent: 'flex-start', borderColor: 'transparent' }}
+                            startIcon={<Collections />}
+                          >
+                            Upload
+                            <input
+                              type="file"
+                              hidden
+                              onChange={handleFileChange}
+                              multiple
+                              accept="image/*"
+                            />
+                          </Button>
+                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
+                            {imagePreviews.map((preview, index) => (
+                              <Box key={index} sx={{ position: 'relative', width: '100px', height: '100px' }}>
+                                <img src={preview} alt={`Preview ${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px' }} />
+                                <IconButton
+                                  sx={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    backgroundColor: 'rgba(255, 255, 255, 0.7)'
+                                  }}
+                                  onClick={() => handleRemoveImage(index)}
+                                >
+                                  <Close />
+                                </IconButton>
+                              </Box>
+                            ))}
+                          </Box>
+                          {files.length > 0 && (
+                            <Typography variant="body2" sx={{ mt: 1 }}>
+                              {files.length} {files.length === 1 ? 'imagem' : 'imagens'} selecionada(s)
+                            </Typography>
+                          )}
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  </form>
+                )}
+              </Formik>
             </CardContent>
             <CardActions sx={{ justifyContent: 'center', gap: 2, px: 2 }}>
               <Button
@@ -211,7 +239,7 @@ function StepForm() {
           </Card>
         </Modal>
       </Grid>
-    </Grid>
+    </Grid >
   );
 }
 

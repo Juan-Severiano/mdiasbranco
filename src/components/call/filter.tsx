@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import { FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { CalendarMonth } from '@mui/icons-material';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
@@ -16,6 +16,7 @@ import CustomSelect from '../../styles/theme/custom-select';
 //icon do botão de alternancia
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
+import { useCustomContext } from '../../contexts/context';
 
 const priority = [
   { value: 'Tecnologia', label: 'Tecnologia' },
@@ -65,6 +66,8 @@ export function CallFilters({
   const handleRenderFile2 = () => {
     setToogleRender("list");
   };
+
+  const { dispatch } = useCustomContext()
 
   return (
     <Card sx={{ p: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
@@ -149,6 +152,13 @@ export function CallFilters({
               <FormatListBulletedOutlinedIcon />
             </ToggleButton>
           </ToggleButtonGroup>
+        </Grid>
+        <Grid item sm={12} md={4}>
+          <Button variant="contained" color="secondary" sx={{ color: '#000' }} onClick={() => {
+            dispatch({ type: 'CHANGE-MODAL', payload: true })
+          }}>
+            Solicitar Chamado
+          </Button>
         </Grid>
       </Grid>
     </Card>
