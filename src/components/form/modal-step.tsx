@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { Card, CardHeader, IconButton, Modal, CardContent, CardActions, Button, Grid, Typography, Box, InputAdornment, Chip } from '@mui/material';
+import { Card, IconButton, Modal, CardContent, CardActions, Button, Grid, Typography, Box, Chip } from '@mui/material';
 import * as Yup from 'yup';
-import { Close, Collections, Email } from '@mui/icons-material';
+import { Close, Collections } from '@mui/icons-material';
 import { useCustomContext } from '../../contexts/context';
 import { Logo } from '../core/logo';
 import { Field, Formik } from 'formik';
-import { CustomInput, PasswordInput } from '../custom/custom-input';
+import { CustomInput } from '../custom/custom-input';
 
-const setor = [
-  { value: 'Tecnologia', label: 'Tecnologia' },
-  { value: 'Industria', label: 'Indústria' },
-  { value: 'Vendas', label: 'Vendas' }
+const setorOptions = [
+  { value: 'Vendas', label: 'Vendas' },
+  { value: 'Logística', label: 'Logística' },
+  { value: 'Indústria', label: 'Indústria' }
 ];
 
 function StepForm() {
@@ -130,7 +130,7 @@ function StepForm() {
                           }}
                         >
                           <option value="" label="Selecione o setor" />
-                          {setor.map((option) => (
+                          {setorOptions.map((option) => (
                             <option key={option.value} value={option.value}>
                               {option.label}
                             </option>
@@ -167,7 +167,7 @@ function StepForm() {
                           name="description"
                           label="Descrição do problema"
                           multiline
-                          rows={4}
+                          rows={6}
                           InputProps={{
                             sx: { backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' },
                           }}
@@ -175,20 +175,6 @@ function StepForm() {
                       </Grid>
                       <Grid item xs={12}>
                         <Typography variant="body1" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>Anexar imagens</Typography>
-                        <Field
-                          component={CustomInput}
-                          name="images"
-                          type="file"
-                          onChange={handleFileChange}
-                          multiple
-                          accept="image/*"
-                          InputProps={{
-                            sx: { display: 'none' },
-                          }}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
                         <Button
                           variant="outlined"
                           component="label"
