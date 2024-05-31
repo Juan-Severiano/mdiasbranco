@@ -52,7 +52,7 @@ export function StartupTable({
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">
                       <Typography variant="h6">Nome Da Startup</Typography>
-                      <Typography variant="body1">ÁREA DE ATUAÇÃO</Typography>
+                      <Typography variant="body1">{row.corporate_reason}</Typography>
                     </Stack>
                   </TableCell>
                   <TableCell>

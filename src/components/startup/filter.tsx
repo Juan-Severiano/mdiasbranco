@@ -2,7 +2,6 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
 import { Button, FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography, Box } from '@mui/material';
-import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Amarelo from '../../../public/Status/analisys.jpeg';
@@ -13,6 +12,8 @@ import CustomSelect from '../../styles/theme/custom-select';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 
 const priority = [
   { value: 'Tecnologia', label: 'Tecnologia' },
@@ -72,7 +73,7 @@ export function CallFilters({
             <CustomSelect
               label='Prioridade'
               sx={{ backgroundColor: '#fff' }}
-              startAdornment={<CrisisAlertIcon color='disabled' />}
+              startAdornment={<GroupOutlinedIcon color='disabled' />}
               onChange={handlePriorityChange}
               aria-label="Prioridade"
             >
@@ -90,7 +91,7 @@ export function CallFilters({
             <CustomSelect
               label='Prioridade'
               sx={{ backgroundColor: '#fff' }}
-              startAdornment={<CrisisAlertIcon color='disabled' />}
+              startAdornment={<LocationOnOutlinedIcon color='disabled' />}
               onChange={handlePriorityChange}
               aria-label="Prioridade"
             >
@@ -150,7 +151,7 @@ export function CallFilters({
         <Grid item sm={12} md={2}>
           <Box display="flex" justifyContent="flex-end">
             <Button variant="contained" color="primary" startIcon={<AddToPhotosIcon />}>
-              Colocar startup
+              Colocar Startup
             </Button>
           </Box>
         </Grid>
