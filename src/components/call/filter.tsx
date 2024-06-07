@@ -2,7 +2,7 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
 import { Button, FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import { CalendarMonth } from '@mui/icons-material';
+import { CalendarMonth, LibraryAdd } from '@mui/icons-material';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
@@ -12,7 +12,6 @@ import Ciano from '../../../public/Status/open.jpeg';
 import Vermelho from '../../../public/Status/concluted.jpeg';
 import CustomOutlinedInput from '../../styles/theme/custom-outlined-input';
 import CustomSelect from '../../styles/theme/custom-select';
-import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 // Icon do botão de alternancia
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
@@ -48,6 +47,7 @@ export function CallFilters({
   setToogleRender,
   toogleRender
 }: CallProps) {
+  const { dispatch } = useCustomContext()
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
   };
@@ -68,12 +68,10 @@ export function CallFilters({
     setToogleRender("list");
   };
 
-  const { dispatch } = useCustomContext()
-
   return (
-    <Card sx={{ p: 2, backgroundColor: 'transparent' }}>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12} sm={6} md={2}>
+    <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
+      <Grid container spacing={2}>
+        <Grid item sm={12} md={3}>
           <FormControl fullWidth>
             <InputLabel>Filtrar por Data</InputLabel>
             <CustomOutlinedInput
@@ -138,30 +136,35 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-
-        <Grid item xs={12} sm={6} md={2}>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <ToggleButtonGroup
-              value={toogleRender}
-              exclusive
-              aria-label="file-toggle-buttons"
-              sx={{ height: '100%', bgcolor: '#fff' }}
-            >
-              <ToggleButton sx={{ border: 'none' }} value="grid" onClick={handleRenderFile1}>
-                <WindowOutlinedIcon />
-              </ToggleButton>
-              <ToggleButton sx={{ border: 'none' }} value="list" onClick={handleRenderFile2}>
-                <FormatListBulletedOutlinedIcon />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Stack>
+        <Grid item sm={12} md={2}>
+          <ToggleButtonGroup
+            value={toogleRender}
+            exclusive
+            aria-label="file-toggle-buttons"
+            sx={{ bgcolor: '#fff', height: '100%' }}
+          >
+            <ToggleButton sx={{ border: 'none' }} value="grid" onClick={handleRenderFile1}>
+              <WindowOutlinedIcon />
+            </ToggleButton>
+            <ToggleButton sx={{ border: 'none' }} value="list" onClick={handleRenderFile2}>
+              <FormatListBulletedOutlinedIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>
         </Grid>
-
-        <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button variant="contained" color="primary" startIcon={<AddToPhotosIcon />}  onClick={() => {
-            dispatch({ type: 'CHANGE-MODAL', payload: true })
-          }}>
-            Solicitar Resolução
+        <Grid item sm={12} md={.5} />
+        <Grid item sm={12} md={2.5}>
+          <Button
+            variant="contained"
+            sx={{
+              height: '100%',
+              width: '100%'
+            }}
+            onClick={() => {
+              dispatch({ type: 'CHANGE-MODAL', payload: true })
+            }}
+            startIcon={<LibraryAdd />}
+          >
+            Solicitar Chamado
           </Button>
         </Grid>
       </Grid>

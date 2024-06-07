@@ -114,7 +114,7 @@ const RegisterForm = ({ ...others }) => {
               <Grid item xs={12} md={7}>
                 <Field
                   component={CustomInput}
-                  name="tel"
+                  name="telphone"
                   label="Telefone"
                   type="tel"
                   startAdornment={
