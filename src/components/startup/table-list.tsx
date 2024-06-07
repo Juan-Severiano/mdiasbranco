@@ -8,12 +8,14 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useSelection } from '../../hooks/use-selection';
-// ICONS
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import SettingsIcon from '@mui/icons-material/Settings';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import { useCustomContext } from '../../contexts/context';
 import { Startup } from '../../types/problem';
+import IconButton from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import InterestsOutlinedIcon from '@mui/icons-material/InterestsOutlined';
+import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 
 interface CustomersTableProps {
   count?: number;
@@ -28,8 +30,9 @@ export function StartupTable({
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
-  const { dispatch } = useCustomContext()
+  const { dispatch } = useCustomContext();
   const { selected } = useSelection(rowIds);
+
   return (
     <Card>
       <Box sx={{ overflowX: 'auto' }}>
@@ -38,28 +41,68 @@ export function StartupTable({
             {rows.map((row) => {
               const isSelected = selected?.has(row.id);
               return (
-                <TableRow hover key={row.id} selected={isSelected} onClick={() => {
-                  console.log('sd')
-                  dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: true })
-                }}>
+                <TableRow
+                  hover
+                  key={row.id}
+                  selected={isSelected}
+                  onClick={() => {
+                    dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: true });
+                  }}
+                >
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">
-                      <Typography variant="h6">
-                        {row.corporate_reason}
+                      <Typography variant="h6">Nome Da Startup</Typography>
+                      <Typography variant="body1">{row.corporate_reason}</Typography>
+                    </Stack>
+                  </TableCell>
+                  <TableCell>
+                    <Stack
+                      sx={{ display: 'flex', flexDirection: 'column' }}
+                      justifyContent="center"
+                    >
+                      <Stack spacing={1} flexDirection="row" alignItems="center">
+                        <AssignmentIndOutlinedIcon color="action" sx={{ fontSize: '1rem' }} />
+                        <Typography variant="body1">CNPJ</Typography>
+                      </Stack>
+                      <Stack spacing={1} flexDirection="row" alignItems="center">
+                        <InterestsOutlinedIcon color="action" sx={{ fontSize: '1rem' }} />
+                        <Typography variant="body1">RAZÃO SOCIAL</Typography>
+                      </Stack>
+                    </Stack>
+                  </TableCell>
+                  <TableCell>
+                    <Stack spacing={1} flexDirection="row" alignItems="center">
+                      <WarningAmberIcon color="action" sx={{ fontSize: '1rem' }} />
+                      <Typography
+                        variant="body1"
+                        color="action"
+                        textTransform="capitalize"
+                      >
+                        {row.service}
                       </Typography>
-                      <Typography variant="body1">
-                        {row.cnpj}
+                    </Stack>
+                    <Stack spacing={1} flexDirection="row" alignItems="center">
+                      <EmailOutlinedIcon color="action" sx={{ fontSize: '1rem' }} />
+                      <Typography
+                        variant="body1"
+                        color="action"
+                        textTransform="uppercase"
+                      >
+                        {row.email}
                       </Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell sx={{}}>
-                    <Stack sx={{ display: 'flex', flexDirection: 'column' }} justifyContent="center">
-                      <Stack spacing={1} flexDirection='row'><CalendarMonthIcon color='action' />{(row.email)}</Stack>
-                    </Stack>
+                  <TableCell>
+                    <Typography variant="subtitle1" color="action">
+                      Lorem
+                    </Typography>
                   </TableCell>
-                  <TableCell sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.service}</Typography></Stack>
-                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action' textTransform='uppercase'> {row.email}</Typography></Stack>
+                  <TableCell>
+                    <Stack alignItems="center" justifyContent="flex-end">
+                      <IconButton>
+                        <MoreVertIcon />
+                      </IconButton>
+                    </Stack>
                   </TableCell>
                 </TableRow>
               );

@@ -31,8 +31,9 @@ export function CustomersTable({
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
-  const { dispatch } = useCustomContext()
+  const { dispatch } = useCustomContext();
   const { selected } = useSelection(rowIds);
+
   return (
     <Card>
       <Box sx={{ overflowX: 'auto' }}>
@@ -41,10 +42,15 @@ export function CustomersTable({
             {rows.map((row) => {
               const isSelected = selected?.has(row.id);
               return (
-                <TableRow hover key={row.id} selected={isSelected} onClick={() => {
-                  console.log('sd')
-                  dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: true })
-                }}>
+                <TableRow
+                  hover
+                  key={row.id}
+                  selected={isSelected}
+                  onClick={() => {
+                    console.log('sd');
+                    dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: true });
+                  }}
+                >
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">
                       <Typography variant="h6">
@@ -56,38 +62,75 @@ export function CustomersTable({
                       </Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell sx={{}}>
-                    <Stack sx={{ display: 'flex', flexDirection: 'column' }} justifyContent="center">
-                      <Stack spacing={1} flexDirection='row'>
+                  <TableCell>
+                    <Stack
+                      sx={{ display: 'flex', flexDirection: 'column' }}
+                      justifyContent="center"
+                    >
+                      <Stack spacing={1} flexDirection="row" alignItems="center">
                         <Brightness1Icon
                           color={
-                            row.status === 'open' ? 'info'
-                              : row.status === 'analisys' ? 'warning'
-                                : row.status === 'pending' ? 'disabled'
+                            row.status === 'open'
+                              ? 'info'
+                              : row.status === 'analisys'
+                                ? 'warning'
+                                : row.status === 'pending'
+                                  ? 'disabled'
                                   : 'success'
                           }
+                          sx={{ fontSize: '1rem' }} // Ajuste o tamanho do ícone aqui
                         />
-                        <Typography variant='body1' color='action' textTransform='capitalize'>{row.status}</Typography>
+                        <Typography
+                          variant="body1"
+                          color="textPrimary"
+                          textTransform="capitalize"
+                        >
+                          {row.status}
+                        </Typography>
                       </Stack>
-                      <Stack spacing={1} flexDirection='row'><CalendarMonthIcon color='action' />{dayjs(row.resolve_at).format('DD/MM/YYYY')}</Stack>
+                      <Stack spacing={1} flexDirection="row" alignItems="center">
+                        <CalendarMonthIcon color="action" sx={{ fontSize: '1rem' }} /> {/* Ajuste o tamanho do ícone aqui */}
+                        <Typography variant="body1" color="textPrimary">
+                          {dayjs(row.resolve_at).format('DD/MM/YYYY')}
+                        </Typography>
+                      </Stack>
                     </Stack>
                   </TableCell>
-                  <TableCell sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Stack spacing={1} flexDirection='row'><WarningAmberIcon color='action' /> <Typography variant='body1' color='action' textTransform='capitalize'> {row.keywords![0]}</Typography></Stack>
-                    <Stack spacing={1} flexDirection='row'><SettingsIcon color='action' /><Typography variant='body1' color='action' textTransform='uppercase'> {row.setor}</Typography></Stack>
-                  </TableCell>
-                  {/*Tecnico  / david paz */}
-                  <TableCell>
-                    <Stack spacing={1} flexDirection='row'>
-                      <Typography variant='subtitle1' color='action' >Nome do Tecnico</Typography>
+                  <TableCell >
+                    <Stack spacing={1} flexDirection="row" alignItems="center">
+                      <WarningAmberIcon color="action" sx={{ fontSize: '1rem' }} /> {/* Ajuste o tamanho do ícone aqui */}
+                      <Typography
+                        variant="body1"
+                        color="textPrimary"
+                        textTransform="capitalize"
+                      >
+                        {row.keywords![0]}
+                      </Typography>
+                    </Stack>
+                    <Stack spacing={1} flexDirection="row" alignItems="center">
+                      <SettingsIcon color="action" sx={{ fontSize: '1rem' }} /> {/* Ajuste o tamanho do ícone aqui */}
+                      <Typography
+                        variant="body1"
+                        color="textPrimary"
+                        textTransform="uppercase"
+                      >
+                        {row.setor}
+                      </Typography>
                     </Stack>
                   </TableCell>
                   <TableCell>
-                  <Stack alignItems='center' justifyContent='flex-end'>
-                        <IconButton >
-                          <MoreVertIcon />
-                        </IconButton>
-                      </Stack>
+                    <Stack spacing={1} flexDirection="row" alignItems="center">
+                      <Typography variant="subtitle1" color="textPrimary">
+                        Nome do Tecnico
+                      </Typography>
+                    </Stack>
+                  </TableCell>
+                  <TableCell>
+                    <Stack alignItems="center" justifyContent="flex-end">
+                      <IconButton>
+                        <MoreVertIcon />
+                      </IconButton>
+                    </Stack>
                   </TableCell>
                 </TableRow>
               );
