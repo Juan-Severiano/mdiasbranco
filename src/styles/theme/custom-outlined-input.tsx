@@ -6,7 +6,7 @@ const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
   outline: 'none',
   '& .MuiOutlinedInput-input::placeholder': {
     fontSize: '14px',
-    color: '#6F6F73 !important',
+    color: '#767982 !important',
   },
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',

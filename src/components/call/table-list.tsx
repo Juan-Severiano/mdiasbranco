@@ -46,20 +46,20 @@ export function CustomersTable({
                   hover
                   key={row.id}
                   selected={isSelected}
-                  onClick={() => {
-                    dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: {
-                      problem: row
-                    } });
-                  }}
                 >
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">
-                      <Typography variant="h6">
+                      <Typography variant="h6" sx={{ ":hover": { textDecoration: 'underline' } }} onClick={() => {
+                        dispatch({
+                          type: 'CHANGE-MODAL-DETAILS', payload: {
+                            problem: row
+                          }
+                        });
+                      }}>
                         {row.title}
                       </Typography>
                       <Typography variant="body1">
-                        {/* Nome Do solicitante */}
-                        {row.title}
+                        {row.user?.name}
                       </Typography>
                     </Stack>
                   </TableCell>
@@ -79,7 +79,7 @@ export function CustomersTable({
                                   ? 'disabled'
                                   : 'success'
                           }
-                          sx={{ fontSize: '1rem' }} // Ajuste o tamanho do ícone aqui
+                          sx={{ fontSize: '1rem' }}
                         />
                         <Typography
                           variant="body1"
@@ -90,7 +90,7 @@ export function CustomersTable({
                         </Typography>
                       </Stack>
                       <Stack spacing={1} flexDirection="row" alignItems="center">
-                        <CalendarMonthIcon color="action" sx={{ fontSize: '1rem' }} /> {/* Ajuste o tamanho do ícone aqui */}
+                        <CalendarMonthIcon color="action" sx={{ fontSize: '1rem' }} />
                         <Typography variant="body1" color="textPrimary">
                           {dayjs(row.resolve_at).format('DD/MM/YYYY')}
                         </Typography>
@@ -99,7 +99,7 @@ export function CustomersTable({
                   </TableCell>
                   <TableCell >
                     <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <WarningAmberIcon color="action" sx={{ fontSize: '1rem' }} /> {/* Ajuste o tamanho do ícone aqui */}
+                      <WarningAmberIcon color="action" sx={{ fontSize: '1rem' }} />
                       <Typography
                         variant="body1"
                         color="textPrimary"
@@ -109,7 +109,7 @@ export function CustomersTable({
                       </Typography>
                     </Stack>
                     <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <SettingsIcon color="action" sx={{ fontSize: '1rem' }} /> {/* Ajuste o tamanho do ícone aqui */}
+                      <SettingsIcon color="action" sx={{ fontSize: '1rem' }} />
                       <Typography
                         variant="body1"
                         color="textPrimary"

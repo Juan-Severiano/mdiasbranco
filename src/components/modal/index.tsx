@@ -2,7 +2,7 @@ import { Card, CardHeader, IconButton, Modal, CardContent, CardActions, Button, 
 import { Circle, Close, CrisisAlert, SaveOutlined } from '@mui/icons-material'
 import { useCustomContext } from '../../contexts/context';
 import { Logo } from '../core/logo';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MarkDownEditor } from './markdown-editor';
 import ReactMarkdown from 'react-markdown';
 import { Heading } from '../custom/heading';
@@ -18,6 +18,10 @@ function ModalProblem() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [markdownContent, setMarkdownContent] = useState<string>(problem?.description!);
+
+  useEffect(() => {
+    setMarkdownContent(problem?.description!)
+  }, [problem?.description])
 
   const handleEditorChange = ({ text }: { text: string }) => {
     setMarkdownContent(text);
@@ -107,7 +111,7 @@ function ModalProblem() {
                       ) : (
                         <Typography>
                           <ReactMarkdown>
-                            {markdownContent || 'Click to add a description...'}
+                            {markdownContent}
                           </ReactMarkdown>
                         </Typography>
                       )
