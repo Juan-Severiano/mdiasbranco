@@ -1,27 +1,14 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import { FormControl, Grid, InputAdornment, InputLabel, OutlinedInput, Select } from '@mui/material';
-import { CalendarMonth, Search } from '@mui/icons-material';
+import { FormControl, Grid, InputLabel, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
+import { Search } from '@mui/icons-material';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Amarelo from '../../../public/Status/amarelo.jpeg';
-import Azul from '../../../public/Status/azul.jpeg';
-import Ciano from '../../../public/Status/ciano.jpeg';
-import Vermelho from '../../../public/Status/vermelho.jpeg';
 
 const priority = [
   { value: 'Tecnologia', label: 'Tecnologia' },
   { value: 'Industria', label: 'Industria' },
   { value: 'Vendas', label: 'Vendas' }
-];
-
-const status = [
-  { value: 'pending', label: 'Pendente' },
-  { value: 'open', label: 'Aberto' },
-  { value: 'analisys', label: 'Analise' },
-  { value: 'concluted', label: 'Concluido' },
 ];
 
 interface CallProps {
@@ -32,25 +19,15 @@ interface CallProps {
 }
 
 export function CallFilters({ 
-  setSearchKeyword, 
-  setSelectedDate, 
-  setSelectedPriority, 
-  setSelectedStatus 
+  setSearchKeyword,
+  setSelectedPriority,
 }: CallProps) {
   const handleKeywordChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setSearchKeyword(event.target.value);
   };
 
-  const handleDateChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setSelectedDate(event.target.value);
-  };
-
-  const handlePriorityChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handlePriorityChange = (event: SelectChangeEvent<string>) => {
     setSelectedPriority(event.target.value);
-  };
-
-  const handleStatusChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setSelectedStatus(event.target.value);
   };
 
   return (

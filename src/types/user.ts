@@ -17,5 +17,6 @@ export interface RegisterUser {
 }
 
 export interface User extends RegisterUser {
+  role: string
   id: number
 }

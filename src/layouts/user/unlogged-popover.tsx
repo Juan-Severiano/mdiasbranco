@@ -8,8 +8,6 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { Login } from '@mui/icons-material';
-import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
-import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 import { useCustomContext } from '../../contexts/context';
 import { localClient } from '../../lib/local/client';
 

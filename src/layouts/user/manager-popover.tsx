@@ -16,7 +16,6 @@ import PersonAddAltSharpIcon from '@mui/icons-material/PersonAddAltSharp';
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 import GroupAddSharpIcon from '@mui/icons-material/GroupAddSharp';
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
-import { localClient } from '../../lib/local/client';
 import { useCustomContext } from '../../contexts/context';
 
 
@@ -29,7 +28,6 @@ export interface UserPopoverProps {
 export function ManagerPopover({ anchorEl, onClose, open }: UserPopoverProps): React.JSX.Element {
   const navigate = useNavigate();
   const { dispatch } = useCustomContext()
-  const { data : user } = localClient.getUser()!
   const handleSignIn = React.useCallback(async (): Promise<void> => {
     dispatch({ type: 'SIGN_OUT' })
     navigate('/auth/login')

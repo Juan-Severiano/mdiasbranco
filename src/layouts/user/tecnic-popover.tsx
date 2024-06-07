@@ -16,8 +16,6 @@ import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 import GroupAddSharpIcon from '@mui/icons-material/GroupAddSharp';
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import { useCustomContext } from '../../contexts/context';
-import { localClient } from '../../lib/local/client';
-
 
 export interface UserPopoverProps {
   anchorEl: Element | null;
@@ -28,7 +26,6 @@ export interface UserPopoverProps {
 export function TecnicPopover({ anchorEl, onClose, open }: UserPopoverProps): React.JSX.Element {
   const navigate = useNavigate();
   const { dispatch } = useCustomContext()
-  const { data : user } = localClient.getUser()!
   const handleSignIn = React.useCallback(async (): Promise<void> => {
     dispatch({ type: 'SIGN_OUT' })
     navigate('/auth/login')

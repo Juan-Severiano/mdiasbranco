@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
-import { Problem } from '../../../types/problem';
+import { Startup } from '../../../types/problem';
 import { startups } from '../../../mock/startup';
 import { StartupTable } from '../../../components/startup/table-list';
 import { CallFilters } from '../../../components/startup/filter';
@@ -12,7 +12,7 @@ export default function ManagerStartup() {
   const [selectedPriority, setSelectedPriority] = React.useState('');
   const [selectedStatus, setSelectedStatus] = React.useState('');
 
-  const applyPagination = (rows: Problem[], page: number, rowsPerPage: number): Problem[] => {
+  const applyPagination = (rows: Startup[], page: number, rowsPerPage: number): Startup[] => {
     return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   };
 
