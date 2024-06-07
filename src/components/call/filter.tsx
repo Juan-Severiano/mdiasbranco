@@ -1,7 +1,11 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
+<<<<<<< HEAD
 import {Button, FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+=======
+import { Button, FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+>>>>>>> implement/modal
 import { CalendarMonth } from '@mui/icons-material';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
@@ -17,6 +21,7 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 // Icon do botão de alternancia
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
+import { useCustomContext } from '../../contexts/context';
 
 const priority = [
   { value: 'Tecnologia', label: 'Tecnologia' },
@@ -66,6 +71,8 @@ export function CallFilters({
   const handleRenderFile2 = () => {
     setToogleRender("list");
   };
+
+  const { dispatch } = useCustomContext()
 
   return (
     <Card sx={{ p: 2, backgroundColor: 'transparent' }}>
@@ -157,6 +164,13 @@ export function CallFilters({
         <Grid item xs={12} sm={6} md={4} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button variant="contained" color="primary" startIcon={<AddToPhotosIcon />}>
             Solicitar Resolução
+          </Button>
+        </Grid>
+        <Grid item sm={12} md={4}>
+          <Button variant="contained" color="secondary" sx={{ color: '#000' }} onClick={() => {
+            dispatch({ type: 'CHANGE-MODAL', payload: true })
+          }}>
+            Solicitar Chamado
           </Button>
         </Grid>
       </Grid>
