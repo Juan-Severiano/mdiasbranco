@@ -33,8 +33,8 @@ interface CallProps {
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>,
   setSelectedPriority: React.Dispatch<React.SetStateAction<string>>,
   setSelectedStatus: React.Dispatch<React.SetStateAction<string>>,
-  setToogleRender: React.Dispatch<React.SetStateAction<'list' | 'grid'>>,
-  toogleRender: string
+  setToogleRender?: React.Dispatch<React.SetStateAction<'list' | 'grid'>>,
+  toogleRender?: string
 }
 
 export function CallFilters({
@@ -53,11 +53,11 @@ export function CallFilters({
   };
 
   const handleRenderFile1 = () => {
-    setToogleRender("grid")
+    setToogleRender!("grid")
   };
 
   const handleRenderFile2 = () => {
-    setToogleRender("list");
+    setToogleRender!("list");
   };
 
   return (

@@ -1,21 +1,38 @@
-import { Card, CardHeader, IconButton, Modal, CardContent, CardActions, Button, Grid, Typography, Paper, Avatar, Divider, Stack, FormControl, InputLabel, Select, MenuItem, OutlinedInput } from '@mui/material';
-import { Circle, Close } from '@mui/icons-material'
+import { Card, CardHeader, IconButton, Modal, CardContent, CardActions, Button, Grid, Stack, Typography, Chip, Box } from '@mui/material';
+import { Circle, Close, CrisisAlert, SaveOutlined } from '@mui/icons-material'
 import { useCustomContext } from '../../contexts/context';
-
-const setor = [
-  { value: 'CoffeeStack', label: 'CoffeeStack' },
-  { value: 'Lovel', label: 'Lovel' },
-  { value: 'MedFlow', label: 'MedFlow' },
-  { value: 'Suri', label: 'Suri' },
-  { value: 'Straloo', label: 'Straloo' },
-];
+import { Logo } from '../core/logo';
+import { useState } from 'react';
+import { MarkDownEditor } from './markdown-editor';
+import ReactMarkdown from 'react-markdown';
+import { Heading } from '../custom/heading';
+import { IconAlignJustified } from '@tabler/icons-react';
+import { Keyboard, ListBullets, Pencil } from '@phosphor-icons/react';
+import { WriteComment } from './write-comment';
+import { ProblemDetail } from './details';
 
 function ModalProblem() {
   const { dispatch, state } = useCustomContext()
 
+  const { modalDetails: { problem } } = state
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [markdownContent, setMarkdownContent] = useState<string>(problem?.description!);
+
+  const handleEditorChange = ({ text }: { text: string }) => {
+    setMarkdownContent(text);
+  };
+
+  const handleEditorClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
+
   const handleClose = () => {
-    dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: false })
-    location.reload()
+    dispatch({ type: 'CLOSE-MODAL-DETAILS' })
   };
 
   return (
@@ -28,86 +45,89 @@ function ModalProblem() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: 4,
+        paddingBottom: 4,
+        maxHeight: '100vh'
       }}
     >
-      <div style={{ overflowY: 'auto', maxHeight: '90vh' }}>
-        <Grid container justifyContent='center'>
-          <Grid item xs={12} md={8}>
+      <div style={{
+        overflowY: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        width: '100%',
+        paddingTop: '40px',
+        paddingBottom: '40px',
+      }}>
+        <Grid container justifyContent='center' alignItems='center'>
+          <Grid item xs={11} md={8}>
             <Card>
-              <CardHeader sx={{ textTransform: 'uppercase', fontWeight: 900 }} title="Automatizar a ação de embalar pacotes" action={
-                <Grid container alignItems='center' spacing={1}>
-                  <Grid item>
-                    <Stack flexDirection='row' alignItems='center'>
-                      <Typography fontWeight={700} fontSize={12}>Status</Typography>
-                      <Circle color='success' />
-                    </Stack>
-                  </Grid>
-                  <Grid item>
-                    <IconButton onClick={handleClose} aria-label="Fechar">
-                      <Close />
-                    </IconButton>
-                  </Grid>
-                </Grid>
-              } />
+              <CardHeader
+                title={
+                  <Stack width='100%' flexDirection='row' justifyContent='center'>
+                    <Logo theme='dark' width={200} />
+                  </Stack>
+                }
+                action={
+                  <IconButton onClick={handleClose} aria-label="Fechar">
+                    <Close />
+                  </IconButton>
+                } />
               <CardContent>
                 <Grid container spacing={3}>
-                  <Grid item xs={6}>
-                    <Typography>
-                      Na M Dias Branco, embalar pacotes é um trabalho importante, mas também manual e demorado. Automatizar esse processo pode ajudar muito. Isso significa usar máquinas para embalar os produtos de forma rápida e precisa. Isso economiza tempo e dinheiro, além de garantir que cada pacote seja embalado corretamente. Com a automação, a empresa pode produzir mais, economizar recursos e garantir que seus produtos cheguem aos clientes com qualidade. É um passo importante para tornar a M Dias Branco mais eficiente e competitiva no mercado.
-                    </Typography>
+                  <Grid item xs={12} md={8}>
+                    <Heading color='primary' fontWeight={600} text={problem?.title!} icon={<Keyboard fontSize={32} style={{ marginRight: 20 }} />} />
                   </Grid>
-                  <Grid item container xs={6}>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth>
-                        <InputLabel>
-                          Startup
-                        </InputLabel>
-                        <Select
-                          id="problem"
-                          fullWidth
-                          variant="outlined"
-                          label="Startup"
-                        >
-                          {
-                            setor.map(problem => <MenuItem value={problem.value}><Avatar sx={{ mr: 2 }}
-                              src='https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/04/attachment_78090804-e1492455618692.png'
-                            />{problem.label}</MenuItem>)
-                          }
-                        </Select>
-                      </FormControl>
+                  <Grid item xs={12} md={8} container spacing={2}>
+                    <Grid item xs={3}>
+                      <ProblemDetail
+                        icon={<Circle color="warning" fontSize='small' sx={{ mr: .5 }} />}
+                        title="Status"
+                        value='Pendente'
+                      />
                     </Grid>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth>
-                        <InputLabel>Feedback</InputLabel>
-                        <OutlinedInput name='name_user' label="Feedback" type="text" />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                          <Button variant='outlined'>Enviar</Button>
+                    <Grid item xs={3}>
+                      <ProblemDetail
+                        icon={<CrisisAlert color="action" fontSize='small' sx={{ mr: .5 }} />}
+                        title="Setor"
+                        value={problem?.setor!}
+                      />
                     </Grid>
                   </Grid>
-                  <Divider />
-                  <Grid item xs={12}>
-                    <Paper style={{ padding: "20px 20px" }}>
-                      <Grid container wrap="nowrap" spacing={2}>
-                        <Paper style={{ padding: "20px 20px" }}>
-                          <Grid container wrap="nowrap" spacing={2}>
-                            <Grid item>
-                              <Avatar />
-                            </Grid>
-                            <Grid justifyContent="left" item xs zeroMinWidth>
-                              <h4 style={{ margin: 0, textAlign: "left" }}>Isaac Alves</h4>
-                              <p style={{ textAlign: "left" }}>
-                                Como poderiamos fazer isso?
-                              </p>
-                              <p style={{ textAlign: "left", color: "gray" }}>
-                                posted 1 minute ago
-                              </p>
-                            </Grid>
-                          </Grid>
-                        </Paper>
-                      </Grid>
-                    </Paper>
+                  <Grid item xs={12} md={8}>
+                    <Heading text='Descrição' icon={<IconAlignJustified style={{ marginRight: 20 }} />} />
+                    {
+                      isEditing ? (
+                        <MarkDownEditor
+                          handleBlur={handleBlur}
+                          handleEditorChange={handleEditorChange}
+                          content={markdownContent}
+                        />
+                      ) : (
+                        <Typography>
+                          <ReactMarkdown>
+                            {markdownContent || 'Click to add a description...'}
+                          </ReactMarkdown>
+                        </Typography>
+                      )
+                    }
+                    <Stack>
+                      <Chip
+                        sx={{ ml: 'auto' }}
+                        onClick={isEditing ? handleBlur : handleEditorClick}
+                        label={
+                          <Box
+                            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            {!isEditing ? <><Pencil /> Editar</> : <><SaveOutlined color='action' /> Salvar</>}
+                          </Box>
+                        }
+                      />
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={12} md={8}>
+                    <Heading text='Atividades' icon={<ListBullets color='action' style={{ marginRight: 20 }} />} />
+                    <WriteComment />
                   </Grid>
                 </Grid>
               </CardContent>
@@ -119,6 +139,7 @@ function ModalProblem() {
         </Grid>
       </div>
     </Modal>
+
   );
 }
 

@@ -9,7 +9,6 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useSelection } from '../../hooks/use-selection';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { useCustomContext } from '../../contexts/context';
 import { Startup } from '../../types/problem';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -30,7 +29,6 @@ export function StartupTable({
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
-  const { dispatch } = useCustomContext();
   const { selected } = useSelection(rowIds);
 
   return (
@@ -45,9 +43,6 @@ export function StartupTable({
                   hover
                   key={row.id}
                   selected={isSelected}
-                  onClick={() => {
-                    dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: true });
-                  }}
                 >
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">

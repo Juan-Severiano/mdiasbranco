@@ -12,6 +12,7 @@ import { MuiTab } from './tab';
 import { MuiTableBody } from './table-body';
 import { MuiTableCell } from './table-cell';
 import { MuiTableHead } from './table-head';
+import { MuiChip } from './chip';
 // import { MuiOutlinedInput } from './input';
 
 export const components = {
@@ -26,5 +27,6 @@ export const components = {
   MuiTableBody,
   MuiTableCell,
   MuiTableHead,
+  MuiChip
   // MuiOutlinedInput
 } satisfies Components<Theme>;

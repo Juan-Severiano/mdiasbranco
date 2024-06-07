@@ -47,8 +47,9 @@ export function CustomersTable({
                   key={row.id}
                   selected={isSelected}
                   onClick={() => {
-                    console.log('sd');
-                    dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: true });
+                    dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: {
+                      problem: row
+                    } });
                   }}
                 >
                   <TableCell>

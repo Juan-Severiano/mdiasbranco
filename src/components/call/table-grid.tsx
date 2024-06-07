@@ -36,7 +36,9 @@ export function ProblemsGrid({
               <Card>
                 <CardContent onClick={() => {
                   console.log('sd');
-                  dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: true });
+                  dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: {
+                    problem: row
+                  } });
                 }}>
                   <Typography variant="h6" gutterBottom fontSize={20}>
                     {row.title} {/* Título do item */}

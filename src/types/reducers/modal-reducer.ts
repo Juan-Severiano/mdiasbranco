@@ -1,3 +1,4 @@
+import { Problem } from "../problem"
 
 type ChangeModal = {
   type: 'CHANGE-MODAL',
@@ -9,7 +10,13 @@ export type ModalAction = ChangeModal
 
 type ChangeModalDetails = {
   type: 'CHANGE-MODAL-DETAILS',
-  payload: boolean
+  payload: {
+    problem: Problem
+  }
 }
 
-export type ModalDetailsAction = ChangeModalDetails
+type CloseModalDetails = {
+  type: 'CLOSE-MODAL-DETAILS'
+}
+
+export type ModalDetailsAction = ChangeModalDetails | CloseModalDetails
