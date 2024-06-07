@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { Logo } from '../../components/core/logo';
 import { navItems } from './config';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunchOutlined';
 import { House } from '@phosphor-icons/react'
 import RestoreIcon from '@mui/icons-material/Restore';
@@ -11,10 +11,19 @@ import { NavItemConfig } from '../../types/nav';
 import { Button, useTheme } from '@mui/material';
 import { IconLogin2 } from '@tabler/icons-react'
 import { Assignment } from '@mui/icons-material';
+import { useCustomContext } from '../../contexts/context';
 
 export function SideNav(): React.JSX.Element {
   const { pathname } = useLocation();
   const theme = useTheme();
+  const { dispatch } = useCustomContext()
+  const navigate = useNavigate()
+
+  const handleSignOut = React.useCallback(async (): Promise<void> => {
+    dispatch({ type: 'SIGN_OUT' })
+    navigate('/auth/login')
+  }, [navigate]);
+
   return (
     <Box
       sx={{
@@ -61,6 +70,7 @@ export function SideNav(): React.JSX.Element {
             textDecoration: 'none',
             color: '#fff',
           }}
+          onClick={handleSignOut}
         >
           <IconLogin2  />
         </Button>

@@ -5,14 +5,8 @@ import { usePopover } from "../../hooks/use-popover";
 import { NavLink } from "react-router-dom";
 import { useCustomContext } from "../../contexts/context";
 
-import { ManagerPopover } from "./manager-popover";
-import { TecnicPopover } from "./tecnic-popover";
-import { UnloggedPopover } from "./unlogged-popover";
-import { localClient } from "../../lib/local/client";
-
 export default function TopNav() {
   const userPopover = usePopover<HTMLDivElement>();
-  const { data: user } = localClient.getUser();
   const { dispatch } = useCustomContext()
   return (
     <>
@@ -45,15 +39,6 @@ export default function TopNav() {
           </Stack>
         </Grid>
       </Grid >
-      {
-        user?.role === 'gerente' ? (
-          <ManagerPopover anchorEl={userPopover.anchorRef.current} onClose={userPopover.handleClose} open={userPopover.open} />
-        ) : user?.role === 'tecnico' ? (
-          <TecnicPopover anchorEl={userPopover.anchorRef.current} onClose={userPopover.handleClose} open={userPopover.open} />
-        ) : (
-          <UnloggedPopover anchorEl={userPopover.anchorRef.current} onClose={userPopover.handleClose} open={userPopover.open} />
-        )
-      }
     </>
   )
 }

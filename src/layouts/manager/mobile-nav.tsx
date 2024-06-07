@@ -2,20 +2,18 @@
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from '../../components/core/logo';
 import { navItems } from './config';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
-import HomeIcon from '@mui/icons-material/Home';
-import ExploreIcon from '@mui/icons-material/Explore';
 import RestoreIcon from '@mui/icons-material/Restore';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import { localClient } from '../../lib/local/client';
+import { Button } from '@mui/material';
+import { IconLogin2 } from '@tabler/icons-react';
+import { NavItemConfig } from '../../types/nav';
+import { Assignment, RocketLaunch } from '@mui/icons-material';
+import { House } from '@phosphor-icons/react';
+import { useCustomContext } from '../../contexts/context';
 
 export interface MobileNavProps {
   onClose?: () => void;
@@ -24,73 +22,65 @@ export interface MobileNavProps {
 
 export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element {
   const { pathname } = useLocation();
-  const { data: user } = localClient.getUser()
+  const { dispatch } = useCustomContext()
+  const navigate = useNavigate()
+
+  const handleSignOut = React.useCallback(async (): Promise<void> => {
+    dispatch({ type: 'SIGN_OUT' })
+    navigate('/auth/login')
+  }, [navigate]);
 
   return (
     <Drawer
-      PaperProps={{
-        sx: {
-          '--MobileNav-background': 'var(--mui-palette-background-paper)',
-          '--MobileNav-color': 'var(--mui-palette-common-white)',
-          '--NavItem-color': 'var(--mui-palette-neutral-300)',
-          '--NavItem-hover-background': 'rgba(255, 255, 255, 0.04)',
-          '--NavItem-active-background': 'var(--mui-palette-primary-main)',
-          '--NavItem-active-color': 'var(--mui-palette-primary-contrastText)',
-          '--NavItem-disabled-color': 'var(--mui-palette-neutral-500)',
-          '--NavItem-icon-color': 'var(--mui-palette-neutral-400)',
-          '--NavItem-icon-active-color': 'var(--mui-palette-primary-contrastText)',
-          '--NavItem-icon-disabled-color': 'var(--mui-palette-neutral-600)',
-          bgcolor: 'var(--MobileNav-background)',
-          color: 'var(--MobileNav-color)',
-          display: 'flex',
-          flexDirection: 'column',
-          maxWidth: '100%',
-          scrollbarWidth: 'none',
-          width: 'var(--MobileNav-width)',
-          zIndex: 'var(--MobileNav-zIndex)',
-          '&::-webkit-scrollbar': { display: 'none' },
-        },
-      }}
-      onClose={onClose}
-      open={open}
+    PaperProps={{
+      sx: {
+        '--MobileNav-background': 'var(--mui-palette-primary-main)',
+        '--MobileNav-color': 'var(--mui-palette-common-white)',
+        '--NavItem-color': 'var(--mui-palette-neutral-300)',
+        '--NavItem-hover-background': 'rgba(255, 255, 255, 0.04)',
+        '--NavItem-active-background': 'var(--mui-palette-primary-main)',
+        '--NavItem-active-color': 'var(--mui-palette-primary-contrastText)',
+        '--NavItem-disabled-color': 'var(--mui-palette-neutral-500)',
+        '--NavItem-icon-color': 'var(--mui-palette-neutral-400)',
+        '--NavItem-icon-active-color': 'var(--mui-palette-primary-contrastText)',
+        '--NavItem-icon-disabled-color': 'var(--mui-palette-neutral-600)',
+        bgcolor: 'var(--MobileNav-background)',
+        color: 'var(--MobileNav-color)',
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '100%',
+        scrollbarWidth: 'none',
+        width: 200,
+        zIndex: 'var(--MobileNav-zIndex)',
+        '&::-webkit-scrollbar': { display: 'none' },
+      },
+    }}
+    onClose={onClose}
+    open={open}
     >
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Box component={Link} to='/' sx={{ display: 'inline-flex' }}>
-          <Logo />
-        </Box>
-        <Box
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
-            p: '15px 14px',
-            justifyContent: 'center',
-            backgroundImage: 'url(/bg/bg-account.gif)',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center'
-          }}
-        >
-          <Box
-            sx={{
-              alignItems: 'center',
-              backgroundColor: '#F3F5F8',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              display: 'flex',
-              p: '15px 14px',
-            }}
-          >
-            <Box sx={{ flex: '1 1 auto' }}>
-              <Typography color="primary" variant="body2">
-                Olá, {user?.name}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
+      <Stack sx={{ py: 3, px: .2 }} alignItems='center' justifyContent='center'>
+        <Logo width={150} />
       </Stack>
-      <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
-      <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
+      <Box component="nav" sx={{ flex: '1 1 auto', mt: 9 }}>
         {renderNavItems({ pathname, items: navItems })}
+      </Box>
+      <Box>
+        <Button
+          sx={{
+            mt: 'auto', mb: 3, mx: 'auto',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            display: 'flex',
+            padding: '5px 16px',
+            textDecoration: 'none',
+            color: '#fff',
+          }}
+          startIcon={<IconLogin2  />}
+          onClick={handleSignOut}
+        >
+          Sair
+        </Button>
       </Box>
     </Drawer>
   );
@@ -106,52 +96,33 @@ function renderNavItems({ items = [], pathname }: { items?: any; pathname: strin
   }, []);
 
   return (
-    <Stack component="ul" spacing={1} sx={{ listStyle: 'none', m: 0, p: 0 }}>
+    <Stack component="ul" spacing={2} sx={{ listStyle: 'none', m: 0, p: 0 }}>
       {children}
     </Stack>
   );
 }
 
-function NavItem({ href, title, icon }: any): React.JSX.Element {
-
+function NavItem({ href, icon, title }: NavItemConfig): React.JSX.Element {
   return (
-    <li>
+    <li className='nav-link'>
       <NavLink
         to={href!}
-        className={({ isActive }) => isActive ? 'active-link' : ''}
+        className={({ isActive }) => isActive ? 'nav-icon' : ''}
         style={{
           alignItems: 'center',
-          borderRadius: 16,
+          justifyContent: 'start',
           cursor: 'pointer',
           display: 'flex',
-          gap: 1,
-          padding: '6px 16px',
-          position: 'relative',
+          padding: '5px 16px',
           textDecoration: 'none',
-          whiteSpace: 'nowrap',
-          color: '#667085'
+          color: '#f0f0f0',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {icon === 'dashboard' && <SignalCellularAltIcon sx={{ marginRight: 1 }} />}
-          {icon === 'home' && <HomeIcon sx={{ marginRight: 1 }} />}
-          {icon === 'user' && <ExploreIcon sx={{ marginRight: 1 }} />}
-          {icon === 'users' && <AccountCircleIcon sx={{ marginRight: 1 }} />}
-          {icon === 'tecnics' && <AccountCircleIcon sx={{ marginRight: 1 }} />}
-          {icon === 'historic' && <RestoreIcon sx={{ marginRight: 1 }} />}
-          {icon === 'relatorio' && <AssignmentIcon sx={{ marginRight: 1 }} />}
-          <Typography
-            component="span"
-            sx={{
-              color: 'inherit',
-              fontSize: '0.875rem',
-              fontWeight: 500,
-              lineHeight: '28px',
-            }}
-          >
-            {title}
-          </Typography>
-        </Box>
+        {icon === 'clipboard' && <Assignment sx={{ mr: 2 }} />}
+        {icon === 'home' && <House size={22} weight="fill" style={{ marginRight: 20 }} />}
+        {icon === 'user' && <RocketLaunch sx={{ mr: 2 }} />}
+        {icon === 'historic' && <RestoreIcon sx={{ mr: 2 }} />}
+        {title}
       </NavLink>
     </li>
   );
