@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const BASE_URL = import.meta.env.BASE_URL
+
 export const api = axios.create({
-  baseURL: 'http://localhost:3100'
+  baseURL: BASE_URL
 });
