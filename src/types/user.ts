@@ -5,8 +5,6 @@ export interface LoginParams {
   password: string
 }
 
-export type Role = 'usuario' | 'gerente'
-
 export interface RegisterUser {
   name: string
   email: string
@@ -17,6 +15,6 @@ export interface RegisterUser {
 }
 
 export interface User extends RegisterUser {
-  role: string
+  role: 'manager' | 'base'
   id: number
 }

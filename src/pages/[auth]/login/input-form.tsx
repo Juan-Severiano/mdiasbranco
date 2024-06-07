@@ -27,7 +27,6 @@ const LoginForm: React.FC = () => {
         password: Yup.string()
           .required('Senha é obrigatória')
           .min(6, 'A senha deve ter no mínimo 6 caracteres')
-          .max(12, 'A senha deve ter no máximo 12 caracteres')
       })}
       onSubmit={async (values, { setErrors }) => {
         const response = await loginRequest(values);

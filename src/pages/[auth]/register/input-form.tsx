@@ -46,8 +46,7 @@ const RegisterForm = ({ ...others }) => {
           email: Yup.string().email('Deve ser um email válido').max(255).required('Email é obrigatório'),
           password: Yup.string()
             .required('Senha é obrigatória')
-            .min(6, 'A senha  deve ter no mínimo 6 caracteres')
-            .max(12, 'A senha  deve ter no máximo 12 caracteres'),
+            .min(6, 'A senha  deve ter no mínimo 6 caracteres'),
           name: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').required('Nome Completo é obrigatório'),
           telphone: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').required('Telefone é obrigatório'),
           sector: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').required('Setor é obrigatório'),
@@ -174,7 +173,7 @@ const RegisterForm = ({ ...others }) => {
               </Alert>
             )}
             <Box sx={{ mt: 3 }}>
-              <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
+              <Button disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
                 {isSubmitting ?
                   <>
                     <RotatingLines width='20' strokeColor='#b2cbdc' /> Carregando ...
