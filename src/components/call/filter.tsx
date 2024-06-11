@@ -136,6 +136,7 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
+        
         <Grid item sm={12} md={2}>
           <ToggleButtonGroup
             value={toogleRender}
@@ -151,6 +152,8 @@ export function CallFilters({
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
+
+
         <Grid item sm={12} md={.5} />
         <Grid item sm={12} md={2.5}>
           <Button
