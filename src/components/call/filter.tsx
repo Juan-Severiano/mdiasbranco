@@ -72,7 +72,7 @@ export function CallFilters({
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2}>
         <Grid item sm={12} md={3}>
-          <FormControl fullWidth>
+          <FormControl fullWidth >
             <InputLabel>Filtrar por Data</InputLabel>
             <CustomOutlinedInput
               label='Filtrar por Data'
@@ -95,7 +95,8 @@ export function CallFilters({
             <CustomSelect
               label='Prioridade'
               sx={{ backgroundColor: '#fff' }}
-              startAdornment={<CrisisAlertIcon color='disabled' />}
+              startAdornment={
+              <CrisisAlertIcon color='disabled' />}
               onChange={handlePriorityChange}
               aria-label="Prioridade"
             >
@@ -136,7 +137,7 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-        
+
         <Grid item sm={12} md={2}>
           <ToggleButtonGroup
             value={toogleRender}

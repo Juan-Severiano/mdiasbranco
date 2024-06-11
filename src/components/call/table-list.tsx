@@ -49,16 +49,26 @@ export function CustomersTable({
                 >
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">
-                      <Typography variant="h6" sx={{ ":hover": { textDecoration: 'underline' } }} onClick={() => {
-                        dispatch({
-                          type: 'CHANGE-MODAL-DETAILS', payload: {
-                            problem: row
-                          }
-                        });
-                      }}>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ 
+                          fontSize: '0.875rem', 
+                          ":hover": { 
+                            textDecoration: 'underline', 
+                            cursor: 'pointer' 
+                          } 
+                        }}
+                        role="button"
+                        onClick={() => {
+                          dispatch({
+                            type: 'CHANGE-MODAL-DETAILS',
+                            payload: { problem: row }
+                          });
+                        }}
+                      >
                         {row.title}
                       </Typography>
-                      <Typography variant="body1">
+                      <Typography variant="body1" sx={{ fontSize: '0.75rem' }}>
                         {row.user?.name}
                       </Typography>
                     </Stack>
@@ -84,6 +94,7 @@ export function CustomersTable({
                         <Typography
                           variant="body1"
                           color="textPrimary"
+                          sx={{ fontSize: '0.75rem' }}
                           textTransform="capitalize"
                         >
                           {row.status}
@@ -91,7 +102,7 @@ export function CustomersTable({
                       </Stack>
                       <Stack spacing={1} flexDirection="row" alignItems="center">
                         <CalendarMonthIcon color="action" sx={{ fontSize: '1rem' }} />
-                        <Typography variant="body1" color="textPrimary">
+                        <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.75rem' }}>
                           {dayjs(row.resolve_at).format('DD/MM/YYYY')}
                         </Typography>
                       </Stack>
@@ -103,6 +114,7 @@ export function CustomersTable({
                       <Typography
                         variant="body1"
                         color="textPrimary"
+                        sx={{ fontSize: '0.75rem' }}
                         textTransform="capitalize"
                       >
                         {row.keywords![0]}
@@ -111,9 +123,10 @@ export function CustomersTable({
                     <Stack spacing={1} flexDirection="row" alignItems="center">
                       <SettingsIcon color="action" sx={{ fontSize: '1rem' }} />
                       <Typography
-                        variant="body1"
+                        variant="body2"
                         color="textPrimary"
-                        textTransform="uppercase"
+                        sx={{ fontSize: '0.75rem' }}
+                        textTransform="capitalize"
                       >
                         {row.setor}
                       </Typography>
@@ -121,8 +134,8 @@ export function CustomersTable({
                   </TableCell>
                   <TableCell>
                     <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <Typography variant="subtitle1" color="textPrimary">
-                        Nome do Tecnico
+                      <Typography variant="subtitle2" color="textPrimary" sx={{ fontSize: '0.75rem' }} textTransform="capitalize">
+                        Lorem
                       </Typography>
                     </Stack>
                   </TableCell>
