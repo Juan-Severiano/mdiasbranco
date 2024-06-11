@@ -46,8 +46,8 @@ export function StartupTable({
                 >
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">
-                      <Typography variant="h6">Nome Da Startup</Typography>
-                      <Typography variant="body1">{row.corporate_reason}</Typography>
+                      <Typography variant="subtitle2">Nome Da Startup</Typography>
+                      <Typography variant="body2">{row.corporate_reason}</Typography>
                     </Stack>
                   </TableCell>
                   <TableCell>
@@ -56,20 +56,20 @@ export function StartupTable({
                       justifyContent="center"
                     >
                       <Stack spacing={1} flexDirection="row" alignItems="center">
-                        <AssignmentIndOutlinedIcon color="action" sx={{ fontSize: '1rem' }} />
-                        <Typography variant="body1">CNPJ</Typography>
+                        <AssignmentIndOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
+                        <Typography variant="body2">Cnpj</Typography>
                       </Stack>
                       <Stack spacing={1} flexDirection="row" alignItems="center">
-                        <InterestsOutlinedIcon color="action" sx={{ fontSize: '1rem' }} />
-                        <Typography variant="body1">RAZÃO SOCIAL</Typography>
+                        <InterestsOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
+                        <Typography variant="body2">Razão Social</Typography>
                       </Stack>
                     </Stack>
                   </TableCell>
                   <TableCell>
                     <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <WarningAmberIcon color="action" sx={{ fontSize: '1rem' }} />
+                      <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
                       <Typography
-                        variant="body1"
+                        variant="body2"
                         color="action"
                         textTransform="capitalize"
                       >
@@ -77,9 +77,9 @@ export function StartupTable({
                       </Typography>
                     </Stack>
                     <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <EmailOutlinedIcon color="action" sx={{ fontSize: '1rem' }} />
+                      <EmailOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
                       <Typography
-                        variant="body1"
+                        variant="body2"
                         color="action"
                         textTransform="uppercase"
                       >
@@ -88,14 +88,14 @@ export function StartupTable({
                     </Stack>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="subtitle1" color="action">
+                    <Typography variant="body2" color="action">
                       Lorem
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Stack alignItems="center" justifyContent="flex-end">
                       <IconButton>
-                        <MoreVertIcon />
+                        <MoreVertIcon sx={{ fontSize: '1.25rem' }} />
                       </IconButton>
                     </Stack>
                   </TableCell>

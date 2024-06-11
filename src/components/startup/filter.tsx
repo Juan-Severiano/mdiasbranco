@@ -2,12 +2,6 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
 import { Button, FormControl, Grid, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography, Box } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Amarelo from '../../../public/Status/analisys.jpeg';
-import Azul from '../../../public/Status/pending.jpeg';
-import Ciano from '../../../public/Status/open.jpeg';
-import Vermelho from '../../../public/Status/concluted.jpeg';
 import CustomSelect from '../../styles/theme/custom-select';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
@@ -61,7 +55,7 @@ export function CallFilters({
   };
 
   return (
-    <Card sx={{ p: 2, backgroundColor: 'transparent' }}>
+    <Card sx={{  py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2} alignItems="center">
         <Grid item sm={12} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
@@ -81,7 +75,7 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-        <Grid item sm={12} md={2}>
+        <Grid item sm={12}  md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             <InputLabel>Localização</InputLabel>
             <CustomSelect
@@ -99,35 +93,8 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-        <Grid item sm={12} md={2}>
-          <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
-            <InputLabel>Status</InputLabel>
-            <CustomSelect
-              label="Status"
-              sx={{ backgroundColor: '#fff' }}
-              startAdornment={
-                <AvatarGroup max={4}>
-                  <Avatar sx={{ width: 13, height: 13 }} src={Vermelho} alt="Vermelho" />
-                  <Avatar sx={{ width: 13, height: 13 }} src={Ciano} alt="Ciano" />
-                  <Avatar sx={{ width: 13, height: 13 }} src={Azul} alt="Azul" />
-                  <Avatar sx={{ width: 13, height: 13 }} src={Amarelo} alt="Amarelo" />
-                </AvatarGroup>
-              }
-              onChange={handleStatusChange}
-              aria-label="Status"
-            >
-              {status.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  <Stack justifyContent='space-between' alignItems='center' flexDirection='row' width='100%'>
-                    <Typography fontSize={15}>{option.label}</Typography>
-                    <Avatar sx={{ width: 15, height: 15 }} src={`/Status/${option.value}.jpeg`} alt={`${option.label} status`} />
-                  </Stack>
-                </MenuItem>
-              ))}
-            </CustomSelect>
-          </FormControl>
-        </Grid>
-        <Grid item sm={12} md={4}>
+
+        <Grid item sm={12} md={6}>
           <Stack direction="row" spacing={2} alignItems="center">
             <ToggleButtonGroup
               value={toogleRender}
@@ -144,10 +111,11 @@ export function CallFilters({
             </ToggleButtonGroup>
           </Stack>
         </Grid>
-        <Grid item sm={12} md={2}>
+        
+        <Grid item sm={12}  md={2}>
           <Box display="flex" justifyContent="flex-end">
             <Button variant="contained" color="primary" startIcon={<AddToPhotosIcon />}>
-              Colocar Startup
+              Adicionar Startup
             </Button>
           </Box>
         </Grid>
