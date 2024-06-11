@@ -57,7 +57,10 @@ export function StartupTable({
                     >
                       <Stack spacing={1} flexDirection="row" alignItems="center">
                         <AssignmentIndOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
-                        <Typography variant="body2">Cnpj</Typography>
+                        <Typography 
+                        variant="body2"
+                        textTransform={'uppercase'}
+                        >Cnpj</Typography>
                       </Stack>
                       <Stack spacing={1} flexDirection="row" alignItems="center">
                         <InterestsOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
@@ -81,7 +84,7 @@ export function StartupTable({
                       <Typography
                         variant="body2"
                         color="action"
-                        textTransform="uppercase"
+                      textTransform="capitalize"
                       >
                         {row.email}
                       </Typography>

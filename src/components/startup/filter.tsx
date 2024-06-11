@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import { Button, FormControl, Grid, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography, Box } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup,  } from '@mui/material';
 import CustomSelect from '../../styles/theme/custom-select';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
@@ -10,18 +10,10 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 
 const priority = [
-  { value: 'Tecnologia', label: 'Tecnologia' },
+  { value: 'juan', label: 'Juan' },
   { value: 'Industria', label: 'Industria' },
   { value: 'Vendas', label: 'Vendas' }
 ];
-
-const status = [
-  { value: 'pending', label: 'Pendente' },
-  { value: 'open', label: 'Aberto' },
-  { value: 'analisys', label: 'Analise' },
-  { value: 'concluted', label: 'Concluido' },
-];
-
 interface CallProps {
   setSearchKeyword: React.Dispatch<React.SetStateAction<string>>,
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>,
@@ -100,24 +92,34 @@ export function CallFilters({
               value={toogleRender}
               exclusive
               aria-label="file-toggle-buttons"
-              sx={{ height: '100%', bgcolor: '#fff' }}
+              sx={{ height: '100% ', bgcolor: '#fff' }}
             >
-              <ToggleButton sx={{ border: 'none' }} value="grid" onClick={handleRenderFile1}>
-                <WindowOutlinedIcon />
+           <ToggleButton sx={{ border: 'none', fontSize: '1.5rem', padding: '17px 9px' }} value="grid" onClick={handleRenderFile1}>
+                <WindowOutlinedIcon sx={{ fontSize: '1.5rem' }} />
               </ToggleButton>
-              <ToggleButton sx={{ border: 'none' }} value="list" onClick={handleRenderFile2}>
-                <FormatListBulletedOutlinedIcon />
+              <ToggleButton sx={{ border: 'none', fontSize: '1.5rem', padding: '12px 9px' }} value="list" onClick={handleRenderFile2}>
+                <FormatListBulletedOutlinedIcon sx={{ fontSize: '1.5rem' }} />
               </ToggleButton>
             </ToggleButtonGroup>
           </Stack>
         </Grid>
         
-        <Grid item sm={12}  md={2}>
-          <Box display="flex" justifyContent="flex-end">
-            <Button variant="contained" color="primary" startIcon={<AddToPhotosIcon />}>
-              Adicionar Startup
-            </Button>
-          </Box>
+        <Grid item sm={12} md={2}>
+          <Button
+            sx={{
+              height: '100%',
+              width: '100%',
+              fontSize: '0.9rem', 
+              padding: '16px 20px',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            variant="contained"
+            color="primary"
+            startIcon={<AddToPhotosIcon sx={{ fontSize: '2rem' }} />} // Increase icon size
+          >
+            Adicionar Startup
+          </Button>
         </Grid>
       </Grid>
     </Card>
