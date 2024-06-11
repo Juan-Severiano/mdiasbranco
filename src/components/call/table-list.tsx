@@ -68,7 +68,7 @@ export function CustomersTable({
                       >
                         {row.title}
                       </Typography>
-                      <Typography variant="body1" sx={{ fontSize: '0.75rem' }}>
+                      <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
                         {row.user?.name}
                       </Typography>
                     </Stack>
@@ -89,20 +89,20 @@ export function CustomersTable({
                                   ? 'disabled'
                                   : 'success'
                           }
-                          sx={{ fontSize: '1rem' }}
+                          sx={{ fontSize: '1.25rem' }}
                         />
                         <Typography
-                          variant="body1"
+                          variant="body2"
                           color="textPrimary"
-                          sx={{ fontSize: '0.75rem' }}
+                          sx={{ fontSize: '0.875rem' }}
                           textTransform="capitalize"
                         >
                           {row.status}
                         </Typography>
                       </Stack>
                       <Stack spacing={1} flexDirection="row" alignItems="center">
-                        <CalendarMonthIcon color="action" sx={{ fontSize: '1rem' }} />
-                        <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.75rem' }}>
+                        <CalendarMonthIcon color="action" sx={{ fontSize: '1.25rem' }} />
+                        <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.875rem' }}>
                           {dayjs(row.resolve_at).format('DD/MM/YYYY')}
                         </Typography>
                       </Stack>
@@ -110,22 +110,22 @@ export function CustomersTable({
                   </TableCell>
                   <TableCell >
                     <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <WarningAmberIcon color="action" sx={{ fontSize: '1rem' }} />
+                      <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
                       <Typography
-                        variant="body1"
+                        variant="body2"
                         color="textPrimary"
-                        sx={{ fontSize: '0.75rem' }}
+                        sx={{ fontSize: '0.875rem' }}
                         textTransform="capitalize"
                       >
                         {row.keywords![0]}
                       </Typography>
                     </Stack>
                     <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <SettingsIcon color="action" sx={{ fontSize: '1rem' }} />
+                      <SettingsIcon color="action" sx={{ fontSize: '1.25rem' }} />
                       <Typography
                         variant="body2"
                         color="textPrimary"
-                        sx={{ fontSize: '0.75rem' }}
+                        sx={{ fontSize: '0.875rem' }}
                         textTransform="capitalize"
                       >
                         {row.setor}
@@ -134,7 +134,7 @@ export function CustomersTable({
                   </TableCell>
                   <TableCell>
                     <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <Typography variant="subtitle2" color="textPrimary" sx={{ fontSize: '0.75rem' }} textTransform="capitalize">
+                      <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.875rem' }} textTransform="capitalize">
                         Lorem
                       </Typography>
                     </Stack>
@@ -142,7 +142,7 @@ export function CustomersTable({
                   <TableCell>
                     <Stack alignItems="center" justifyContent="flex-end">
                       <IconButton>
-                        <MoreVertIcon />
+                        <MoreVertIcon sx={{ fontSize: '1.25rem' }} />
                       </IconButton>
                     </Stack>
                   </TableCell>
