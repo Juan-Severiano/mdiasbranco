@@ -12,8 +12,8 @@ const SimpleLayout = () => {
         minWidth: '100vw',
         height: '100vh'
       }}>
-          <Logo width={150} />
-          <Outlet />
+        <Logo width={150} />
+        <Outlet />
       </Container>
       <Box sx={{
         position: 'relative',
