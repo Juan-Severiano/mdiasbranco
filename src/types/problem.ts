@@ -13,7 +13,7 @@ export interface Problem {
   resolve_at?: string
   feedback?: string
   user?: User
-
+  attachments: Attachment[]
   created_at: string
 }
 

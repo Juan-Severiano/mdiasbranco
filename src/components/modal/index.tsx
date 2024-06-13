@@ -10,6 +10,7 @@ import { IconAlignJustified } from '@tabler/icons-react';
 import { Keyboard, ListBullets, Pencil } from '@phosphor-icons/react';
 import { WriteComment } from './write-comment';
 import { ProblemDetail } from './details';
+import { ProblemAnexos } from './anexos';
 
 function ModalProblem() {
   const { dispatch, state } = useCustomContext()
@@ -79,59 +80,66 @@ function ModalProblem() {
                   </IconButton>
                 } />
               <CardContent>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={8}>
-                    <Heading color='primary' fontWeight={600} text={problem?.title!} icon={<Keyboard fontSize={32} style={{ marginRight: 20 }} />} />
-                  </Grid>
-                  <Grid item xs={12} md={8} container spacing={2}>
-                    <Grid item xs={4}>
-                      <ProblemDetail
-                        icon={<Circle color="warning" fontSize='small' sx={{ mr: .5 }} />}
-                        title="Status"
-                        value='Pendente'
-                      />
+                <Grid container>
+                  <Grid item container xs={12} md={8} spacing={3}>
+                    <Grid item xs={12}>
+                      <Heading color='primary' fontWeight={600} text={problem?.title!} icon={<Keyboard fontSize={32} style={{ marginRight: 20 }} />} />
                     </Grid>
-                    <Grid item xs={5}>
-                      <ProblemDetail
-                        icon={<CrisisAlert color="action" fontSize='small' sx={{ mr: .5 }} />}
-                        title="Setor"
-                        value={problem?.sector!}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} md={8}>
-                    <Heading text='Descrição' icon={<IconAlignJustified style={{ marginRight: 20 }} />} />
-                    {
-                      isEditing ? (
-                        <MarkDownEditor
-                          handleBlur={handleBlur}
-                          handleEditorChange={handleEditorChange}
-                          content={markdownContent}
+                    <Grid item xs={12} container spacing={2}>
+                      <Grid item xs={4}>
+                        <ProblemDetail
+                          icon={<Circle color="warning" fontSize='small' sx={{ mr: .5 }} />}
+                          title="Status"
+                          value='Pendente'
                         />
-                      ) : (
-                        <Typography>
-                          <ReactMarkdown>
-                            {markdownContent}
-                          </ReactMarkdown>
-                        </Typography>
-                      )
-                    }
-                    <Stack>
-                      <Chip
-                        sx={{ ml: 'auto' }}
-                        onClick={isEditing ? handleBlur : handleEditorClick}
-                        label={
-                          <Box
-                            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            {!isEditing ? <><Pencil /> Editar</> : <><SaveOutlined color='action' /> Salvar</>}
-                          </Box>
-                        }
-                      />
-                    </Stack>
+                      </Grid>
+                      <Grid item xs={5}>
+                        <ProblemDetail
+                          icon={<CrisisAlert color="action" fontSize='small' sx={{ mr: .5 }} />}
+                          title="Setor"
+                          value={problem?.sector!}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Heading text='Descrição' icon={<IconAlignJustified style={{ marginRight: 20 }} />} />
+                      {
+                        isEditing ? (
+                          <MarkDownEditor
+                            handleBlur={handleBlur}
+                            handleEditorChange={handleEditorChange}
+                            content={markdownContent}
+                          />
+                        ) : (
+                          <Typography>
+                            <ReactMarkdown>
+                              {markdownContent}
+                            </ReactMarkdown>
+                          </Typography>
+                        )
+                      }
+                      <Stack>
+                        <Chip
+                          sx={{ ml: 'auto' }}
+                          onClick={isEditing ? handleBlur : handleEditorClick}
+                          label={
+                            <Box
+                              sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              {!isEditing ? <><Pencil /> Editar</> : <><SaveOutlined color='action' /> Salvar</>}
+                            </Box>
+                          }
+                        />
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Heading text='Atividades' icon={<ListBullets color='action' style={{ marginRight: 20 }} />} />
+                      <WriteComment />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} md={8}>
-                    <Heading text='Atividades' icon={<ListBullets color='action' style={{ marginRight: 20 }} />} />
-                    <WriteComment />
+                  <Grid item container xs={12} md={4} spacing={3}>
+                    <Grid item xs={12}>
+                      <ProblemAnexos anexos={problem?.attachments!} />
+                    </Grid>
                   </Grid>
                 </Grid>
               </CardContent>

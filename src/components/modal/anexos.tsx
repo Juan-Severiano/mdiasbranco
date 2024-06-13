@@ -1,8 +1,13 @@
 import { Collections } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
+import { Attachment } from "../../types/problem";
 
-export function ProblemAnexos() {
+interface ProblemAnexosProps {
+  anexos: Attachment[]
+}
+
+export function ProblemAnexos({ anexos }: ProblemAnexosProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +51,11 @@ export function ProblemAnexos() {
         />
       </Button>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
+        {anexos.map((preview, index) => (
+          <Box key={index} sx={{ width: '50px', height: '50px' }}>
+            <img src={`${import.meta.env.BASE_URL}/call/${preview.path}`} alt="" style={{ width: '50px', height: '50px' }} />
+          </Box>
+        ))}
         {imagePreviews.map((preview, index) => (
           <Box key={index} sx={{ width: '50px', height: '50px' }}>
             <img src={preview} alt="" style={{ width: '50px', height: '50px' }} />

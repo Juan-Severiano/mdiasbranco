@@ -25,17 +25,12 @@ interface CallProps {
 
 export function CallFilters({
   setSelectedPriority,
-  setSelectedStatus,
   setToogleRender,
   toogleRender
 }: CallProps) {
 
   const handlePriorityChange = (event: SelectChangeEvent<unknown>) => {
     setSelectedPriority(event.target.value as string);
-  };
-
-  const handleStatusChange = (event: SelectChangeEvent<unknown>) => {
-    setSelectedStatus(event.target.value as string);
   };
 
   const handleRenderFile1 = () => {
