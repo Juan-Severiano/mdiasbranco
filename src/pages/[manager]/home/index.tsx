@@ -5,9 +5,8 @@ import { CallFilters } from '../../../components/call/filter';
 import { CustomersTable } from '../../../components/call/table-list';
 import { Problem } from '../../../types/problem';
 import { ProblemsGrid } from '../../../components/call/table-grid';
-import { HistoricFilters } from '../../../components/historic/filter';
 
-export default function ManagerHistoric(): React.JSX.Element {
+export default function ManagerHome(): React.JSX.Element {
   const [filteredProblems, setFilteredProblems] = React.useState(problems);
   const [searchKeyword, setSearchKeyword] = React.useState('');
   const [selectedDate, setSelectedDate] = React.useState('');
@@ -50,7 +49,7 @@ export default function ManagerHistoric(): React.JSX.Element {
   const paginatedCustomers = applyPagination(filteredProblems, page, rowsPerPage);
   return (
     <Stack spacing={3}>
-      <HistoricFilters
+      <CallFilters
         setSearchKeyword={setSearchKeyword}
         setSelectedDate={setSelectedDate}
         setSelectedPriority={setSelectedPriority}
