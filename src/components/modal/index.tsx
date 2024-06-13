@@ -84,18 +84,18 @@ function ModalProblem() {
                     <Heading color='primary' fontWeight={600} text={problem?.title!} icon={<Keyboard fontSize={32} style={{ marginRight: 20 }} />} />
                   </Grid>
                   <Grid item xs={12} md={8} container spacing={2}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                       <ProblemDetail
                         icon={<Circle color="warning" fontSize='small' sx={{ mr: .5 }} />}
                         title="Status"
                         value='Pendente'
                       />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={5}>
                       <ProblemDetail
                         icon={<CrisisAlert color="action" fontSize='small' sx={{ mr: .5 }} />}
                         title="Setor"
-                        value={problem?.setor!}
+                        value={problem?.sector!}
                       />
                     </Grid>
                   </Grid>

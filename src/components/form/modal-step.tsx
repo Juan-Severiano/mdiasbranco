@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   IconButton,
@@ -11,21 +11,19 @@ import {
   CardHeader,
   Stack,
 } from '@mui/material';
-import * as Yup from 'yup';
 import { Close, Collections } from '@mui/icons-material';
 import { useCustomContext } from '../../contexts/context';
 import { Logo } from '../core/logo';
-import { Field, Formik } from 'formik';
-import { CustomInput } from '../custom/custom-input';
-
-const setorOptions = [
-  { value: 'Vendas', label: 'Vendas' },
-  { value: 'Logística', label: 'Logística' },
-  { value: 'Indústria', label: 'Indústria' }
-];
+import { Field, Formik, Form } from 'formik';
+import { useForm, FormProvider } from 'react-hook-form';
+import { createCall } from '../../services/requests/call';
+import { formSchema } from '../../schema/call';
+import { Sector } from '../../types/problem';
+import SelectField, { CustomInput } from '../custom/custom-input';
 
 function StepForm() {
   const { dispatch, state } = useCustomContext();
+  const methods = useForm();
 
   const handleClose = () => {
     dispatch({ type: 'CHANGE-MODAL', payload: false });
@@ -53,7 +51,7 @@ function StepForm() {
         setImagePreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
       });
 
-      setFieldValue('images', [...files, ...selectedFiles]);  // Adicione esta linha
+      setFieldValue('files', [...files, ...selectedFiles]);
     }
   };
 
@@ -105,158 +103,128 @@ function StepForm() {
                 <Formik
                   initialValues={{
                     title: '',
-                    sector: '',
+                    sector: Sector.OPERATIONS,
                     description: '',
                     files: [] as File[]
                   }}
-                  validationSchema={Yup.object().shape({
-                    title: Yup.string().required('Título é obrigatório'),
-                    sector: Yup.string().required('Setor é obrigatório'),
-                    description: Yup.string().required('Descrição é obrigatória'),
-                    files: Yup.array()
-                      .of(
-                        Yup.mixed().test('fileSize', 'O arquivo é muito grande', (value) => {
-                          if (value) {
-                            return (value as File).size <= 1024 * 1024;
-                          }
-                          return true;
-                        })
-                      )
-                      .max(6, 'Você pode enviar no máximo 6 imagens') // Limite de arquivos
-                  })}
+                  validationSchema={formSchema}
                   onSubmit={async (values) => {
                     console.log(values);
+                    await createCall(values);
                   }}
                 >
-                  {({ handleSubmit, setFieldValue }) => (
-                    <form noValidate onSubmit={handleSubmit}>
-                      <Grid container spacing={1.5}>
-                        <Grid item xs={12}>
-                          <Field
-                            component={CustomInput}
-                            name="title"
-                            label="Título do problema"
-                            type="text"
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Field
-                            component={CustomInput}
-                            name="sector"
-                            label="Setor"
-                            select
-                            fullWidth
-                            variant="outlined"
-                            SelectProps={{
-                              native: true,
-                            }}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            InputProps={{
-                              sx: { backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' },
-                            }}
-                          >
-                            <option value="" label="Selecione o setor" />
-                            {setorOptions.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
-                            ))}
-                          </Field>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Field
-                            component={CustomInput}
-                            name="description"
-                            label="Descrição do problema"
-                            multiline
-                            rows={6}
-                            InputProps={{
-                              sx: { backgroundColor: '#f5f5f5', padding: '10px', borderRadius: '5px' },
-                            }}
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Button
-                            variant="text"
-                            component="label"
-                            fullWidth
-                            sx={{ height: 60, justifyContent: 'flex-start', borderColor: 'transparent', bgcolor: '#f3f3fa' }}
-                            startIcon={<Collections />}
-                          >
-                            Anexar imagens
-                            <input
-                              type="file"
-                              hidden
-                              onChange={(event) => {
-                                handleFileChange(event, setFieldValue);
-                                setFieldValue('files', Array.from(event.target.files || []));
-                              }}
-                              multiple
-                              accept="image/*"
+                  {({ handleSubmit, setFieldValue, errors, touched }) => (
+                    <FormProvider {...methods}>
+                      <Form noValidate onSubmit={handleSubmit}>
+                        <Grid container spacing={1.5}>
+                          <Grid item xs={12}>
+                            <Field
+                              component={CustomInput}
+                              name="title"
+                              label="Título do problema"
+                              type="text"
+                              error={touched.title && errors.title}
                             />
-                          </Button>
-                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
-                            {imagePreviews.map((preview, index) => (
-                              <Box key={index} sx={{ position: 'relative', width: '70px', height: '70px' }}>
-                                <img src={preview} alt={`Preview ${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px' }} />
-                                <IconButton
-                                  sx={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    right: 0,
-                                    backgroundColor: 'rgba(255, 255, 255, 0.7)'
-                                  }}
-                                  onClick={() => handleRemoveImage(index)}
-                                >
-                                  <Close />
-                                </IconButton>
-                              </Box>
-                            ))}
-                          </Box>
-                          {files.length > 0 && (
-                            <Typography variant="body2" sx={{ mt: 1 }}>
-                              {files.length} {files.length === 1 ? 'imagem' : 'imagens'} selecionada(s)
-                            </Typography>
-                          )}
+                          </Grid>
+                          <Grid item xs={12}>
+                            <SelectField
+                              name="sector"
+                              label="Setor"
+                              options={Sector}
+                              error={touched.sector && errors.sector}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Field
+                              component={CustomInput}
+                              name="description"
+                              label="Descrição do problema"
+                              multiline
+                              rows={6}
+                              error={touched.description && errors.description}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Button
+                              variant="text"
+                              component="label"
+                              fullWidth
+                              sx={{ height: 60, justifyContent: 'flex-start', borderColor: 'transparent', bgcolor: '#f3f3fa' }}
+                              startIcon={<Collections />}
+                            >
+                              Anexar imagens
+                              <input
+                                type="file"
+                                hidden
+                                onChange={(event) => {
+                                  handleFileChange(event, setFieldValue);
+                                  setFieldValue('files', Array.from(event.target.files || []));
+                                }}
+                                multiple
+                                accept="image/*"
+                              />
+                            </Button>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
+                              {imagePreviews.map((preview, index) => (
+                                <Box key={index} sx={{ position: 'relative', width: '70px', height: '70px' }}>
+                                  <img src={preview} alt={`Preview ${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px' }} />
+                                  <IconButton
+                                    sx={{
+                                      position: 'absolute',
+                                      top: 0,
+                                      right: 0,
+                                      backgroundColor: 'rgba(255, 255, 255, 0.7)'
+                                    }}
+                                    onClick={() => handleRemoveImage(index)}
+                                  >
+                                    <Close />
+                                  </IconButton>
+                                </Box>
+                              ))}
+                            </Box>
+                            {files.length > 0 && (
+                              <Typography variant="body2" sx={{ mt: 1 }}>
+                                {files.length} {files.length === 1 ? 'imagem' : 'imagens'} selecionada(s)
+                              </Typography>
+                            )}
+                          </Grid>
                         </Grid>
-                      </Grid>
-                      <Grid item xs={12} sx={{ mt: 2 }}>
-                        <Stack flexDirection='row' justifyContent='space-between'>
-                          <Button
-                            onClick={handleClose}
-                            sx={{
-                              height: 48,
-                              width: '45%',
-                              color: 'black',
-                              borderColor: 'transparent',
-                            }}
-                            variant="contained"
-                            color='secondary'
-                          >
-                            Cancelar
-                          </Button>
-                          <Button
-                            sx={{
-                              height: 48,
-                              width: '45%',
-                            }}
-                            variant="contained"
-                            color="primary"
-                            type='submit'
-                          >
-                            Solicitar resolução
-                          </Button>
-                        </Stack>
-                      </Grid>
-                    </form>
+                        <Grid item xs={12} sx={{ mt: 2 }}>
+                          <Stack flexDirection='row' justifyContent='space-between'>
+                            <Button
+                              onClick={handleClose}
+                              sx={{
+                                height: 48,
+                                width: '45%',
+                                color: 'black',
+                                borderColor: 'transparent',
+                              }}
+                              variant="contained"
+                              color='secondary'
+                            >
+                              Cancelar
+                            </Button>
+                            <Button
+                              sx={{
+                                height: 48,
+                                width: '45%',
+                              }}
+                              variant="contained"
+                              color="primary"
+                              type='submit'
+                            >
+                              Solicitar resolução
+                            </Button>
+                          </Stack>
+                        </Grid>
+                      </Form>
+                    </FormProvider>
                   )}
                 </Formik>
               </CardContent>
             </Card>
           </Grid>
-        </Grid >
+        </Grid>
       </div>
     </Modal>
   );

@@ -37,36 +37,28 @@ export function UnloggedPopover({ anchorEl, onClose, open }: UserPopoverProps): 
       slotProps={{ paper: { sx: { width: '280px' } } }}
     >
       <Box sx={{ p: '16px 20px' }} >
-        <Typography variant="h6" fontSize={'13px'} color={'#525252'}>Conta</Typography>
-        <Typography variant="subtitle1" color='#525252' fontWeight={700}>{user?.name}</Typography>
-        <Typography variant="body1" fontSize={'10px'} color={'#525252'}>{user?.email}</Typography>
+        <Typography variant="h6" fontSize={'13px'} color={'#0B2B70'}>Conta</Typography>
+        <Typography variant="subtitle1" color='#0B2B70' fontWeight={700}>{user?.name}</Typography>
+        <Typography variant="body1" fontSize={'10px'} color={'#0B2B70'}>{user?.email}</Typography>
       </Box>
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
         <MenuItem >
-          <ListItemIcon color='text.success'>
+          <ListItemIcon sx={{ color: '#0B2B70' }} color='#0B2B70'>
           <PlaylistAddCircleIcon />
           </ListItemIcon>
-          <Typography variant='body1' color='text.success' fontSize={15} fontWeight={600}>
-            ABRIR NOVO CHAMADO
-          </Typography>
-        </MenuItem>
-        <MenuItem sx={{ mb:4}} onClick={() => navigate('/historic')}>
-          <ListItemIcon color='text.success'>
-          <ManageHistoryIcon />
-          </ListItemIcon>
-          <Typography variant='body1' color='text.success' fontSize={15} fontWeight={600}>
-            HISTORICO
+          <Typography variant='body1' color='primary' fontSize={15} fontWeight={600}>
+            Solicitar Chamado 
           </Typography>
         </MenuItem>
       </MenuList>
       <Divider />
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
         <MenuItem onClick={handleSignIn}>
-          <ListItemIcon color='text.success'>
+          <ListItemIcon color='primary'>
             <Login color="error" />
           </ListItemIcon>
-          <Typography variant='body1' color='text.success' fontWeight={600}>
-            SAIR
+          <Typography variant='body1' color='primary' fontWeight={600}>
+            Sair
           </Typography>
         </MenuItem>
       </MenuList>

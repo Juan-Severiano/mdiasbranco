@@ -49,25 +49,31 @@ export function ProblemsGrid({
                   </Typography>
                   <Stack sx={{ display: 'flex', flexDirection: 'column' }} justifyContent="space-between">
                     <Stack spacing={1} direction='row' marginTop={2} display={'flex'} alignItems={'center'}>
-                      <Brightness1Icon sx={{ width: 17, height: 17, }}
+                      <Brightness1Icon
                         color={
-                          row.status === 'open' ? 'info'
-                            : row.status === 'analisys' ? 'warning'
-                              : row.status === 'pending' ? 'disabled'
-                                : 'success'
+                          row.status === 'open'
+                            ? 'info'
+                            : row.status === 'analisys'
+                              ? 'warning'
+                              : row.status === 'pending'
+                                ? 'disabled'
+                                : !row.status ? 'disabled' : 'success'
                         }
+                        sx={{ fontSize: '1.25rem' }}
                       />
-                      <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>{row.status}</Typography> {/* Status */}
+                      <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>
+                        {!row.status ? 'Pendente' : row.status}
+                      </Typography>
                     </Stack>
                     <Stack spacing={1} direction='row' display={'flex'} alignItems={'center'}>
                       <CalendarMonthIcon color='action' sx={{ width: 17, height: 17, }} />
-                      <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>{dayjs(row.resolve_at).format('DD/MM/YYYY')}</Typography> {/* Data de resolução */}
+                      <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>{dayjs(row.created_at).format('DD/MM/YYYY')}</Typography> {/* Data de resolução */}
                     </Stack>
                     <Stack spacing={1} direction='row' marginTop={2} display={'flex'} alignItems={'center'}>
                       <WarningAmberIcon color='action' sx={{ width: 17, height: 17, }} />
-                      <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>{row.keywords && row.keywords[0]}</Typography> {/* Palavras-chave */}
+                      <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>Asd</Typography> {/* Palavras-chave */}
                       <SettingsIcon color='action' sx={{ width: 17, height: 17, }} />
-                      <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>{row.setor}</Typography> {/* Setor */}
+                      <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>{row.sector}</Typography> {/* Setor */}
                     </Stack>
                   </Stack>
                 </CardContent>

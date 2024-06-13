@@ -1,9 +1,7 @@
-import { Avatar, Badge, Button, FormControl, Grid, IconButton, OutlinedInput, Stack, Tooltip, Typography, styled } from "@mui/material";
+import { Avatar, Button, FormControl, Grid, OutlinedInput, Stack, Tooltip, Typography, styled } from "@mui/material";
 import { usePopover } from "../../hooks/use-popover";
 import { UnloggedPopover } from "./unlogged-popover";
-import { Sun, Bell, Moon } from "@phosphor-icons/react";
 import { Search } from "@mui/icons-material";
-import { useCustomContext } from "../../contexts/context";
 import { localClient } from "../../lib/local/client";
 
 const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
@@ -27,12 +25,12 @@ const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
 
 export default function TopNav() {
   // const { toggleTheme, mode } = useTheme();
-  const { dispatch, state } = useCustomContext()
+  // const { dispatch, state } = useCustomContext()
   const { data: user } = localClient.getUser()
-  const toggleTheme = () => {
-    const newTheme = state.theme.theme === 'dark' ? 'light': 'dark'
-    dispatch({ type: 'CHANGE_THEME', payload: newTheme })
-  }
+  // const toggleTheme = () => {
+  //   const newTheme = state.theme.theme === 'dark' ? 'light': 'dark'
+  //   dispatch({ type: 'CHANGE_THEME', payload: newTheme })
+  // }
 
   const userPopover = usePopover<HTMLDivElement>();
   return (
@@ -58,7 +56,7 @@ export default function TopNav() {
         <Grid item xs={0} md={1.5}></Grid>
         <Grid item xs={6} md={3} justifyItems='end'>
           <Stack alignItems='center' justifyContent='end' direction="row" spacing={1}>
-            <Tooltip title="Trocar o tema">
+            {/* <Tooltip title="Trocar o tema">
               <IconButton onClick={toggleTheme}>
                 {
                   state.theme.theme == 'light' ? <Sun fontSize={18} /> : <Moon fontSize={18} />
@@ -73,7 +71,7 @@ export default function TopNav() {
                   <Bell weight="fill" size={18} />
                 </Badge>
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip
               title="Conta"
               onClick={userPopover.handleOpen}

@@ -23,11 +23,12 @@ const ManagerLayout = () => {
 
   useEffect(() => {
     if (user?.role === 'manager') {
-      navigate('/manager/home')
+      return
     } else if (user?.role === 'base') {
       navigate('/')
     }
-  }, [])
+  }, []);
+
   return (
     <>
       <Box

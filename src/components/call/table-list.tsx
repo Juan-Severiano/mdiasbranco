@@ -13,10 +13,13 @@ import Brightness1Icon from '@mui/icons-material/Brightness1';
 import dayjs from 'dayjs';
 import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import IconButton from '@mui/material/IconButton';
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
+import { Trash } from '@phosphor-icons/react';
+import { usePopover } from '../../hooks/use-popover';
+import { deleteCall } from '../../services/requests/call';
+import { ConfirmPopover } from '../core/confirm-popover';
 
 interface CustomersTableProps {
   count?: number;
@@ -33,6 +36,27 @@ export function CustomersTable({
   }, [rows]);
   const { dispatch } = useCustomContext();
   const { selected } = useSelection(rowIds);
+  const [id, setId] = React.useState(0)
+
+  const confirmPopover = usePopover<HTMLButtonElement>()
+
+  const [confirm, setConfirm] = React.useState<boolean>(false)
+
+  React.useEffect(() => {
+    async function onDelete() {
+      await deleteCall(id)
+      // await fetch()
+      setConfirm(false)
+    }
+    if (confirm) {
+      onDelete()
+    }
+  }, [confirm, confirmPopover.open])
+
+  const handleDelete = async (id: number) => {
+    confirmPopover.handleOpen()
+    setId(id)
+  };
 
   return (
     <Card>
@@ -51,12 +75,12 @@ export function CustomersTable({
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">
                       <Typography
                         variant="subtitle2"
-                        sx={{ 
-                          fontSize: '0.875rem', 
-                          ":hover": { 
-                            textDecoration: 'underline', 
-                            cursor: 'pointer' 
-                          } 
+                        sx={{
+                          fontSize: '0.875rem',
+                          ":hover": {
+                            textDecoration: 'underline',
+                            cursor: 'pointer'
+                          }
                         }}
                         role="button"
                         onClick={() => {
@@ -87,7 +111,7 @@ export function CustomersTable({
                                 ? 'warning'
                                 : row.status === 'pending'
                                   ? 'disabled'
-                                  : 'success'
+                                  : !row.status ? 'disabled' : 'success'
                           }
                           sx={{ fontSize: '1.25rem' }}
                         />
@@ -97,13 +121,13 @@ export function CustomersTable({
                           sx={{ fontSize: '0.875rem' }}
                           textTransform="capitalize"
                         >
-                          {row.status}
+                          {!row.status ? 'Pendente' : row.status}
                         </Typography>
                       </Stack>
                       <Stack spacing={1} flexDirection="row" alignItems="center">
                         <CalendarMonthIcon color="action" sx={{ fontSize: '1.25rem' }} />
                         <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.875rem' }}>
-                          {dayjs(row.resolve_at).format('DD/MM/YYYY')}
+                          {dayjs(row.created_at).format('DD/MM/YYYY')}
                         </Typography>
                       </Stack>
                     </Stack>
@@ -117,7 +141,8 @@ export function CustomersTable({
                         sx={{ fontSize: '0.875rem' }}
                         textTransform="capitalize"
                       >
-                        {row.keywords![0]}
+                        {/* {row.keywords![0]} */}
+                        asd
                       </Typography>
                     </Stack>
                     <Stack spacing={1} flexDirection="row" alignItems="center">
@@ -128,7 +153,7 @@ export function CustomersTable({
                         sx={{ fontSize: '0.875rem' }}
                         textTransform="capitalize"
                       >
-                        {row.setor}
+                        {row.sector}
                       </Typography>
                     </Stack>
                   </TableCell>
@@ -140,12 +165,19 @@ export function CustomersTable({
                     </Stack>
                   </TableCell>
                   <TableCell>
-                    <Stack alignItems="center" justifyContent="flex-end">
-                      <IconButton>
-                        <MoreVertIcon sx={{ fontSize: '1.25rem' }} />
+                    <Stack alignItems='center' justifyContent='flex-end'>
+                      <IconButton color='error' onClick={() => handleDelete(row.id!)}>
+                        <Trash />
                       </IconButton>
                     </Stack>
                   </TableCell>
+                  <ConfirmPopover
+                    anchorEl={confirmPopover.anchorRef.current}
+                    onClose={confirmPopover.handleClose}
+                    open={confirmPopover.open}
+                    setConfirm={setConfirm}
+                    name={row.title}
+                  />
                 </TableRow>
               );
             })}

@@ -4,8 +4,8 @@ export interface Problem {
   id?: number
   title?: string
   description?: string
-  keywords?: string[]
-  setor?: 'Vendas' | 'Industria' | 'Tecnologia'
+  // keywords?: string[]
+  sector?: Sector
   // anexo: File | File[]
   status?: 'pending' | 'open' | 'analisys' | 'concluted'
   description_solution?: string
@@ -13,6 +13,15 @@ export interface Problem {
   resolve_at?: string
   feedback?: string
   user?: User
+
+  created_at: string
+}
+
+export interface CreateProblem {
+  title: string
+  description: string
+  sector: string
+  files?: File[]
 }
 
 export enum Sector {

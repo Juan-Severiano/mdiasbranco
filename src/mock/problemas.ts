@@ -1,13 +1,13 @@
 import dayjs from "dayjs";
 import { Problem } from "../types/problem";
 
-export const problems = [
+export const problemsList = [
   {
     id: 1,
     description: 'Lorem ipsum ametd, ido aotp, ipsum ametd, ido aotp,ipsum ametd, ido aotp,ipsum ametd, ido aotp,',
     description_solution: 'Descrição do problema pelo gestor',
     feedback: 'Feedback do problema pelo gestor',
-    keywords: ['automatizacao'],
+    // keywords: ['automatizacao'],
     resolve_at: String(dayjs().add(10, 'days').toDate()),
     responsible_startup: {
       cnpj: '098754321123',
@@ -19,7 +19,7 @@ export const problems = [
       website: 'https://empresa.com',
       id: 1
     },
-    setor: 'Tecnologia',
+    sector: 'Tecnologia',
     status: 'concluted',
     title: 'Automatizar a ação de embalar pacotes'
   },
@@ -40,7 +40,7 @@ export const problems = [
       website: 'https://empresa.com',
       id: 2
     },
-    setor: 'Industria',
+    sector: 'Industria',
     status: 'analisys',
     title: 'Otimizar o roteamento de entregas'
   },
@@ -61,7 +61,7 @@ export const problems = [
       website: 'https://empresa.com',
       id: 3
     },
-    setor: 'Tecnologia',
+    sector: 'Tecnologia',
     status: 'pending',
     title: 'Desenvolver um sistema de gestão hospitalar'
   },
@@ -82,7 +82,7 @@ export const problems = [
       website: 'https://empresa.com',
       id: 4
     },
-    setor: 'Vendas',
+    sector: 'Vendas',
     status: 'concluted',
     title: 'Desenvolver uma plataforma de ensino online'
   },
@@ -103,7 +103,7 @@ export const problems = [
       website: 'https://empresa.com',
       id: 5
     },
-    setor: 'Industria',
+    sector: 'Industria',
     status: 'analisys',
     title: 'Desenvolver alternativas sustentáveis de embalagens'
   },
@@ -124,7 +124,7 @@ export const problems = [
       website: 'https://empresa.com',
       id: 6
     },
-    setor: 'Industria',
+    sector: 'Industria',
     status: 'pending',
     title: 'Implementar uma estratégia de cross-selling'
   },
@@ -145,7 +145,7 @@ export const problems = [
       website: 'https://empresa.com',
       id: 7
     },
-    setor: 'Tecnologia',
+    sector: 'Tecnologia',
     status: 'open',
     title: 'Desenvolver um aplicativo de gestão financeira'
   },

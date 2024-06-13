@@ -1,8 +1,9 @@
-import { FormControl, FormHelperText, IconButton, InputAdornment, useTheme } from "@mui/material";
+import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, MenuItem, Select, useTheme } from "@mui/material";
 import { useState } from "react";
 import { FieldProps } from "formik";
 import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import CustomOutlinedInput from "../../styles/theme/custom-outlined-input";
+import { Controller, useFormContext } from "react-hook-form";
 
 interface CustomInputProps extends FieldProps {
   label: string;
@@ -87,3 +88,36 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({ field, form, label
     </FormControl>
   );
 };
+
+interface SelectFieldProps {
+  name: string;
+  label: string;
+  options: Record<string, string>;
+  error: any;
+}
+
+const SelectField = ({ name, label, options, error }: SelectFieldProps) => {
+  const { control } = useFormContext();
+
+  return (
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormControl fullWidth error={Boolean(error)}>
+          <InputLabel>{label}</InputLabel>
+          <Select {...field} label={label}>
+            {Object.entries(options).map(([key, value]) => (
+              <MenuItem key={key} value={key}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+          {error && <FormHelperText>{error.message}</FormHelperText>}
+        </FormControl>
+      )}
+    />
+  );
+};
+
+export default SelectField;
