@@ -55,8 +55,8 @@ const ManagerLayout = () => {
               position: "sticky",
               top: 0,
               zIndex: "appBar",
+              bgcolor: '#F7F7FDd0',
               backdropFilter: 'blur(5px)',
-              bgcolor: '#F7F7FDd0'
             }}
           >
             <Stack

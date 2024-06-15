@@ -20,6 +20,7 @@ import { Trash } from '@phosphor-icons/react';
 import { usePopover } from '../../hooks/use-popover';
 import { deleteCall } from '../../services/requests/call';
 import { ConfirmPopover } from '../core/confirm-popover';
+import { status } from '../../constants/status';
 
 interface CustomersTableProps {
   count?: number;
@@ -113,15 +114,7 @@ export function CustomersTable({
                     >
                       <Stack spacing={1} flexDirection="row" alignItems="center">
                         <Brightness1Icon
-                          color={
-                            row.status === 'open'
-                              ? 'info'
-                              : row.status === 'analisys'
-                                ? 'warning'
-                                : row.status === 'pending'
-                                  ? 'disabled'
-                                  : !row.status ? 'disabled' : 'success'
-                          }
+                          color={status[row.status!]}
                           sx={{ fontSize: '1.25rem' }}
                         />
                         <Typography

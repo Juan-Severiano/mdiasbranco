@@ -15,22 +15,23 @@ const priority = [
   { value: 'Vendas', label: 'Vendas' }
 ];
 interface CallProps {
-  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>,
-  setSelectedDate: React.Dispatch<React.SetStateAction<string>>,
-  setSelectedPriority: React.Dispatch<React.SetStateAction<string>>,
-  setSelectedStatus: React.Dispatch<React.SetStateAction<string>>,
+  setSearchKeyword?: React.Dispatch<React.SetStateAction<string>>,
+  setSelectedDate?: React.Dispatch<React.SetStateAction<string>>,
+  setSelectedPriority?: React.Dispatch<React.SetStateAction<string>>,
+  setSelectedStatus?: React.Dispatch<React.SetStateAction<string>>,
   setToogleRender?: React.Dispatch<React.SetStateAction<'list' | 'grid'>>,
   toogleRender?: string
 }
 
 export function CallFilters({
-  setSelectedPriority,
+  // setSelectedPriority,
   setToogleRender,
   toogleRender
 }: CallProps) {
 
   const handlePriorityChange = (event: SelectChangeEvent<unknown>) => {
-    setSelectedPriority(event.target.value as string);
+    console.log(event)
+    // setSelectedPriority(event.target.value as string);
   };
 
   const handleRenderFile1 = () => {

@@ -36,9 +36,7 @@ export default function TopNav() {
   return (
     <>
       <Grid container sx={{
-        py: 2,
-        backdropFilter: 'blur(5px)',
-        bgcolor: '#F7F7FDd0'
+        py: 2
       }} alignItems='center'>
         <Grid item xs={6} md={7.5}>
           <FormControl fullWidth>
