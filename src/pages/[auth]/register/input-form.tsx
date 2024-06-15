@@ -9,10 +9,11 @@ import {
   FormHelperText,
   InputAdornment,
   Grid,
-  MenuItem
+  MenuItem,
+  IconButton,
+  Stack,
+  Typography
 } from '@mui/material';
-
-import * as Yup from 'yup';
 import { Field, Formik } from 'formik';
 import { RotatingLines } from 'react-loader-spinner'
 import { useNavigate } from 'react-router-dom';
@@ -20,14 +21,45 @@ import { registerRequest } from '../../../services/requests/auth';
 import { Sector } from '../../../types/problem';
 import { isAxiosError } from 'axios';
 import { CustomInput, PasswordInput } from '../../../components/custom/custom-input';
-import { AddIcCall, Assignment, Email, PermContactCalendar } from '@mui/icons-material';
-import { UserCircle } from '@phosphor-icons/react';
+import { AddIcCall, Assignment, Close, Email, PermContactCalendar } from '@mui/icons-material';
+import { User, UserCircle } from '@phosphor-icons/react';
 import CustomSelect from '../../../styles/theme/custom-select';
+import { registerSchema } from '../../../schema/user';
 
 const RegisterForm = ({ ...others }) => {
   const theme = useTheme()
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate()
+  const [files, setFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, setFieldValue: any) => {
+    if (event.target.files) {
+      const selectedFiles = Array.from(event.target.files).slice(0, 1 - files.length);
+      setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
+
+      const readerPromises = selectedFiles.map((file) => {
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(readerPromises).then((newPreviews) => {
+        setImagePreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
+      });
+
+      setFieldValue('files', [...files, ...selectedFiles]);
+    }
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    setImagePreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
+  };
 
   return (
     <>
@@ -39,22 +71,11 @@ const RegisterForm = ({ ...others }) => {
           name: '',
           telphone: '',
           mat: '',
+          files: [] as File[],
           sector: Sector.SECTOR,
           submit: null,
         }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string().email('Deve ser um email válido').max(255).required('Email é obrigatório'),
-          password: Yup.string()
-            .required('Senha é obrigatória')
-            .min(6, 'A senha  deve ter no mínimo 6 caracteres'),
-          name: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').required('Nome Completo é obrigatório'),
-          telphone: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').required('Telefone é obrigatório'),
-          sector: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').required('Setor é obrigatório'),
-          mat: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').required('Matrícula é obrigatório'),
-          repeatPassword: Yup.string()
-            .oneOf([Yup.ref('password'), ''], 'As senhas devem corresponder')
-            .required('Repetir senha é obrigatório'),
-        })}
+        validationSchema={registerSchema}
         onSubmit={async function (values, { setErrors }) {
           try {
             const response = await registerRequest(values);
@@ -75,9 +96,48 @@ const RegisterForm = ({ ...others }) => {
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldValue }) => (
           <form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <Button
+                  variant="text"
+                  component="label"
+                  fullWidth
+                  sx={{ height: 60, justifyContent: 'flex-start', borderColor: 'transparent', bgcolor: '#f3f3fa', color: '#D7D8DF' }}
+                  startIcon={<User color='gray' />}
+                >
+                  <Stack flexDirection='row' justifyContent='space-between' width='100%' alignItems='center'>
+                    <Typography fontSize='inherit' color='GrayText'>Foto de perfil </Typography>{imagePreviews.map((preview, index) => (
+                      <Box key={index} sx={{ position: 'relative', width: '50px', height: '50px' }}>
+                        <img src={preview} alt={`Preview ${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                        <IconButton
+                          sx={{
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                            width: 20, height: 20
+                          }}
+                          onClick={() => handleRemoveImage(index)}
+                        >
+                          <Close fontSize='small' />
+                        </IconButton>
+                      </Box>
+                    ))}
+                  </Stack>
+                  <input
+                    type="file"
+                    hidden
+                    onChange={(event) => {
+                      handleFileChange(event, setFieldValue);
+                      setFieldValue('files', Array.from(event.target.files || []));
+                    }}
+                    multiple
+                    accept="image/*"
+                  />
+                </Button>
+              </Grid>
               <Grid item xs={12}>
                 <Field
                   component={CustomInput}
@@ -147,14 +207,14 @@ const RegisterForm = ({ ...others }) => {
                   )}
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} md={6}>
                 <Field
                   component={PasswordInput}
                   name="password"
                   label="Senha"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} md={6}>
                 <Field
                   component={PasswordInput}
                   name="repeatPassword"
