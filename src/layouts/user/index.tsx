@@ -26,14 +26,14 @@ const DefaultLayout = () => {
   }, [])
 
   return (
-    <Box>
-      <Box  sx={{ p: 2, bgcolor: '#0B2B70' }}>
-        <Container maxWidth='xl'>
+    <Box bgcolor='#f7f7fd'>
+      <Box>
+        <Container maxWidth='lg'>
           <TopNav />
         </Container>
       </Box>
-      <Box sx={{ pb: 10, pt: 2, backgroundColor: '#F3F5F8', minHeight: '100vh' }}>
-        <Container>
+      <Box sx={{ pb: 10, pt: 2, minHeight: '100vh' }}>
+        <Container maxWidth='lg'>
           <Outlet />
           <StepForm />
           <ModalProblem />

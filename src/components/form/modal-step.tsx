@@ -103,17 +103,22 @@ function StepForm() {
                 <Formik
                   initialValues={{
                     title: '',
-                    sector: Sector.OPERATIONS,
+                    sector: Sector.ADMINISTRATION,
                     description: '',
                     files: [] as File[]
                   }}
                   validationSchema={formSchema}
-                  onSubmit={async (values) => {
+                  onSubmit={async (values, { resetForm, setFieldValue }) => {
                     console.log(values);
-                    await createCall(values);
+                    const res = await createCall(values);
+                    if (res.status === 201) {
+                      resetForm()
+                      setFieldValue('files', [])
+                      handleClose()
+                    }
                   }}
                 >
-                  {({ handleSubmit, setFieldValue, errors, touched }) => (
+                  {({ handleSubmit, setFieldValue, errors, touched, isSubmitting }) => (
                     <FormProvider {...methods}>
                       <Form noValidate onSubmit={handleSubmit}>
                         <Grid container spacing={1.5}>
@@ -212,8 +217,9 @@ function StepForm() {
                               variant="contained"
                               color="primary"
                               type='submit'
+                              disabled={isSubmitting}
                             >
-                              Solicitar resolução
+                              { isSubmitting ? 'Carregando ...' : 'Solicitar resolução'}
                             </Button>
                           </Stack>
                         </Grid>

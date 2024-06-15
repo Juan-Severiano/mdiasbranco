@@ -2,6 +2,7 @@ import { Collections } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { Attachment } from "../../types/problem";
+import { baseURL } from "../../config";
 
 interface ProblemAnexosProps {
   anexos: Attachment[]
@@ -10,6 +11,7 @@ interface ProblemAnexosProps {
 export function ProblemAnexos({ anexos }: ProblemAnexosProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const newAnexos = anexos.map(anexo => anexo.path.split('\\')[1])
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const selectedFiles = Array.from(event.target.files).slice(0, 3 - files.length); // Limit to 10 files
@@ -51,9 +53,9 @@ export function ProblemAnexos({ anexos }: ProblemAnexosProps) {
         />
       </Button>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
-        {anexos.map((preview, index) => (
+        {newAnexos.map((preview, index) => (
           <Box key={index} sx={{ width: '50px', height: '50px' }}>
-            <img src={`${import.meta.env.BASE_URL}/call/${preview.path}`} alt="" style={{ width: '50px', height: '50px' }} />
+            <img src={`${baseURL}/call/attachment/${preview}`} alt="" style={{ width: '50px', height: '50px' }} />
           </Box>
         ))}
         {imagePreviews.map((preview, index) => (

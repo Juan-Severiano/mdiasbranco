@@ -9,11 +9,10 @@ import { Logo } from '../../components/core/logo';
 import { navItems } from './config';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { Button } from '@mui/material';
-import { IconLogin2 } from '@tabler/icons-react';
+import { IconLogin } from '@tabler/icons-react';
 import { NavItemConfig } from '../../types/nav';
 import { Assignment, RocketLaunch } from '@mui/icons-material';
 import { House } from '@phosphor-icons/react';
-import { useCustomContext } from '../../contexts/context';
 
 export interface MobileNavProps {
   onClose?: () => void;
@@ -22,12 +21,10 @@ export interface MobileNavProps {
 
 export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element {
   const { pathname } = useLocation();
-  const { dispatch } = useCustomContext()
   const navigate = useNavigate()
 
   const handleSignOut = React.useCallback(async (): Promise<void> => {
-    dispatch({ type: 'SIGN_OUT' })
-    navigate('/auth/login')
+    onClose!()
   }, [navigate]);
 
   return (
@@ -53,6 +50,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
         width: 200,
         zIndex: 'var(--MobileNav-zIndex)',
         '&::-webkit-scrollbar': { display: 'none' },
+        borderRadius: '0px 24px 24px 0px',
       },
     }}
     onClose={onClose}
@@ -76,10 +74,10 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
             textDecoration: 'none',
             color: '#fff',
           }}
-          startIcon={<IconLogin2  />}
+          startIcon={<IconLogin  />}
           onClick={handleSignOut}
         >
-          Sair
+          Recolher
         </Button>
       </Box>
     </Drawer>

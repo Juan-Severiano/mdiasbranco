@@ -5,6 +5,7 @@ import { Problem } from '../../../types/problem';
 import { ProblemsGrid } from '../../../components/call/table-grid';
 import { getCalls } from '../../../services/requests/call';
 import { HistoricFilters } from '../../../components/historic/filter';
+import { useCustomContext } from '../../../contexts/context';
 
 export default function ManagerHome(): React.JSX.Element {
   const [problems, setProblems] = React.useState<Problem[]>([])
@@ -13,14 +14,16 @@ export default function ManagerHome(): React.JSX.Element {
   const [selectedPriority, setSelectedPriority] = React.useState('');
   const [selectedStatus, setSelectedStatus] = React.useState('');
   const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
+  const { state } = useCustomContext()
+
+  const fetch = async () => {
+    const res = await getCalls();
+    setProblems(res)
+  }
 
   React.useEffect(() => {
-    const fetch = async () => {
-      const res = await getCalls();
-      setProblems(res)
-    }
     fetch()
-  }, [])
+  }, [state.modal.modal])
 
   const applyFilters = () => {
     // let filtered = problems.filter(problem => {
@@ -71,7 +74,9 @@ export default function ManagerHome(): React.JSX.Element {
             page={page}
             rows={paginatedCustomers}
             rowsPerPage={rowsPerPage}
+            reload={fetch}
           /> : <CustomersTable
+            reload={fetch}
             count={paginatedCustomers.length}
             page={page}
             rows={paginatedCustomers}

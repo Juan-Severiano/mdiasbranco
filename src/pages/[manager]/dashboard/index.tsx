@@ -11,12 +11,12 @@ export default function ManagerDashboard() {
     <Grid container spacing={3}>
       <Grid item lg={3} sm={6} xs={12}>
         <Budget diff={12} trend="up" sx={{ height: '100%' }} value="200" />
-      </Grid> 
+      </Grid>
       <Grid item lg={3} sm={6} xs={12}>
         <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value="150" />
       </Grid>
       <Grid item lg={3} sm={6} xs={12}>
-        <TasksProgress sx={{ height: '100%' }} value={75.5} />
+        <TasksProgress sx={{ height: '100%' }} diff={22} trend="up" value={253} />
       </Grid>
       <Grid item lg={3} sm={6} xs={12}>
         <TotalProfit sx={{ height: '100%' }} value="20k" diff={16} trend="up" />

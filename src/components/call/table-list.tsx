@@ -26,10 +26,12 @@ interface CustomersTableProps {
   page?: number;
   rows?: Problem[];
   rowsPerPage?: number;
+  reload: () => Promise<void>
 }
 
 export function CustomersTable({
   rows = [],
+  reload
 }: CustomersTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
@@ -37,25 +39,32 @@ export function CustomersTable({
   const { dispatch } = useCustomContext();
   const { selected } = useSelection(rowIds);
   const [id, setId] = React.useState(0)
+  const [name, setName] = React.useState('')
 
   const confirmPopover = usePopover<HTMLButtonElement>()
 
   const [confirm, setConfirm] = React.useState<boolean>(false)
 
+  async function onDelete() {
+    await deleteCall(id)
+    // await fetch()
+    setConfirm(false)
+  }
+
   React.useEffect(() => {
-    async function onDelete() {
-      await deleteCall(id)
-      // await fetch()
-      setConfirm(false)
+    async function confirmAsd() {
+      if (confirm) {
+        await onDelete()
+        await reload()
+      }
     }
-    if (confirm) {
-      onDelete()
-    }
+    confirmAsd()
   }, [confirm, confirmPopover.open])
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number, name: string) => {
     confirmPopover.handleOpen()
     setId(id)
+    setName(name)
   };
 
   return (
@@ -166,7 +175,7 @@ export function CustomersTable({
                   </TableCell>
                   <TableCell>
                     <Stack alignItems='center' justifyContent='flex-end'>
-                      <IconButton color='error' onClick={() => handleDelete(row.id!)}>
+                      <IconButton color='error' onClick={() => handleDelete(row.id!, row.title!)}>
                         <Trash />
                       </IconButton>
                     </Stack>
@@ -176,7 +185,7 @@ export function CustomersTable({
                     onClose={confirmPopover.handleClose}
                     open={confirmPopover.open}
                     setConfirm={setConfirm}
-                    name={row.title}
+                    name={name}
                   />
                 </TableRow>
               );

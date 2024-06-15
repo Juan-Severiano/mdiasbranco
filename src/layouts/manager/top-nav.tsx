@@ -38,11 +38,9 @@ export default function TopNav() {
       <Grid container sx={{
         py: 2,
         backdropFilter: 'blur(5px)',
-        borderRadius: 2,
         bgcolor: '#F7F7FDd0'
-      }}>
-        <Grid item xs={0} md={1}></Grid>
-        <Grid item xs={6} md={6.5}>
+      }} alignItems='center'>
+        <Grid item xs={6} md={7.5}>
           <FormControl fullWidth>
             <CustomOutlinedInput
               sx={{
@@ -78,7 +76,7 @@ export default function TopNav() {
               ref={userPopover.anchorRef}
             >
               <Button>
-                <Avatar sx={{ mr: 2, maxWidth: 50 }} />
+                <Avatar sx={{ mr: 2, maxWidth: 50 }} src='http://localhost:3100/user/attachment/martonio-perfil.jpg' />
                 <Stack justifyContent="center">
                   <Typography align="left" variant="subtitle1" color='#323232' fontSize={12} fontWeight={700}>{user?.name}</Typography>
                   <Typography align="left" variant="body2" color='#323232' fontSize={9}>{user?.role === 'manager' ? 'Gerente' : 'Colaborador'}</Typography>

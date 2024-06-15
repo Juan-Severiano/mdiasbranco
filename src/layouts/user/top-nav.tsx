@@ -1,44 +1,93 @@
-import { Grid, IconButton, Stack, Tooltip, Box, Button } from "@mui/material";
-import { Logo } from "../../components/core/logo";
-import { AccountCircle } from "@mui/icons-material";
+import { Avatar, Button, FormControl, Grid, OutlinedInput, Stack, Tooltip, Typography, styled } from "@mui/material";
 import { usePopover } from "../../hooks/use-popover";
-import { NavLink } from "react-router-dom";
-import { useCustomContext } from "../../contexts/context";
+import { UnloggedPopover } from "./unlogged-popover";
+import { Search } from "@mui/icons-material";
+import { localClient } from "../../lib/local/client";
+
+const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
+  border: 'none !important',
+  outline: 'none',
+  '& .MuiOutlinedInput-input::placeholder': {
+    fontSize: '12px', // Defina o tamanho do placeholder aqui
+    color: '#999', // Defina a cor do placeholder se necessário
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    border: 'none', // Remove a borda
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    border: 'none', // Remove a borda no hover também, se necessário
+  },
+  '&:focus .MuiOutlinedInput-notchedOutline': {
+    boxShadow: `0 0 0 3px ${theme.palette.primary.main}80`, // Sombra com a cor do tema principal
+  },
+  backgroundColor: 'white'
+}));
 
 export default function TopNav() {
+  // const { toggleTheme, mode } = useTheme();
+  // const { dispatch, state } = useCustomContext()
+  const { data: user } = localClient.getUser()
+  // const toggleTheme = () => {
+  //   const newTheme = state.theme.theme === 'dark' ? 'light': 'dark'
+  //   dispatch({ type: 'CHANGE_THEME', payload: newTheme })
+  // }
+
   const userPopover = usePopover<HTMLDivElement>();
-  const { dispatch } = useCustomContext()
   return (
     <>
-      <Grid container alignItems='center'>
-        <Grid item xs={5} md={3} lg={3}>
-          <Box component={NavLink} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', pt: 2 }} to="/">
-            <Logo width={150} />
-          </Box>
+      <Grid container sx={{
+        py: 2,
+        backdropFilter: 'blur(5px)',
+        borderRadius: 2,
+        bgcolor: '#F7F7FDd0'
+      }}>
+        <Grid item xs={6} md={6.5}>
+          <FormControl fullWidth>
+            <CustomOutlinedInput
+              sx={{
+                height: 40
+              }}
+              placeholder="Pesquisar"
+              startAdornment={<Search color="disabled" fontSize="small" sx={{ mr: 2 }} />}
+            />
+          </FormControl>
         </Grid>
-        <Grid item xs={3} md={9} alignItems='center'>
-          <Stack sx={{ alignItems: 'center', justifyContent: 'end' }} direction="row" spacing={2}>
-            <Tooltip title="Novo Chamado">
-              <Box>
-                <Button variant="contained" color="secondary" sx={{ color: '#000' }} onClick={() => {
-                  dispatch({ type: 'CHANGE-MODAL', payload: true })
-                }}>
-                  Solicitar Chamado
-                </Button>
-              </Box>
+        <Grid item xs={0} md={2.5}></Grid>
+        <Grid item xs={6} md={3} justifyItems='end'>
+          <Stack alignItems='center' justifyContent='end' direction="row" spacing={1}>
+            {/* <Tooltip title="Trocar o tema">
+              <IconButton onClick={toggleTheme}>
+                {
+                  state.theme.theme == 'light' ? <Sun fontSize={18} /> : <Moon fontSize={18} />
+                }
+              </IconButton>
             </Tooltip>
+            <Tooltip
+              title="Notificações"
+            >
+              <IconButton>
+                <Badge color="primary" variant="dot">
+                  <Bell weight="fill" size={18} />
+                </Badge>
+              </IconButton>
+            </Tooltip> */}
             <Tooltip
               title="Conta"
               onClick={userPopover.handleOpen}
               ref={userPopover.anchorRef}
             >
-              <IconButton>
-                <AccountCircle sx={{ color: '#fff' }} fontSize={"large"} />
-              </IconButton>
-            </Tooltip>   
+              <Button>
+                <Avatar sx={{ mr: 2, maxWidth: 50 }} src={`${import.meta.env.BASE_URL}/user/attachment/martonio-perfil.jpg`} />
+                <Stack justifyContent="center">
+                  <Typography align="left" variant="subtitle1" color='#323232' fontSize={12} fontWeight={700}>{user?.name}</Typography>
+                  <Typography align="left" variant="body2" color='#323232' fontSize={9}>{user?.role === 'manager' ? 'Gerente' : 'Colaborador'}</Typography>
+                </Stack>
+              </Button>
+            </Tooltip>
           </Stack>
         </Grid>
       </Grid >
+      <UnloggedPopover anchorEl={userPopover.anchorRef.current} onClose={userPopover.handleClose} open={userPopover.open} />
     </>
   )
 }

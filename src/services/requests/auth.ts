@@ -19,13 +19,9 @@ export async function registerRequest(registerParams: RegisterUser) {
   formData.append('password', registerParams.password);
   formData.append('email', registerParams.email);
   formData.append('sector', registerParams.sector);
-
-  if (registerParams.files) {
-    registerParams.files.forEach((file) => {
-      formData.append('file', file);
-    });
-  }
-
-  const response = await api.post('/user', registerParams);
+  formData.append('image', registerParams.files[0]);
+  console.log(registerParams.files[0])
+  console.log(formData)
+  const response = await api.post('/user', formData);
   return response.data
 }
