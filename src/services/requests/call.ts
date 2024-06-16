@@ -1,5 +1,5 @@
 import { isAxiosError } from 'axios';
-import { CreateProblem } from '../../types/problem';
+import { CreateProblem, Problem } from '../../types/problem';
 import { localClient } from '../../lib/local/client';
 import { api } from '../api';
 
@@ -45,4 +45,9 @@ export async function deleteCall(id: number) {
     console.log(err)
     return isAxiosError(err) ? err : err
   }
+}
+
+export async function updateCallPartial(partialCall:Partial<Problem>, id: number) {
+  const response = await api.patch(`/call/${id}/`, partialCall)
+  return response.data
 }

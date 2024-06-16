@@ -1,9 +1,9 @@
-import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, MenuItem, Select, useTheme } from "@mui/material";
+import { Avatar, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import { FieldProps } from "formik";
 import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import CustomOutlinedInput from "../../styles/theme/custom-outlined-input";
-import { Controller, useFormContext } from "react-hook-form";
+import CustomSelect from "../../styles/theme/custom-select";
 
 interface CustomInputProps extends FieldProps {
   label: string;
@@ -89,35 +89,70 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({ field, form, label
   );
 };
 
-interface SelectFieldProps {
-  name: string;
+interface SelectFieldProps extends FieldProps {
   label: string;
   options: Record<string, string>;
-  error: any;
+  error?: any;
 }
 
-const SelectField = ({ name, label, options, error }: SelectFieldProps) => {
-  const { control } = useFormContext();
+const SelectField = ({ form, field, options, label }: SelectFieldProps) => {
+  const theme = useTheme();
+  const { name } = field;
+  const { touched, errors } = form;
 
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <FormControl fullWidth error={Boolean(error)}>
-          <InputLabel>{label}</InputLabel>
-          <Select {...field} label={label}>
-            {Object.entries(options).map(([key, value]) => (
-              <MenuItem key={key} value={key}>
-                {value}
-              </MenuItem>
-            ))}
-          </Select>
-          {error && <FormHelperText>{error.message}</FormHelperText>}
-        </FormControl>
+    <FormControl fullWidth error={Boolean(touched[name] && errors[name])} sx={{ ...theme.typography.body1, mb: 1 }}>
+      <InputLabel>{label}</InputLabel>
+      <Select
+        {...field}
+        label={label}
+        value={field.value || ''}
+      >
+        {Object.entries(options).map(([key, value]) => (
+          <MenuItem key={key} value={value}>
+            {value}
+          </MenuItem>
+        ))}
+      </Select>
+      {touched[name] && errors[name] && (
+        <FormHelperText error id={`standard-weight-helper-text-${name}`}>
+          {errors[name] as string}
+        </FormHelperText>
       )}
-    />
+    </FormControl>
   );
 };
+
+interface SelectPureProps {
+  label: string;
+  options: Record<string, string>;
+  value: string;
+  onChange: (e: SelectChangeEvent<unknown>) => void;
+  onBlur?: () => void;
+}
+
+export function SelectPure({ options, value, onChange, onBlur }: SelectPureProps) {
+  return (
+    <>
+      <CustomSelect
+        label="Status"
+        sx={{ maxHeight: 30 }}
+        onBlur={onBlur}
+        onChange={onChange}
+        aria-label="Status"
+        value={value}
+      >
+        {Object.entries(options).map(([key, value]) => (
+          <MenuItem key={key} value={value}>
+            <Stack justifyContent='space-between' alignItems='center' flexDirection='row' width='100%'>
+              <Typography fontSize={15}>{value}</Typography>
+              <Avatar sx={{ width: 15, height: 15 }} src={`/Status/${key}.jpeg`} alt={`${value} status`} />
+            </Stack>
+          </MenuItem>
+        ))}
+      </CustomSelect>
+    </>
+  );
+}
 
 export default SelectField;

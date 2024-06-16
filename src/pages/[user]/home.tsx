@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
-import { CallFilters } from '../../components/call/filter';
 import { CustomersTable } from '../../components/call/table-list';
+import { Problem } from '../../types/problem';
 import { ProblemsGrid } from '../../components/call/table-grid';
 import { getCalls } from '../../services/requests/call';
-import { Problem } from '../../types/problem';
+import { HistoricFilters } from '../../components/historic/filter';
+import { useCustomContext } from '../../contexts/context';
 
 export default function ManagerHome(): React.JSX.Element {
   const [problems, setProblems] = React.useState<Problem[]>([])
@@ -13,14 +14,16 @@ export default function ManagerHome(): React.JSX.Element {
   const [selectedPriority, setSelectedPriority] = React.useState('');
   const [selectedStatus, setSelectedStatus] = React.useState('');
   const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
+  const { state } = useCustomContext()
+
+  const fetch = async () => {
+    const res = await getCalls();
+    setProblems(res)
+  }
 
   React.useEffect(() => {
-    const fetch = async () => {
-      const res = await getCalls();
-      setProblems(res)
-    }
     fetch()
-  }, [])
+  }, [state.modal.modal, state.modalDetails.modal])
 
   const applyFilters = () => {
     // let filtered = problems.filter(problem => {
@@ -56,7 +59,7 @@ export default function ManagerHome(): React.JSX.Element {
 
   return (
     <Stack spacing={3}>
-      <CallFilters
+      <HistoricFilters
         setSearchKeyword={setSearchKeyword}
         setSelectedDate={setSelectedDate}
         setSelectedPriority={setSelectedPriority}
@@ -71,7 +74,9 @@ export default function ManagerHome(): React.JSX.Element {
             page={page}
             rows={paginatedCustomers}
             rowsPerPage={rowsPerPage}
+            reload={fetch}
           /> : <CustomersTable
+            reload={fetch}
             count={paginatedCustomers.length}
             page={page}
             rows={paginatedCustomers}

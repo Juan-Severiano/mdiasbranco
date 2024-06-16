@@ -72,166 +72,157 @@ function StepForm() {
         justifyContent: 'center',
         paddingTop: 4,
         paddingBottom: 4,
-        maxHeight: '100vh'
+        maxHeight: '100vh',
+        overflow: 'auto', px: 2, pb: 2
       }}
     >
-      <div style={{
-        overflowY: 'auto',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        width: '100%',
-        paddingTop: '40px',
-        paddingBottom: '40px',
-      }}>
-        <Grid container justifyContent='center' alignItems='center'>
-          <Grid item xs={11} md={6}>
-            <Card sx={{ maxHeight: '95vh', overflow: 'auto', px: 2, pb: 2 }}>
-              <CardHeader
-                title={
-                  <Stack width='100%' flexDirection='row' justifyContent='center'>
-                    <Logo theme='dark' width={200} />
-                  </Stack>
-                }
-                action={
-                  <IconButton onClick={handleClose} aria-label="Fechar">
-                    <Close />
-                  </IconButton>
-                } />
-              <CardContent>
-                <Formik
-                  initialValues={{
-                    title: '',
-                    sector: Sector.ADMINISTRATION,
-                    description: '',
-                    files: [] as File[]
-                  }}
-                  validationSchema={formSchema}
-                  onSubmit={async (values, { resetForm, setFieldValue }) => {
-                    console.log(values);
-                    const res = await createCall(values);
-                    if (res.status === 201) {
-                      resetForm()
-                      setFieldValue('files', [])
-                      handleClose()
-                    }
-                  }}
-                >
-                  {({ handleSubmit, setFieldValue, errors, touched, isSubmitting }) => (
-                    <FormProvider {...methods}>
-                      <Form noValidate onSubmit={handleSubmit}>
-                        <Grid container spacing={1.5}>
-                          <Grid item xs={12}>
-                            <Field
-                              component={CustomInput}
-                              name="title"
-                              label="Título do problema"
-                              type="text"
-                              error={touched.title && errors.title}
-                            />
-                          </Grid>
-                          <Grid item xs={12}>
-                            <SelectField
-                              name="sector"
-                              label="Setor"
-                              options={Sector}
-                              error={touched.sector && errors.sector}
-                            />
-                          </Grid>
-                          <Grid item xs={12}>
-                            <Field
-                              component={CustomInput}
-                              name="description"
-                              label="Descrição do problema"
-                              multiline
-                              rows={6}
-                              error={touched.description && errors.description}
-                            />
-                          </Grid>
-                          <Grid item xs={12}>
-                            <Button
-                              variant="text"
-                              component="label"
-                              fullWidth
-                              sx={{ height: 60, justifyContent: 'flex-start', borderColor: 'transparent', bgcolor: '#f3f3fa' }}
-                              startIcon={<Collections />}
-                            >
-                              Anexar imagens
-                              <input
-                                type="file"
-                                hidden
-                                onChange={(event) => {
-                                  handleFileChange(event, setFieldValue);
-                                  setFieldValue('files', Array.from(event.target.files || []));
-                                }}
-                                multiple
-                                accept="image/*"
-                              />
-                            </Button>
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
-                              {imagePreviews.map((preview, index) => (
-                                <Box key={index} sx={{ position: 'relative', width: '70px', height: '70px' }}>
-                                  <img src={preview} alt={`Preview ${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px' }} />
-                                  <IconButton
-                                    sx={{
-                                      position: 'absolute',
-                                      top: 0,
-                                      right: 0,
-                                      backgroundColor: 'rgba(255, 255, 255, 0.7)'
-                                    }}
-                                    onClick={() => handleRemoveImage(index)}
-                                  >
-                                    <Close />
-                                  </IconButton>
-                                </Box>
-                              ))}
-                            </Box>
-                            {files.length > 0 && (
-                              <Typography variant="body2" sx={{ mt: 1 }}>
-                                {files.length} {files.length === 1 ? 'imagem' : 'imagens'} selecionada(s)
-                              </Typography>
-                            )}
-                          </Grid>
+      <Grid container justifyContent='center' alignItems='center'>
+        <Grid item xs={11} md={6}>
+          <Card>
+            <CardHeader
+              title={
+                <Stack width='100%' flexDirection='row' justifyContent='center'>
+                  <Logo theme='dark' width={200} />
+                </Stack>
+              }
+              action={
+                <IconButton onClick={handleClose} aria-label="Fechar">
+                  <Close />
+                </IconButton>
+              } />
+            <CardContent>
+              <Formik
+                initialValues={{
+                  title: '',
+                  sector: '',
+                  description: '',
+                  files: [] as File[]
+                }}
+                validationSchema={formSchema}
+                onSubmit={async (values, { resetForm, setFieldValue }) => {
+                  console.log(values);
+                  const res = await createCall(values);
+                  if (res.status === 201) {
+                    resetForm()
+                    setFieldValue('files', [])
+                    handleClose()
+                  }
+                }}
+              >
+                {({ handleSubmit, setFieldValue, errors, touched, isSubmitting }) => (
+                  <FormProvider {...methods}>
+                    <Form noValidate onSubmit={handleSubmit}>
+                      <Grid container spacing={1.5}>
+                        <Grid item xs={12}>
+                          <Field
+                            component={CustomInput}
+                            name="title"
+                            label="Título do problema"
+                            type="text"
+                            error={touched.title && errors.title}
+                          />
                         </Grid>
-                        <Grid item xs={12} sx={{ mt: 2 }}>
-                          <Stack flexDirection='row' justifyContent='space-between'>
-                            <Button
-                              onClick={handleClose}
-                              sx={{
-                                height: 48,
-                                width: '45%',
-                                color: 'black',
-                                borderColor: 'transparent',
-                              }}
-                              variant="contained"
-                              color='secondary'
-                            >
-                              Cancelar
-                            </Button>
-                            <Button
-                              sx={{
-                                height: 48,
-                                width: '45%',
-                              }}
-                              variant="contained"
-                              color="primary"
-                              type='submit'
-                              disabled={isSubmitting}
-                            >
-                              { isSubmitting ? 'Carregando ...' : 'Solicitar resolução'}
-                            </Button>
-                          </Stack>
+                        <Grid item xs={12}>
+                          <Field
+                            component={SelectField}
+                            name="sector"
+                            label="Setor"
+                            options={Sector}
+                            error={touched.sector && errors.sector}
+                          />
                         </Grid>
-                      </Form>
-                    </FormProvider>
-                  )}
-                </Formik>
-              </CardContent>
-            </Card>
-          </Grid>
+                        <Grid item xs={12}>
+                          <Field
+                            component={CustomInput}
+                            name="description"
+                            label="Descrição do problema"
+                            multiline
+                            rows={6}
+                            error={touched.description && errors.description}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Button
+                            variant="text"
+                            component="label"
+                            fullWidth
+                            sx={{ height: 60, justifyContent: 'flex-start', borderColor: 'transparent', bgcolor: '#f3f3fa' }}
+                            startIcon={<Collections />}
+                          >
+                            Anexar imagens
+                            <input
+                              type="file"
+                              hidden
+                              onChange={(event) => {
+                                handleFileChange(event, setFieldValue);
+                                setFieldValue('files', Array.from(event.target.files || []));
+                              }}
+                              multiple
+                              accept="image/*"
+                            />
+                          </Button>
+                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
+                            {imagePreviews.map((preview, index) => (
+                              <Box key={index} sx={{ position: 'relative', width: '70px', height: '70px' }}>
+                                <img src={preview} alt={`Preview ${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px' }} />
+                                <IconButton
+                                  sx={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    backgroundColor: 'rgba(255, 255, 255, 0.7)'
+                                  }}
+                                  onClick={() => handleRemoveImage(index)}
+                                >
+                                  <Close />
+                                </IconButton>
+                              </Box>
+                            ))}
+                          </Box>
+                          {files.length > 0 && (
+                            <Typography variant="body2" sx={{ mt: 1 }}>
+                              {files.length} {files.length === 1 ? 'imagem' : 'imagens'} selecionada(s)
+                            </Typography>
+                          )}
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} sx={{ mt: 2 }}>
+                        <Stack flexDirection='row' justifyContent='space-between'>
+                          <Button
+                            onClick={handleClose}
+                            sx={{
+                              height: 48,
+                              width: '45%',
+                              color: 'black',
+                              borderColor: 'transparent',
+                            }}
+                            variant="contained"
+                            color='secondary'
+                          >
+                            Cancelar
+                          </Button>
+                          <Button
+                            sx={{
+                              height: 48,
+                              width: '45%',
+                            }}
+                            variant="contained"
+                            color="primary"
+                            type='submit'
+                            disabled={isSubmitting}
+                          >
+                            {isSubmitting ? 'Carregando ...' : 'Solicitar resolução'}
+                          </Button>
+                        </Stack>
+                      </Grid>
+                    </Form>
+                  </FormProvider>
+                )}
+              </Formik>
+            </CardContent>
+          </Card>
         </Grid>
-      </div>
+      </Grid>
     </Modal>
   );
 }

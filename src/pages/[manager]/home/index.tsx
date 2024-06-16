@@ -23,7 +23,7 @@ export default function ManagerHome(): React.JSX.Element {
 
   React.useEffect(() => {
     fetch()
-  }, [state.modal.modal])
+  }, [state.modal.modal, state.modalDetails.modal])
 
   const applyFilters = () => {
     // let filtered = problems.filter(problem => {

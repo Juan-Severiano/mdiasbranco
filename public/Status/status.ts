@@ -3,7 +3,7 @@ import { IconOwnProps } from "@mui/material"
 export const status = {
   'Pendente': 'warning',
   'Rebebido': 'primary',
-  'Aprovado': 'success',
+  'Aproavado': 'success',
   'Análise': 'action',
   'Finalizado': 'info',
 } as {

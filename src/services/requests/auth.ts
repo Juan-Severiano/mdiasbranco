@@ -25,3 +25,8 @@ export async function registerRequest(registerParams: RegisterUser) {
   const response = await api.post('/user', formData);
   return response.data
 }
+
+export async function getUserById(id: string) {
+  const response = await api.get(`/user/${id}`)
+  return response.data
+}
