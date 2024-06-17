@@ -14,6 +14,7 @@ import { ProblemAnexos } from './anexos';
 import { SolutionDetails } from './solution';
 import { updateCallPartial } from '../../services/requests/call';
 import { ProblemDetailSector } from './details-sector';
+import { Sync } from '../core/sync';
 
 function ModalProblem() {
   const { dispatch, state } = useCustomContext()
@@ -30,18 +31,28 @@ function ModalProblem() {
   const handleEditorChange = async ({ text }: { text: string }) => {
     setMarkdownContent(text);
   };
-  
+
   const handleEditorClick = () => {
     setIsEditing(true);
   };
-  
+
   const handleBlur = async () => {
+    dispatch({ payload: true, type: 'CHANGE-LOADING' })
     await updateCallPartial({ 'description': markdownContent }, problem?.id!)
     setIsEditing(false);
+    dispatch({ payload: false, type: 'CHANGE-LOADING' })
   };
 
   const handleClose = () => {
     dispatch({ type: 'CLOSE-MODAL-DETAILS' })
+  };
+
+  const handleFinally = () => {
+    dispatch({ payload: true, type: 'CHANGE-LOADING' })
+    setTimeout(() => {
+      dispatch({ type: 'CLOSE-MODAL-DETAILS' })
+      dispatch({ payload: false, type: 'CHANGE-LOADING' })
+    }, 800)
   };
 
   return (
@@ -68,9 +79,12 @@ function ModalProblem() {
                 </Stack>
               }
               action={
-                <IconButton onClick={handleClose} aria-label="Fechar">
-                  <Close />
-                </IconButton>
+                <Stack flexDirection='row' alignItems='center'>
+                  <Sync />
+                  <IconButton sx={{ ml: 2 }} onClick={state.loading.loading ? () => null : handleClose} aria-label="Fechar">
+                    <Close />
+                  </IconButton>
+                </Stack>
               } />
             <CardContent>
               <Grid container>
@@ -117,7 +131,7 @@ function ModalProblem() {
                         label={
                           <Box
                             sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            {!isEditing ? <><Pencil /> Editar</> : <><SaveOutlined color='action' /> Salvar</>}
+                            {!isEditing ? <><Pencil /> Editar</> : state.loading.loading ? <><SaveOutlined color='action' /> Salvando ...</> : <><SaveOutlined color='action' /> Salvar</>}
                           </Box>
                         }
                       />
@@ -139,7 +153,9 @@ function ModalProblem() {
               </Grid>
             </CardContent>
             <CardActions>
-              <Button fullWidth sx={{ height: 60 }} variant='contained'>Finalizar</Button>
+              <Button fullWidth sx={{ height: 60 }} onClick={handleFinally} variant='contained' disabled={state.loading.loading}>
+                {state.loading.loading ? 'Salvando ...' : 'Finalizar'}
+              </Button>
             </CardActions>
           </Card>
         </Grid>

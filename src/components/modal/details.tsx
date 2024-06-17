@@ -16,15 +16,17 @@ interface ProblemDetailProps {
 export function ProblemDetail({ title, ...rest }: ProblemDetailProps) {
   const [edit, setEdit] = useState(false)
   const [value, setValue] = useState(rest['state'])
-  const { state } = useCustomContext()
+  const { state, dispatch } = useCustomContext()
 
   const { modalDetails: { problem } } = state
 
   const handleChange = async (e: SelectChangeEvent<unknown>) => {
+    dispatch({ payload: true, type: 'CHANGE-LOADING' })
     if (typeof e.target.value === 'string') {
       setValue(e.target.value)
       await updateCallPartial({ 'status': e.target.value }, problem?.id!)
     }
+    dispatch({ payload: false, type: 'CHANGE-LOADING' })
   }
 
   return (

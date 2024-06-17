@@ -101,12 +101,14 @@ function StepForm() {
                 validationSchema={formSchema}
                 onSubmit={async (values, { resetForm, setFieldValue }) => {
                   console.log(values);
+                  dispatch({ payload: true, type: 'CHANGE-LOADING' })
                   const res = await createCall(values);
                   if (res.status === 201) {
                     resetForm()
                     setFieldValue('files', [])
                     handleClose()
                   }
+                  dispatch({ payload: false, type: 'CHANGE-LOADING' })
                 }}
               >
                 {({ handleSubmit, setFieldValue, errors, touched, isSubmitting }) => (

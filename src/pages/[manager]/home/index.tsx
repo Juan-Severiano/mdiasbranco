@@ -14,11 +14,13 @@ export default function ManagerHome(): React.JSX.Element {
   const [selectedPriority, setSelectedPriority] = React.useState('');
   const [selectedStatus, setSelectedStatus] = React.useState('');
   const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
-  const { state } = useCustomContext()
+  const { state, dispatch } = useCustomContext()
 
   const fetch = async () => {
+    dispatch({ payload: true, type: 'CHANGE-LOADING' })
     const res = await getCalls();
     setProblems(res)
+    dispatch({ payload: false, type: 'CHANGE-LOADING' })
   }
 
   React.useEffect(() => {

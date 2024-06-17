@@ -5,8 +5,19 @@ type ChangeModal = {
   payload: boolean
 }
 
-export type ModalAction = ChangeModal
+type ChangeLoading = {
+  type: 'CHANGE-LOADING',
+  payload: boolean
+}
 
+type Search = {
+  type: 'SEARCH',
+  payload: string
+}
+
+export type ModalAction = ChangeModal
+export type LoadingAction = ChangeLoading
+export type SearchAction = Search
 
 type ChangeModalDetails = {
   type: 'CHANGE-MODAL-DETAILS',

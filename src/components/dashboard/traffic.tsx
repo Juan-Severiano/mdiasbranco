@@ -51,8 +51,8 @@ function useChartOptions(labels: string[]) {
   return {
     chart: { background: 'transparent' },
     colors: [
-      theme.palette.neutral[300],
       theme.palette.success.main,
+      theme.palette.neutral[300],
       theme.palette.warning.main,
       theme.palette.primary.main,
       theme.palette.info.main,

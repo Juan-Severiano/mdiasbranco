@@ -15,16 +15,18 @@ interface ProblemDetailProps {
 export function ProblemDetailSector({ icon, title, ...rest }: ProblemDetailProps) {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState(rest['state']);
-  const { state } = useCustomContext();
+  const { state, dispatch } = useCustomContext();
 
   const { modalDetails: { problem } } = state;
 
   const handleChange = async (e: SelectChangeEvent<unknown>) => {
+    dispatch({ payload: true, type: 'CHANGE-LOADING' })
     const selectedValue = e.target.value as Sector;
     if (Object.values(Sector).includes(selectedValue)) {
       setValue(selectedValue);
       await updateCallPartial({ 'sector': selectedValue }, problem?.id!);
     }
+    dispatch({ payload: false, type: 'CHANGE-LOADING' })
   };
 
   return (

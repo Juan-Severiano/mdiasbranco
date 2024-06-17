@@ -52,7 +52,7 @@ export default function ManagerDashboard() {
         />
       </Grid>
       <Grid item lg={4} md={6} xs={12}>
-        <Traffic chartSeries={traffic} labels={['Análise', 'Aprovado', 'Pendente', 'Recebido', 'Finalizado']} sx={{ height: '100%' }} />
+        <Traffic chartSeries={traffic} labels={['Aprovado', 'Análise', 'Pendente', 'Recebido', 'Finalizado']} sx={{ height: '100%' }} />
       </Grid>
     </Grid>
   )

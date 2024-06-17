@@ -1,32 +1,14 @@
-import { Avatar, Button, FormControl, Grid, OutlinedInput, Stack, Tooltip, Typography, styled } from "@mui/material";
+import { Avatar, Button, Grid, Stack, Tooltip, Typography } from "@mui/material";
 import { usePopover } from "../../hooks/use-popover";
 import { UnloggedPopover } from "./unlogged-popover";
-import { Search } from "@mui/icons-material";
 import { localClient } from "../../lib/local/client";
 import { baseURL } from "../../config";
-
-const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
-  border: 'none !important',
-  outline: 'none',
-  '& .MuiOutlinedInput-input::placeholder': {
-    fontSize: '12px', // Defina o tamanho do placeholder aqui
-    color: '#999', // Defina a cor do placeholder se necessário
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    border: 'none', // Remove a borda
-  },
-  '&:hover .MuiOutlinedInput-notchedOutline': {
-    border: 'none', // Remove a borda no hover também, se necessário
-  },
-  '&:focus .MuiOutlinedInput-notchedOutline': {
-    boxShadow: `0 0 0 3px ${theme.palette.primary.main}80`, // Sombra com a cor do tema principal
-  },
-  backgroundColor: 'white'
-}));
+import { Sync } from "../../components/core/sync";
+import { SearchBar } from "../../components/core/search-bar";
 
 export default function TopNav() {
   // const { toggleTheme, mode } = useTheme();
-  // const { dispatch, state } = useCustomContext()
+  // const { state } = useCustomContext()
   const { data: user } = localClient.getUser()
   // const toggleTheme = () => {
   //   const newTheme = state.theme.theme === 'dark' ? 'light': 'dark'
@@ -40,27 +22,13 @@ export default function TopNav() {
         py: 2
       }} alignItems='center'>
         <Grid item xs={6} md={7.5}>
-          <FormControl fullWidth>
-            <CustomOutlinedInput
-              sx={{
-                height: 40
-              }}
-              placeholder="Pesquisar"
-              startAdornment={<Search color="disabled" fontSize="small" sx={{ mr: 2 }} />}
-            />
-          </FormControl>
+          <SearchBar />
         </Grid>
         <Grid item xs={0} md={1.5}></Grid>
         <Grid item xs={6} md={3} justifyItems='end'>
           <Stack alignItems='center' justifyContent='end' direction="row" spacing={1}>
-            {/* <Tooltip title="Trocar o tema">
-              <IconButton onClick={toggleTheme}>
-                {
-                  state.theme.theme == 'light' ? <Sun fontSize={18} /> : <Moon fontSize={18} />
-                }
-              </IconButton>
-            </Tooltip>
-            <Tooltip
+            <Sync />
+            {/* <Tooltip
               title="Notificações"
             >
               <IconButton>
