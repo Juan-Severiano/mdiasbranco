@@ -11,17 +11,18 @@ import { NavItemConfig } from '../../types/nav';
 import { Button, useTheme } from '@mui/material';
 import { IconLogin2 } from '@tabler/icons-react'
 import { Assignment } from '@mui/icons-material';
-import { useCustomContext } from '../../contexts/context';
 
-export function SideNav(): React.JSX.Element {
+interface SideNavProps {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export function SideNav({ setOpen }: SideNavProps): React.JSX.Element {
   const { pathname } = useLocation();
   const theme = useTheme();
-  const { dispatch } = useCustomContext()
   const navigate = useNavigate()
 
   const handleSignOut = React.useCallback(async (): Promise<void> => {
-    dispatch({ type: 'SIGN_OUT' })
-    navigate('/auth/login')
+    setOpen(true)
   }, [navigate]);
 
   return (

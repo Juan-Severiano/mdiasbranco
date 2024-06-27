@@ -38,7 +38,7 @@ const ManagerLayout = () => {
           bgcolor: "#f7f7fd"
         }}
       >
-        <SideNav />
+        <SideNav setOpen={setOpenNav} />
         <Box
           sx={{
             display: "flex",
@@ -54,7 +54,9 @@ const ManagerLayout = () => {
             sx={{
               position: "sticky",
               top: 0,
-              zIndex: "appBar"
+              zIndex: "appBar",
+              bgcolor: '#F7F7FDd0',
+              backdropFilter: 'blur(5px)',
             }}
           >
             <Stack
@@ -70,7 +72,9 @@ const ManagerLayout = () => {
               >
                 <MenuIcon />
               </IconButton>
-              <TopNav />
+              <Container>
+                <TopNav />
+              </Container>
             </Stack>
           </Box>
           <Container>

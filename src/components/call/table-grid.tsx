@@ -20,6 +20,7 @@ interface CustomersTableProps {
   page?: number;
   rows?: Problem[];
   rowsPerPage?: number;
+  reload: () => Promise<void>
 }
 
 export function ProblemsGrid({

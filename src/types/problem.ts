@@ -7,7 +7,7 @@ export interface Problem {
   // keywords?: string[]
   sector?: Sector
   // anexo: File | File[]
-  status?: 'pending' | 'open' | 'analisys' | 'concluted'
+  status?: string
   description_solution?: string
   responsible_startup?: Startup
   resolve_at?: string
@@ -59,11 +59,27 @@ export interface Attachment {
 export interface Startup {
   id?: number
   corporate_reason: string
+  name: string
   cnpj: string
   website: string
   linkedin: string
   email: string
   service: string
+  sector: Sector
+  attachments: Attachment[]
+}
 
-  sector: string
+export interface DashData {
+  countStatusCall: {
+    count: {
+      analysys: number
+      approved: number
+      finished: number
+      pending: number
+      received: number
+    }
+  }
+  countUsers: {
+    count: number
+  }
 }

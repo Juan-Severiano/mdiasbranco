@@ -12,6 +12,21 @@ export async function forgetPasswordSolicitation({ email }: { email: string }) {
 }
 
 export async function registerRequest(registerParams: RegisterUser) {
-  const response = await api.post('/user', registerParams);
+  const formData = new FormData();
+  formData.append('name', registerParams.name);
+  formData.append('mat', registerParams.mat);
+  formData.append('telphone', registerParams.telphone);
+  formData.append('password', registerParams.password);
+  formData.append('email', registerParams.email);
+  formData.append('sector', registerParams.sector);
+  formData.append('image', registerParams.files[0]);
+  console.log(registerParams.files[0])
+  console.log(formData)
+  const response = await api.post('/user', formData);
+  return response.data
+}
+
+export async function getUserById(id: string) {
+  const response = await api.get(`/user/${id}`)
   return response.data
 }

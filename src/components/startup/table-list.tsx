@@ -8,7 +8,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useSelection } from '../../hooks/use-selection';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import Settings from '@mui/icons-material/Settings';
 import { Startup } from '../../types/problem';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -46,8 +46,8 @@ export function StartupTable({
                 >
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">
-                      <Typography variant="subtitle2">Nome Da Startup</Typography>
-                      <Typography variant="body2">{row.corporate_reason}</Typography>
+                      <Typography variant="subtitle2">{row.name}</Typography>
+                      <Typography variant="body2">{row.service}</Typography>
                     </Stack>
                   </TableCell>
                   <TableCell>
@@ -60,25 +60,15 @@ export function StartupTable({
                         <Typography 
                         variant="body2"
                         textTransform={'uppercase'}
-                        >Cnpj</Typography>
+                        >{row.cnpj}</Typography>
                       </Stack>
                       <Stack spacing={1} flexDirection="row" alignItems="center">
                         <InterestsOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
-                        <Typography variant="body2">Razão Social</Typography>
+                        <Typography variant="body2">{row.corporate_reason}</Typography>
                       </Stack>
                     </Stack>
                   </TableCell>
                   <TableCell>
-                    <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
-                      <Typography
-                        variant="body2"
-                        color="action"
-                        textTransform="capitalize"
-                      >
-                        {row.service}
-                      </Typography>
-                    </Stack>
                     <Stack spacing={1} flexDirection="row" alignItems="center">
                       <EmailOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
                       <Typography
@@ -87,6 +77,16 @@ export function StartupTable({
                       textTransform="capitalize"
                       >
                         {row.email}
+                      </Typography>
+                    </Stack>
+                    <Stack spacing={1} flexDirection="row" alignItems="center">
+                      <Settings color="action" sx={{ fontSize: '1.25rem' }} />
+                      <Typography
+                        variant="body2"
+                        color="action"
+                        textTransform="capitalize"
+                      >
+                        {row.sector}
                       </Typography>
                     </Stack>
                   </TableCell>

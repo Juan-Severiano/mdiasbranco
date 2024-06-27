@@ -12,6 +12,7 @@ export interface RegisterUser {
   password: string
   telphone: string
   sector: Sector
+  files: File[]
 }
 
 export interface User extends RegisterUser {

@@ -3,6 +3,7 @@ import { usePopover } from "../../hooks/use-popover";
 import { UnloggedPopover } from "./unlogged-popover";
 import { Search } from "@mui/icons-material";
 import { localClient } from "../../lib/local/client";
+import { baseURL } from "../../config";
 
 const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
   border: 'none !important',
@@ -36,13 +37,9 @@ export default function TopNav() {
   return (
     <>
       <Grid container sx={{
-        py: 2,
-        backdropFilter: 'blur(5px)',
-        borderRadius: 2,
-        bgcolor: '#F7F7FDd0'
-      }}>
-        <Grid item xs={0} md={1}></Grid>
-        <Grid item xs={6} md={6.5}>
+        py: 2
+      }} alignItems='center'>
+        <Grid item xs={6} md={7.5}>
           <FormControl fullWidth>
             <CustomOutlinedInput
               sx={{
@@ -78,7 +75,7 @@ export default function TopNav() {
               ref={userPopover.anchorRef}
             >
               <Button>
-                <Avatar sx={{ mr: 2, maxWidth: 50 }} />
+                <Avatar sx={{ mr: 2, maxWidth: 50 }} src={`${baseURL}/user/attachment/${user.name.startsWith('Liliana') ? 'liliana' : 'martonio-perfil'}.jpeg`} />
                 <Stack justifyContent="center">
                   <Typography align="left" variant="subtitle1" color='#323232' fontSize={12} fontWeight={700}>{user?.name}</Typography>
                   <Typography align="left" variant="body2" color='#323232' fontSize={9}>{user?.role === 'manager' ? 'Gerente' : 'Colaborador'}</Typography>
@@ -87,7 +84,7 @@ export default function TopNav() {
             </Tooltip>
           </Stack>
         </Grid>
-      </Grid >
+      </Grid>
       <UnloggedPopover anchorEl={userPopover.anchorRef.current} onClose={userPopover.handleClose} open={userPopover.open} />
     </>
   )
