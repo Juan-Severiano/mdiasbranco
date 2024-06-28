@@ -16,14 +16,14 @@ export default function ManagerHome(): React.JSX.Element {
   const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
   const { state } = useCustomContext()
 
-  const fetch = async () => {
-    const res = await getCalls();
+  const fetch = async (search?: string) => {
+    const res = await getCalls(search);
     setProblems(res)
   }
 
   React.useEffect(() => {
-    fetch()
-  }, [state.modal.modal, state.modalDetails.modal])
+    fetch(state.search.search)
+  }, [state.modal.modal, state.modalDetails.modal, state.search.search])
 
   const applyFilters = () => {
     // let filtered = problems.filter(problem => {

@@ -1,58 +1,58 @@
-import { Card, CardHeader, IconButton, Modal, CardContent, CardActions, Button, Grid, Stack, Typography, Chip, Box } from '@mui/material';
-import { Close, CrisisAlert, SaveOutlined } from '@mui/icons-material'
 import { useCustomContext } from '../../contexts/context';
-import { Logo } from '../core/logo';
 import { useEffect, useState } from 'react';
-import { MarkDownEditor } from './markdown-editor';
-import ReactMarkdown from 'react-markdown';
-import { Heading } from '../custom/heading';
+import { Modal, Grid, Card, CardHeader, CardContent, CardActions, Button, Stack, IconButton, Chip, Box } from '@mui/material';
+import { Sync, Close, SaveOutlined, Keyboard, CrisisAlert } from '@mui/icons-material';
+import { getCallByID, updateCallPartial } from '../../services/requests/call';
 import { IconAlignJustified } from '@tabler/icons-react';
-import { Keyboard, ListBullets, Pencil } from '@phosphor-icons/react';
-import { WriteComment } from './write-comment';
+import { ListBullets } from '@phosphor-icons/react';
+import { Heading } from '../custom/heading';
 import { ProblemDetail } from './details';
+import { ProblemDetailSector } from './details-sector';
+import MarkDownEditor from './markdown-editor';
+import { WriteComment } from './write-comment';
 import { ProblemAnexos } from './anexos';
 import { SolutionDetails } from './solution';
-import { updateCallPartial } from '../../services/requests/call';
-import { ProblemDetailSector } from './details-sector';
-import { Sync } from '../core/sync';
 
 function ModalProblem() {
-  const { dispatch, state } = useCustomContext()
+  const { dispatch, state } = useCustomContext();
+  const { modalDetails: { problem } } = state;
+  // const [problem, setProblem] = useState<Problem>(problem2!);
+  const [markdownContent, setMarkdownContent] = useState<string>(state.modalDetails.problem?.description!);
+  const [comments, setComments] = useState(state.modalDetails.problem?.comments!);
 
-  const { modalDetails: { problem } } = state
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [markdownContent, setMarkdownContent] = useState<string>(problem?.description!);
+  // async function getProblem() {
+  //   const res = await getCallByID(problem!.id!);
+  //   setProblem(res);
+  // }
 
   useEffect(() => {
-    setMarkdownContent(problem?.description!)
-  }, [problem?.description])
+    setMarkdownContent(state.modalDetails.problem?.description!!);
+  }, [state.modalDetails.problem?.description!]);
+
+  // useEffect(() => {
+  //   getProblem();
+  // }, [getProblem]);
 
   const handleEditorChange = async ({ text }: { text: string }) => {
     setMarkdownContent(text);
   };
 
-  const handleEditorClick = () => {
-    setIsEditing(true);
-  };
-
   const handleBlur = async () => {
-    dispatch({ payload: true, type: 'CHANGE-LOADING' })
-    await updateCallPartial({ 'description': markdownContent }, problem?.id!)
-    setIsEditing(false);
-    dispatch({ payload: false, type: 'CHANGE-LOADING' })
+    dispatch({ payload: true, type: 'CHANGE-LOADING' });
+    await updateCallPartial({ 'description': markdownContent }, problem?.id!);
+    dispatch({ payload: false, type: 'CHANGE-LOADING' });
   };
 
   const handleClose = () => {
-    dispatch({ type: 'CLOSE-MODAL-DETAILS' })
+    dispatch({ type: 'CLOSE-MODAL-DETAILS' });
   };
 
   const handleFinally = () => {
-    dispatch({ payload: true, type: 'CHANGE-LOADING' })
+    dispatch({ payload: true, type: 'CHANGE-LOADING' });
     setTimeout(() => {
-      dispatch({ type: 'CLOSE-MODAL-DETAILS' })
-      dispatch({ payload: false, type: 'CHANGE-LOADING' })
-    }, 800)
+      dispatch({ type: 'CLOSE-MODAL-DETAILS' });
+      dispatch({ payload: false, type: 'CHANGE-LOADING' });
+    }, 800);
   };
 
   return (
@@ -71,13 +71,9 @@ function ModalProblem() {
     >
       <Grid container justifyContent='center' alignItems='center' >
         <Grid item xs={11} md={9}>
-          <Card>
+          <Card sx={{ position: 'relative' }}>
             <CardHeader
-              title={
-                <Stack width='100%' flexDirection='row' justifyContent='center'>
-                  <Logo theme='dark' width={200} />
-                </Stack>
-              }
+              sx={{ position: 'absolute', right: 0 }}
               action={
                 <Stack flexDirection='row' alignItems='center'>
                   <Sync />
@@ -90,7 +86,7 @@ function ModalProblem() {
               <Grid container>
                 <Grid item container xs={12} md={8} spacing={3}>
                   <Grid item xs={12}>
-                    <Heading color='primary' fontWeight={600} text={problem?.title!} icon={<Keyboard fontSize={32} style={{ marginRight: 20 }} />} />
+                    <Heading color='primary' fontWeight={600} text={problem?.title!} icon={<Keyboard fontSize='medium' style={{ marginRight: 20 }} />} />
                   </Grid>
                   <Grid item xs={12} container spacing={2}>
                     <Grid item xs={4}>
@@ -109,29 +105,19 @@ function ModalProblem() {
                   </Grid>
                   <Grid item xs={12}>
                     <Heading text='Descrição' icon={<IconAlignJustified style={{ marginRight: 20 }} />} />
-                    {
-                      isEditing ? (
-                        <MarkDownEditor
-                          handleBlur={handleBlur}
-                          handleEditorChange={handleEditorChange}
-                          content={markdownContent}
-                        />
-                      ) : (
-                        <Typography>
-                          <ReactMarkdown>
-                            {markdownContent}
-                          </ReactMarkdown>
-                        </Typography>
-                      )
-                    }
+                    <MarkDownEditor
+                      handleBlur={handleBlur}
+                      handleEditorChange={handleEditorChange}
+                      content={markdownContent}
+                    />
                     <Stack>
                       <Chip
                         sx={{ ml: 'auto' }}
-                        onClick={isEditing ? handleBlur : handleEditorClick}
+                        onClick={handleBlur}
                         label={
                           <Box
                             sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            {!isEditing ? <><Pencil /> Editar</> : state.loading.loading ? <><SaveOutlined color='action' /> Salvando ...</> : <><SaveOutlined color='action' /> Salvar</>}
+                            {state.loading.loading ? <><SaveOutlined color='action' /> Salvando ...</> : <><SaveOutlined color='action' /> Salvar</>}
                           </Box>
                         }
                       />
@@ -139,10 +125,10 @@ function ModalProblem() {
                   </Grid>
                   <Grid item xs={12}>
                     <Heading text='Atividades' icon={<ListBullets color='action' style={{ marginRight: 20 }} />} />
-                    <WriteComment />
+                    <WriteComment comments={comments} setComments={setComments} />
                   </Grid>
                 </Grid>
-                <Grid item container xs={12} md={4} spacing={3}>
+                <Grid item container sx={{ mt: 3 }} xs={12} md={4} spacing={3}>
                   <Grid item xs={12}>
                     <ProblemAnexos anexos={problem?.attachments!} />
                   </Grid>

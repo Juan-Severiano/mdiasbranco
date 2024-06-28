@@ -23,3 +23,21 @@ export const registerSchema = Yup.object().shape({
     )
     .max(6, 'Você pode enviar no máximo 6 imagens')
 });
+
+export const optionalSchema = Yup.object().shape({
+  email: Yup.string().email('Deve ser um email válido').max(255).optional(),
+  name: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').optional(),
+  telphone: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').optional(),
+  sector: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').optional(),
+  mat: Yup.string().min(4, 'Deve ter no mínimo 4 caracteres').optional(),
+  // files: Yup.array()
+  //   .of(
+  //     Yup.mixed().test('fileSize', 'O arquivo é muito grande', (value) => {
+  //       if (value) {
+  //         return (value as File).size <= 1024 * 1024;
+  //       }
+  //       return true;
+  //     })
+  //   )
+  //   .max(6, 'Você pode enviar no máximo 6 imagens')
+});

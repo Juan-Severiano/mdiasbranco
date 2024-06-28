@@ -12,6 +12,8 @@ import DefaultLayout from "../../layouts/user";
 import ForgotPassword from "../../pages/[auth]/forgot-password";
 import SimpleLayout from "../../layouts/simple";
 import CreateStartup from "../../pages/[startup]/create";
+import ManagerAccount from "../../pages/[manager]/account";
+import ManagerBookmarked from "../../pages/[manager]/bookmarked";
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
       {
         path: '/manager/historic',
         element: <ManagerHistoric />
+      },
+      {
+        path: '/manager/account',
+        element: <ManagerAccount />
+      },
+      {
+        path: '/manager/bookmark',
+        element: <ManagerBookmarked />
       },
     ]
   },

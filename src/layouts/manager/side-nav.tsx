@@ -5,7 +5,7 @@ import { Logo } from '../../components/core/logo';
 import { navItems } from './config';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunchOutlined';
-import { House } from '@phosphor-icons/react'
+import { Bookmark, House } from '@phosphor-icons/react'
 import RestoreIcon from '@mui/icons-material/Restore';
 import { NavItemConfig } from '../../types/nav';
 import { Button, useTheme } from '@mui/material';
@@ -116,6 +116,7 @@ function NavItem({ href, icon }: NavItemConfig): React.JSX.Element {
         {icon === 'home' && <House size={22} weight="fill" />}
         {icon === 'user' && <RocketLaunchIcon />}
         {icon === 'historic' && <RestoreIcon />}
+        {icon === 'bookmark' && <Bookmark size={22} weight="fill" />}
       </NavLink>
     </li>
   );

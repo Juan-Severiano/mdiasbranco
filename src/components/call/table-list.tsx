@@ -4,8 +4,8 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useSelection } from '../../hooks/use-selection';
-
-// ICONS
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import BookmarkOutlined from '@mui/icons-material/BookmarkAddOutlined';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -13,14 +13,15 @@ import Brightness1Icon from '@mui/icons-material/Brightness1';
 import dayjs from 'dayjs';
 import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
-
 import IconButton from '@mui/material/IconButton';
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 import { Trash } from '@phosphor-icons/react';
 import { usePopover } from '../../hooks/use-popover';
-import { deleteCall } from '../../services/requests/call';
+import { deleteCall, deleteCallByKeyPoint, saveCallByKeyPoint } from '../../services/requests/call';
 import { ConfirmPopover } from '../core/confirm-popover';
 import { status } from '../../constants/status';
+import { SelectKeyPointPopover } from '../core/select-key-point';
+import { localClient } from '../../lib/local/client';
 
 interface CustomersTableProps {
   count?: number;
@@ -37,19 +38,30 @@ export function CustomersTable({
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
+  const { data: user } = localClient.getUser()
   const { dispatch } = useCustomContext();
   const { selected } = useSelection(rowIds);
   const [id, setId] = React.useState(0)
   const [name, setName] = React.useState('')
-
+  const [keypoint, setKeypoint] = React.useState('exemplo1')
   const confirmPopover = usePopover<HTMLButtonElement>()
-
   const [confirm, setConfirm] = React.useState<boolean>(false)
 
   async function onDelete() {
     await deleteCall(id)
-    // await fetch()
     setConfirm(false)
+  }
+
+  async function handleBookmark(id: string, isTrue: boolean) {
+    setId(Number(id))
+    if (!isTrue) {
+      return await saveCallByKeyPoint(String(user!.id!), String(id), keypoint)
+    }
+    await deleteCallByKeyPoint(String(user!.id!), String(id))
+  }
+
+  async function onSave() {
+    await saveCallByKeyPoint(String(user!.id!), String(id), keypoint)
   }
 
   React.useEffect(() => {
@@ -134,7 +146,7 @@ export function CustomersTable({
                       </Stack>
                     </Stack>
                   </TableCell>
-                  <TableCell >
+                  <TableCell>
                     <Stack spacing={1} flexDirection="row" alignItems="center">
                       <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
                       <Typography
@@ -143,7 +155,6 @@ export function CustomersTable({
                         sx={{ fontSize: '0.875rem' }}
                         textTransform="capitalize"
                       >
-                        {/* {row.keywords![0]} */}
                         asd
                       </Typography>
                     </Stack>
@@ -160,26 +171,22 @@ export function CustomersTable({
                     </Stack>
                   </TableCell>
                   <TableCell>
-                    <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.875rem' }} textTransform="capitalize">
-                        Lorem
-                      </Typography>
-                    </Stack>
-                  </TableCell>
-                  <TableCell>
-                    <Stack alignItems='center' justifyContent='flex-end'>
+                    <Stack alignItems='center' flexDirection='row' justifyContent='space-between'>
+                      <IconButton color='info' onClick={() => handleBookmark(String(row!.id!), row.isBookmarked)}>
+                        {row.isBookmarked ? <BookmarkAddIcon /> : <BookmarkOutlined />}
+                      </IconButton>
                       <IconButton color='error' onClick={() => handleDelete(row.id!, row.title!)}>
                         <Trash />
                       </IconButton>
+                      <ConfirmPopover
+                        anchorEl={confirmPopover.anchorRef.current}
+                        onClose={confirmPopover.handleClose}
+                        open={confirmPopover.open}
+                        setConfirm={setConfirm}
+                        name={name}
+                      />
                     </Stack>
                   </TableCell>
-                  <ConfirmPopover
-                    anchorEl={confirmPopover.anchorRef.current}
-                    onClose={confirmPopover.handleClose}
-                    open={confirmPopover.open}
-                    setConfirm={setConfirm}
-                    name={name}
-                  />
                 </TableRow>
               );
             })}

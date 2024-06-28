@@ -1,1 +1,2 @@
-export const baseURL = 'http://18.231.222.88:3100'
+// export const baseURL = 'https://mdiasbranco-api.onrender.com'
+export const baseURL = 'http://localhost'

@@ -25,9 +25,13 @@ export async function createCall(data: CreateProblem) {
   return response;
 }
 
-export async function getCalls() {
+export async function getCalls(search?: string) {
   try {
-    const response = await api.get('/call')
+    const response = await api.get('/call', {
+      params: {
+        search: search
+      }
+    })
     console.log(response.data)
     return response.data
   } catch (err) {
@@ -47,7 +51,43 @@ export async function deleteCall(id: number) {
   }
 }
 
+export async function getCallByID(id: number) {
+  try {
+    const response = await api.get(`/call/${id}`)
+    console.log(response.data)
+    return response.data
+  } catch (err) {
+    console.log(err)
+    return isAxiosError(err) ? err : err
+  }
+}
+
+
 export async function updateCallPartial(partialCall:Partial<Problem>, id: number) {
   const response = await api.patch(`/call/${id}/`, partialCall)
+  return response.data
+}
+
+interface CreateComment {
+  user: number
+  call: number
+  message: string
+  problem: string
+}
+
+export async function createComment(comment: CreateComment) {
+  const response = await api.post('/comment', comment)
+  return response.data
+}
+
+export async function saveCallByKeyPoint(user_id: string, call_id: string, key_point: string) {
+  const response = await api.post('/user/save/key_points', {
+    user_id, call_id, key_point
+  })
+  return response.data
+}
+
+export async function deleteCallByKeyPoint(user_id: string, call_id: string) {
+  const response = await api.delete(`/user/save/key_points/?user_id=${user_id}&call_id=${call_id}`)
   return response.data
 }

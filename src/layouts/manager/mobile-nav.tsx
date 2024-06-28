@@ -12,7 +12,7 @@ import { Button } from '@mui/material';
 import { IconLogin } from '@tabler/icons-react';
 import { NavItemConfig } from '../../types/nav';
 import { Assignment, RocketLaunch } from '@mui/icons-material';
-import { House } from '@phosphor-icons/react';
+import { Bookmark, House } from '@phosphor-icons/react';
 
 export interface MobileNavProps {
   onClose?: () => void;
@@ -120,6 +120,7 @@ function NavItem({ href, icon, title }: NavItemConfig): React.JSX.Element {
         {icon === 'home' && <House size={22} weight="fill" style={{ marginRight: 20 }} />}
         {icon === 'user' && <RocketLaunch sx={{ mr: 2 }} />}
         {icon === 'historic' && <RestoreIcon sx={{ mr: 2 }} />}
+        {icon === 'bookmark' && <Bookmark size={22} weight="fill" />}
         {title}
       </NavLink>
     </li>

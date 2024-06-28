@@ -16,16 +16,22 @@ export default function ManagerHome(): React.JSX.Element {
   const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
   const { state, dispatch } = useCustomContext()
 
-  const fetch = async () => {
-    dispatch({ payload: true, type: 'CHANGE-LOADING' })
-    const res = await getCalls();
-    setProblems(res)
-    dispatch({ payload: false, type: 'CHANGE-LOADING' })
+  const fetch = async (search?: string) => {
+    dispatch({ payload: true, type: 'CHANGE-LOADING' });
+    const res = await getCalls(search);
+    setProblems(res);
+    if (state.modalDetails.modal) {
+      const problemToUpdate = problems.filter(problem => problem.id === state.modalDetails.problem?.id)
+      dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: {
+        problem: problemToUpdate[0]
+      } })
+    }
+    dispatch({ payload: false, type: 'CHANGE-LOADING' });
   }
 
   React.useEffect(() => {
-    fetch()
-  }, [state.modal.modal, state.modalDetails.modal])
+    fetch(state.search.search)
+  }, [state.modal.modal, state.modalDetails.modal, state.search.search])
 
   const applyFilters = () => {
     // let filtered = problems.filter(problem => {

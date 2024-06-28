@@ -1,24 +1,35 @@
-import markdownIt from "markdown-it";
-import MdEditor from 'react-markdown-editor-lite';
-import '../../styles/md-editor.css';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Box } from '@mui/material';
 
 interface MarkDownEditorProps {
-  content: string
-  handleEditorChange: ({ text }: { text: string }) => void
-  handleBlur: () => void
+  content: string;
+  handleEditorChange: ({ text }: { text: string }) => void;
+  handleBlur: () => void;
 }
 
-export function MarkDownEditor({ content, handleEditorChange, handleBlur }: MarkDownEditorProps) {
-
+function MarkDownEditor({ content, handleBlur, handleEditorChange }: MarkDownEditorProps) {
   return (
-    <>
-      <MdEditor
-        value={content}
-        style={{ height: '150px', width: '100%', marginTop: 10, marginBottom: 10 }}
-        renderHTML={(text) => markdownIt().render(text)}
-        onChange={handleEditorChange}
-        onBlur={handleBlur}
+    <Box sx={{ width: '100%', maxHeight: 200, my: 1, overflow: 'auto' }}>
+      <CKEditor
+        editor={ClassicEditor}
+        data={content}
+        onReady={(editor: any) => {
+          console.log('Editor is ready to use!', editor);
+        }}
+        onChange={(_: any, editor: any) => {
+          const data = editor.getData();
+          handleEditorChange({ text: data });
+        }}
+        onBlur={() => {
+          handleBlur();
+        }}
+        onFocus={(_: any, editor: any) => {
+          console.log('Focus.', editor);
+        }}
       />
-    </>
-  )
+    </Box>
+  );
 }
+
+export default MarkDownEditor;

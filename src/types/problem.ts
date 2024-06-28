@@ -15,6 +15,8 @@ export interface Problem {
   user?: User
   attachments: Attachment[]
   created_at: string
+  isBookmarked: boolean
+  comments: Comments[]
 }
 
 export interface CreateProblem {
