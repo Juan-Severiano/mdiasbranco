@@ -1,1 +1,1 @@
-export const baseURL = 'http://18.231.222.88:3100'
+export const baseURL = 'https://mdiasbranco.vercel.app'
