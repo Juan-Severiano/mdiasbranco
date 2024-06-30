@@ -38,13 +38,11 @@ export async function patchUser(registerParams: Partial<Omit<RegisterUser, 'file
     const value = registerParams[key as keyof typeof registerParams];
     if (value !== undefined) {
       if (key === 'sector') {
-        if (typeof value === 'string' && isValidSector(value as Sector)) {
-          return newData[key as keyof typeof newData] = value as Sector;
-        } else {
-          throw new Error(`Valor inválido para a chave '${key}'`);
+        if (isValidSector(value)) {
+          newData[key as 'sector'] = value;
         }
       } else {
-        newData[key as keyof typeof newData] = value as typeof newData[keyof typeof newData];
+        newData[key as keyof typeof newData] = value as any;
       }
     }
   });

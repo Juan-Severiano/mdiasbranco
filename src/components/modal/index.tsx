@@ -2,7 +2,7 @@ import { useCustomContext } from '../../contexts/context';
 import { useEffect, useState } from 'react';
 import { Modal, Grid, Card, CardHeader, CardContent, CardActions, Button, Stack, IconButton, Chip, Box } from '@mui/material';
 import { Sync, Close, SaveOutlined, Keyboard, CrisisAlert } from '@mui/icons-material';
-import { getCallByID, updateCallPartial } from '../../services/requests/call';
+import { updateCallPartial } from '../../services/requests/call';
 import { IconAlignJustified } from '@tabler/icons-react';
 import { ListBullets } from '@phosphor-icons/react';
 import { Heading } from '../custom/heading';

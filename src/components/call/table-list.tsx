@@ -20,7 +20,6 @@ import { usePopover } from '../../hooks/use-popover';
 import { deleteCall, deleteCallByKeyPoint, saveCallByKeyPoint } from '../../services/requests/call';
 import { ConfirmPopover } from '../core/confirm-popover';
 import { status } from '../../constants/status';
-import { SelectKeyPointPopover } from '../core/select-key-point';
 import { localClient } from '../../lib/local/client';
 
 interface CustomersTableProps {
@@ -43,7 +42,7 @@ export function CustomersTable({
   const { selected } = useSelection(rowIds);
   const [id, setId] = React.useState(0)
   const [name, setName] = React.useState('')
-  const [keypoint, setKeypoint] = React.useState('exemplo1')
+  const [keypoint] = React.useState('exemplo1')
   const confirmPopover = usePopover<HTMLButtonElement>()
   const [confirm, setConfirm] = React.useState<boolean>(false)
 
@@ -58,10 +57,6 @@ export function CustomersTable({
       return await saveCallByKeyPoint(String(user!.id!), String(id), keypoint)
     }
     await deleteCallByKeyPoint(String(user!.id!), String(id))
-  }
-
-  async function onSave() {
-    await saveCallByKeyPoint(String(user!.id!), String(id), keypoint)
   }
 
   React.useEffect(() => {

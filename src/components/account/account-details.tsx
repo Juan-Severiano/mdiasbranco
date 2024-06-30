@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
@@ -18,16 +17,13 @@ import { CustomInput } from '../custom/custom-input';
 import { AddIcCall, Assignment, Email, PermContactCalendar } from '@mui/icons-material';
 import CustomSelect from '../../styles/theme/custom-select';
 import { RotatingLines } from 'react-loader-spinner';
-import { useNavigate } from 'react-router-dom';
-import { patchUser } from '../../services/requests/auth';
 
 export function AccountDetails(): React.JSX.Element {
   const { data } = localClient.getUser()
-  const defaultValues = { ...data };
-  const [isPending, setIsPending] = React.useState<boolean>(false);
+  // const defaultValues = { ...data };
+  // const [isPending, setIsPending] = React.useState<boolean>(false);
   const theme = useTheme()
-  const [success, setSuccess] = React.useState(false);
-  const navigate = useNavigate()
+  const [success] = React.useState(false);
 
   return (
     <Card>
@@ -53,7 +49,7 @@ export function AccountDetails(): React.JSX.Element {
             }
           }}
         >
-          {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldValue }) => (
+          {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
             <form noValidate onSubmit={handleSubmit}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
