@@ -15,6 +15,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import InterestsOutlinedIcon from '@mui/icons-material/InterestsOutlined';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
+import { useNavigate } from 'react-router-dom';
 
 interface CustomersTableProps {
   count?: number;
@@ -30,6 +31,7 @@ export function StartupTable({
     return rows.map((customer) => customer.id);
   }, [rows]);
   const { selected } = useSelection(rowIds);
+  const navigate = useNavigate()
 
   return (
     <Card>
@@ -46,7 +48,22 @@ export function StartupTable({
                 >
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">
-                      <Typography variant="subtitle2">{row.name}</Typography>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          fontSize: '0.875rem',
+                          ":hover": {
+                            textDecoration: 'underline',
+                            cursor: 'pointer'
+                          }
+                        }}
+                        role="button"
+                        onClick={() => {
+                          navigate(`/manager/startup/${row.id}`)
+                        }}
+                      >
+                        {row.name}
+                      </Typography>
                       <Typography variant="body2">{row.service}</Typography>
                     </Stack>
                   </TableCell>
@@ -57,9 +74,9 @@ export function StartupTable({
                     >
                       <Stack spacing={1} flexDirection="row" alignItems="center">
                         <AssignmentIndOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
-                        <Typography 
-                        variant="body2"
-                        textTransform={'uppercase'}
+                        <Typography
+                          variant="body2"
+                          textTransform={'uppercase'}
                         >{row.cnpj}</Typography>
                       </Stack>
                       <Stack spacing={1} flexDirection="row" alignItems="center">
@@ -74,7 +91,7 @@ export function StartupTable({
                       <Typography
                         variant="body2"
                         color="action"
-                      textTransform="capitalize"
+                        textTransform="capitalize"
                       >
                         {row.email}
                       </Typography>

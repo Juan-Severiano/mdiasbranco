@@ -4,8 +4,8 @@ import { CustomersTable } from '../../../components/call/table-list';
 import { Problem } from '../../../types/problem';
 import { ProblemsGrid } from '../../../components/call/table-grid';
 import { getCalls } from '../../../services/requests/call';
-import { HistoricFilters } from '../../../components/historic/filter';
 import { useCustomContext } from '../../../contexts/context';
+import { CallFilters } from '../../../components/call/filter';
 
 export default function ManagerHome(): React.JSX.Element {
   const [problems, setProblems] = React.useState<Problem[]>([])
@@ -67,7 +67,7 @@ export default function ManagerHome(): React.JSX.Element {
 
   return (
     <Stack spacing={3}>
-      <HistoricFilters
+      <CallFilters
         setSearchKeyword={setSearchKeyword}
         setSelectedDate={setSelectedDate}
         setSelectedPriority={setSelectedPriority}

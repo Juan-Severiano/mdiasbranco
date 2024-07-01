@@ -82,6 +82,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100vw;
-  background-color: #f0f0f0; /* Ajuste a cor de fundo conforme necessário */
+  width: 100%;
+  background-color: #F7F7FD;
 }

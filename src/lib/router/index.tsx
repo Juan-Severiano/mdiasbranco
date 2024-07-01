@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Loading from '../../components/core/loading';
 import ErrorBoundary from '../../components/core/error-boundary';
+import ManagerStartupPortfolio from '../../pages/[manager]/startup/portfolio';
 
 const UserHome = lazy(() => import('../../pages/[user]/home'));
 const Login = lazy(() => import('../../pages/[auth]/login'));
@@ -117,6 +118,16 @@ export const router = createBrowserRouter([
           <Suspense fallback={<Loading />}>
             <ErrorBoundary>
               <ManagerStartup />
+            </ErrorBoundary>
+          </Suspense>
+        ),
+      },
+      {
+        path: '/manager/startup/:id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ManagerStartupPortfolio />
             </ErrorBoundary>
           </Suspense>
         ),
