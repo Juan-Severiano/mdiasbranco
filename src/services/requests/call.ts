@@ -82,12 +82,13 @@ export async function createComment(comment: CreateComment) {
 
 export async function saveCallByKeyPoint(user_id: string, call_id: string, key_point: string) {
   const response = await api.post('/user/save/key_points', {
-    user_id, call_id, key_point
+    user_id, call_id, key_point, note: ''
   })
   return response.data
 }
 
 export async function deleteCallByKeyPoint(user_id: string, call_id: string) {
+  console.log(`/user/save/key_points/?user_id=${user_id}&call_id=${call_id}`)
   const response = await api.delete(`/user/save/key_points/?user_id=${user_id}&call_id=${call_id}`)
   return response.data
 }

@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useSelection } from '../../hooks/use-selection';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkOutlined from '@mui/icons-material/BookmarkAddOutlined';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
@@ -34,12 +33,8 @@ export function CustomersTable({
   rows = [],
   reload
 }: CustomersTableProps): React.JSX.Element {
-  const rowIds = React.useMemo(() => {
-    return rows.map((customer) => customer.id);
-  }, [rows]);
   const { data: user } = localClient.getUser()
   const { dispatch } = useCustomContext();
-  const { selected } = useSelection(rowIds);
   const [id, setId] = React.useState(0)
   const [name, setName] = React.useState('')
   const [keypoint] = React.useState('exemplo1')
@@ -50,11 +45,12 @@ export function CustomersTable({
     await deleteCall(id)
     setConfirm(false)
   }
-
+  console.log(rows)
   async function handleBookmark(id: string, isTrue: boolean) {
     setId(Number(id))
     if (!isTrue) {
-      return await saveCallByKeyPoint(String(user!.id!), String(id), keypoint)
+      await saveCallByKeyPoint(String(user!.id!), String(id), keypoint)
+      return
     }
     await deleteCallByKeyPoint(String(user!.id!), String(id))
   }
@@ -81,12 +77,10 @@ export function CustomersTable({
         <Table sx={{ minWidth: '800px' }}>
           <TableBody>
             {rows.map((row) => {
-              const isSelected = selected?.has(row.id);
               return (
                 <TableRow
                   hover
                   key={row.id}
-                  selected={isSelected}
                 >
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="column">

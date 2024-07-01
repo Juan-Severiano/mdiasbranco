@@ -58,7 +58,7 @@ export function WriteComment({ comments, setComments, reload }: WriteCommentProp
           </IconButton>
         </Stack>
       </form>
-      {comments.map((item, index) => (
+      {comments?.map((item, index) => (
         <Stack key={index} flexDirection='row' width='80%' alignItems='center' sx={{ mt: 2, ml: 3 }}>
           <Avatar sx={{ width: 30, height: 30, mr: 2 }} />
           <Box>

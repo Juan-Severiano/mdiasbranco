@@ -8,6 +8,6 @@ const { data: user } = localClient.getUser()
 export const api = axios.create({
   baseURL: BASE_URL,
   params: {
-    id: user!.id!
+    id: user ? user.id : 1
   }
 });

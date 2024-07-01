@@ -1,82 +1,176 @@
-import { createBrowserRouter } from "react-router-dom";
-import UserHome from "../../pages/[user]/home";
-import Login from "../../pages/[auth]/login";
-import Register from "../../pages/[auth]/register";
-import SimpleLogin from "../../layouts/simple-login";
-import ManagerLayout from "../../layouts/manager";
-import ManagerDashboard from "../../pages/[manager]/dashboard";
-import ManagerHome from "../../pages/[manager]/home";
-import ManagerHistoric from "../../pages/[manager]/historic";
-import ManagerStartup from "../../pages/[manager]/startup";
-import DefaultLayout from "../../layouts/user";
-import ForgotPassword from "../../pages/[auth]/forgot-password";
-import SimpleLayout from "../../layouts/simple";
-import CreateStartup from "../../pages/[startup]/create";
-import ManagerAccount from "../../pages/[manager]/account";
-import ManagerBookmarked from "../../pages/[manager]/bookmarked";
+import { Suspense, lazy } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
+import Loading from '../../components/core/loading';
+import ErrorBoundary from '../../components/core/error-boundary';
+
+const UserHome = lazy(() => import('../../pages/[user]/home'));
+const Login = lazy(() => import('../../pages/[auth]/login'));
+const Register = lazy(() => import('../../pages/[auth]/register'));
+const SimpleLogin = lazy(() => import('../../layouts/simple-login'));
+const ManagerLayout = lazy(() => import('../../layouts/manager'));
+const ManagerDashboard = lazy(() => import('../../pages/[manager]/dashboard'));
+const ManagerHome = lazy(() => import('../../pages/[manager]/home'));
+const ManagerHistoric = lazy(() => import('../../pages/[manager]/historic'));
+const ManagerStartup = lazy(() => import('../../pages/[manager]/startup'));
+const DefaultLayout = lazy(() => import('../../layouts/user'));
+const ForgotPassword = lazy(() => import('../../pages/[auth]/forgot-password'));
+const SimpleLayout = lazy(() => import('../../layouts/simple'));
+const CreateStartup = lazy(() => import('../../pages/[startup]/create'));
+const ManagerAccount = lazy(() => import('../../pages/[manager]/account'));
+const ManagerBookmarked = lazy(() => import('../../pages/[manager]/bookmarked'));
 
 export const router = createBrowserRouter([
   {
-    element: <DefaultLayout />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary>
+          <DefaultLayout />
+        </ErrorBoundary>
+      </Suspense>
+    ),
     children: [
       {
         path: '/',
-        element: <UserHome />
-      }
-    ]
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <UserHome />
+            </ErrorBoundary>
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
-    element: <SimpleLogin />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary>
+          <SimpleLogin />
+        </ErrorBoundary>
+      </Suspense>
+    ),
     children: [
       {
         path: '/auth/login',
-        element: <Login />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <Login />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       },
       {
         path: '/auth/register',
-        element: <Register />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <Register />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       },
       {
         path: '/auth/forget-password',
-        element: <ForgotPassword />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ForgotPassword />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       }
     ]
   },
   {
-    element: <ManagerLayout />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary>
+          <ManagerLayout />
+        </ErrorBoundary>
+      </Suspense>
+    ),
     children: [
       {
         path: '/manager/home',
-        element: <ManagerDashboard />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ManagerDashboard />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       },
       {
         path: '/manager/solicitations',
-        element: <ManagerHome />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ManagerHome />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       },
       {
         path: '/manager/startup',
-        element: <ManagerStartup />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ManagerStartup />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       },
       {
         path: '/manager/historic',
-        element: <ManagerHistoric />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ManagerHistoric />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       },
       {
         path: '/manager/account',
-        element: <ManagerAccount />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ManagerAccount />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       },
       {
         path: '/manager/bookmark',
-        element: <ManagerBookmarked />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ManagerBookmarked />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       },
     ]
   },
   {
-    element: <SimpleLayout />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary>
+          <SimpleLayout />
+        </ErrorBoundary>
+      </Suspense>
+    ),
     children: [
       {
         path: '/startup/create',
-        element: <CreateStartup />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <CreateStartup />
+            </ErrorBoundary>
+          </Suspense>
+        ),
       }
     ]
   }

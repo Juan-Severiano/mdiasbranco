@@ -19,7 +19,7 @@ const ManagerLayout = () => {
     if (!user) {
       navigate('/auth/login')
     }
-  }, [user])
+  }, [])
 
   useEffect(() => {
     if (user?.role === 'manager') {
