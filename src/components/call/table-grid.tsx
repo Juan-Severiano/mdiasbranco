@@ -14,6 +14,7 @@ import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
 
 import { CardContent, Grid } from '@mui/material';
+import { status } from '../../constants/status';
 
 interface CustomersTableProps {
   count?: number;
@@ -49,23 +50,20 @@ export function ProblemsGrid({
                     {row.user?.name}
                   </Typography>
                   <Stack sx={{ display: 'flex', flexDirection: 'column' }} justifyContent="space-between">
-                    <Stack spacing={1} direction='row' marginTop={2} display={'flex'} alignItems={'center'}>
-                      <Brightness1Icon
-                        color={
-                          row.status === 'open'
-                            ? 'info'
-                            : row.status === 'analisys'
-                              ? 'warning'
-                              : row.status === 'pending'
-                                ? 'disabled'
-                                : !row.status ? 'disabled' : 'success'
-                        }
-                        sx={{ fontSize: '1.25rem' }}
-                      />
-                      <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>
-                        {!row.status ? 'Pendente' : row.status}
-                      </Typography>
-                    </Stack>
+                  <Stack spacing={1} flexDirection="row" alignItems="center">
+                        <Brightness1Icon
+                          color={status[row.status!]}
+                          sx={{ fontSize: '1.25rem' }}
+                        />
+                        <Typography
+                          variant="body2"
+                          color="textPrimary"
+                          sx={{ fontSize: '0.875rem' }}
+                          textTransform="capitalize"
+                        >
+                          {!row.status ? 'Pendente' : row.status}
+                        </Typography>
+                      </Stack>
                     <Stack spacing={1} direction='row' display={'flex'} alignItems={'center'}>
                       <CalendarMonthIcon color='action' sx={{ width: 17, height: 17, }} />
                       <Typography variant='body1' color='textSecondary' textTransform='capitalize' fontSize={15}>{dayjs(row.created_at).format('DD/MM/YYYY')}</Typography> {/* Data de resolução */}
