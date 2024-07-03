@@ -9,9 +9,14 @@ import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
 import { status } from '../../constants/status';
 
-//icones de ações
+// ícones de ações
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import BookmarkOutlined from '@mui/icons-material/BookmarkAddOutlined';
 import { Trash } from '@phosphor-icons/react';
+import { localClient } from '../../lib/local/client';
+import { usePopover } from '../../hooks/use-popover';
+import { deleteCall, deleteCallByKeyPoint, saveCallByKeyPoint } from '../../services/requests/call';
+import { ConfirmPopover } from '../core/confirm-popover';
 
 interface CustomersTableProps {
   count?: number;
@@ -27,6 +32,45 @@ interface ProblemCardProps {
 }
 
 const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onProblemClick }) => {
+  const { data: user } = localClient.getUser();
+  const { dispatch } = useCustomContext();
+  const [id, setId] = React.useState<number>(0);
+  const [name, setName] = React.useState<string>('');
+  const keypoint = 'exemplo1';
+  const confirmPopover = usePopover<HTMLButtonElement>();
+  const [confirm, setConfirm] = React.useState<boolean>(false);
+
+  async function onDelete() {
+    await deleteCall(id);
+    setConfirm(false);
+  }
+
+  async function handleBookmark(id: string, isTrue: boolean) {
+    setId(Number(id));
+    if (!isTrue) {
+      await saveCallByKeyPoint(String(user!.id!), String(id), keypoint);
+      return;
+    }
+    await deleteCallByKeyPoint(String(user!.id!), String(id));
+  }
+
+  React.useEffect(() => {
+    async function confirmAsd() {
+      if (confirm) {
+        await onDelete();
+        // Reload the parent component after deleting
+        await dispatch({ type: 'RELOAD' });
+      }
+    }
+    confirmAsd();
+  }, [confirm]);
+
+  const handleDelete = (id: number, name: string) => {
+    confirmPopover.handleOpen();
+    setId(id);
+    setName(name);
+  };
+
   return (
     <Grid item xs={12} sm={6} md={4} key={problem.id}>
       <Card>
@@ -36,18 +80,25 @@ const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onProblemClick }) =>
               variant="h6"
               gutterBottom
               fontSize={20}
-              sx={{ ":hover": { textDecoration: 'underline' } }}
+              sx={{ ':hover': { textDecoration: 'underline' } }}
               onClick={() => onProblemClick(problem)}
             >
               {problem.title}
             </Typography>
             <Stack direction="row" spacing={1}>
-              <IconButton aria-label="favoritar" color='info'>
-                <BookmarkAddIcon />
+              <IconButton color="info" onClick={() => handleBookmark(String(problem.id!), problem.isBookmarked)}>
+                {problem.isBookmarked ? <BookmarkAddIcon /> : <BookmarkOutlined />}
               </IconButton>
-              <IconButton aria-label="excluir" color='error'>
+              <IconButton color="error" onClick={() => handleDelete(problem.id!, problem.title!)}>
                 <Trash />
               </IconButton>
+              <ConfirmPopover
+                anchorEl={confirmPopover.anchorRef.current}
+                onClose={confirmPopover.handleClose}
+                open={confirmPopover.open}
+                setConfirm={setConfirm}
+                name={name}
+              />
             </Stack>
           </Stack>
           <Typography variant="body1" color="textSecondary" gutterBottom>
