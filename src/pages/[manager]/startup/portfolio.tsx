@@ -1,7 +1,4 @@
-import { Grid, Card, Skeleton, CardContent, Avatar, Stack, Box } from "@mui/material";
-import { Traffic } from "../../../components/dashboard/traffic";
-import { Sales } from "../../../components/dashboard/sales";
-import { TotalProfit } from "../../../components/dashboard/total-profit";
+import { Grid, Card, Avatar, Stack, Box } from "@mui/material";
 import { TasksProgress } from "../../../components/dashboard/tasks-progress";
 import { TotalCustomers } from "../../../components/dashboard/total-customers";
 import { Budget } from "../../../components/dashboard/budget";
@@ -32,7 +29,7 @@ export default function ManagerDashboard() {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={9}>
+      <Grid item xs={12} md={8}>
         <Card>
           <Box
             sx={{
@@ -56,16 +53,14 @@ export default function ManagerDashboard() {
                 height: 150,
                 left: 20,
                 borderRadius: '50%', // Deixa o perfil circular
-                marginBottom: '-57px',
-                
+                marginBottom: '-50px',
+
               }}
             />
-            <Stack spacing={2}>
-              {/* Aqui você pode adicionar outros componentes como desejado */}
-            </Stack>
           </Box>
+          
           <Grid container spacing={2}>
-            <Grid item lg={4} sm={6} xs={12}>
+            <Grid item lg={4} sm={6} xs={12} >
               <Budget diff={12} trend="up" sx={{ height: '100%' }} value="200" />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
@@ -77,12 +72,38 @@ export default function ManagerDashboard() {
           </Grid>
         </Card>
       </Grid>
-      <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-          <a href="#" style={{ margin: '5px 0', textDecoration: 'none', color: 'blue' }}>Website</a>
-          <a href="#" style={{ margin: '5px 0', textDecoration: 'none', color: 'blue' }}>LinkedIn</a>
-          <a href="#" style={{ margin: '5px 0', textDecoration: 'none', color: 'blue' }}>Instagram</a>
-        </div>
+      <Grid item xs={12} md={3}>
+        <Card>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '20px 40px', // Ajusta o padding horizontal para esticar mais
+              borderRadius: '10px',
+              bgcolor: 'background.default', // Cor de fundo pode ser ajustada
+              width: '100%', // Estica o Box para ocupar toda a largura do Card
+            }}
+          >
+            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: 'rgba(0, 0, 255, 0.1)', padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Website</a>
+            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: 'rgba(0, 0, 255, 0.1)', padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>LinkedIn</a>
+            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: 'rgba(0, 0, 255, 0.1)', padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Instagram</a>
+            {/* Linha dp*/}
+            <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
+            <iframe
+              title="Mapa"
+              width="100%"
+              height="155"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15931.810043721269!2d-39.841159468339214!3d-3.3617796248803655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c02d4be71cab27%3A0x76f1d2207639ec62!2sAmontada%2C%20CE%2C%2062500-000!5e0!3m2!1spt-BR!2sbr!4v1720024815652!5m2!1spt-BR!2sbr"
+              frameBorder="0"
+              style={{ border: '1px solid #ccc', borderRadius: '10px', overflow: 'hidden' }}
+              aria-hidden="false"
+            ></iframe>
+            {/* Linha dp */}
+            <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
+          </Box>
+        </Card>
       </Grid>
     </Grid>
   );
