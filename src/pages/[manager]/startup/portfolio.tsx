@@ -1,12 +1,12 @@
-import { Grid, Card, Avatar, Stack, Box } from "@mui/material";
-import { TasksProgress } from "../../../components/dashboard/tasks-progress";
-import { TotalCustomers } from "../../../components/dashboard/total-customers";
-import { Budget } from "../../../components/dashboard/budget";
-import { useEffect, useState } from "react";
-import { getDashboardData } from "../../../services/requests/dashboard";
-import { DashData } from "../../../types/problem";
-import coringa from "../../../../public/Status/Coringa.jpg";
-import img1 from "../.../../../../../public/Status/img1.jpeg"
+import React, { useEffect, useState } from 'react';
+import { Grid, Card, Avatar, Box, Typography } from '@mui/material';
+import { TasksProgress } from '../../../components/dashboard/tasks-progress';
+import { TotalCustomers } from '../../../components/dashboard/total-customers';
+import { Budget } from '../../../components/dashboard/budget';
+import { getDashboardData } from '../../../services/requests/dashboard';
+import { DashData } from '../../../types/problem';
+import coringa from '../../../../public/Status/Coringa.jpg';
+import img1 from '../../../../public/Status/img1.jpeg';
 
 export default function ManagerDashboard() {
   const [dash, setDash] = useState<DashData | null>(null);
@@ -22,7 +22,7 @@ export default function ManagerDashboard() {
 
   useEffect(() => {
     if (dash) {
-      const count = dash?.countStatusCall.count!;
+      const count = dash.countStatusCall.count!;
       setTraffic(Object.values(count));
     }
   }, [dash]);
@@ -30,7 +30,7 @@ export default function ManagerDashboard() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={8}>
-        <Card>
+        <Card sx={{ padding: '20px' }}>
           <Box
             sx={{
               display: 'flex',
@@ -39,8 +39,8 @@ export default function ManagerDashboard() {
               padding: '20px',
               borderRadius: '10px',
               marginBottom: '50px',
-              bgcolor: 'primary.main', // Cor de fundo pode ser ajustada
-              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3)), url(${img1})`, // Gradiente sobre a imagem de fundo
+              bgcolor: 'primary.main',
+              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3)), url(${img1})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
@@ -52,22 +52,53 @@ export default function ManagerDashboard() {
                 width: 150,
                 height: 150,
                 left: 20,
-                borderRadius: '50%', // Deixa o perfil circular
+                borderRadius: '50%',
                 marginBottom: '-50px',
-
               }}
             />
           </Box>
-          
+          <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
+            <Grid item>
+              <Box sx={{ textAlign: 'center' }}>
+                <Typography variant="h4">Nome da Startup</Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box sx={{ textAlign: 'center' }}>
+                <Typography variant="h6">(Setor)</Typography>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justifyContent="center" alignItems="center">
+            <Grid item xs={12}>
+              <Grid container spacing={2} justifyContent="center" alignItems="center">
+                <Grid item xs={4}>
+                  <Box sx={{ padding: '10px', backgroundColor: 'lightgray', borderRadius: '5px', textAlign: 'center', margin: '5px' }}>
+                    <Typography variant="body2" fontSize="0.8rem">Razão Social: Nome Razão</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={4}>
+                  <Box sx={{ padding: '10px', backgroundColor: 'lightgray', borderRadius: '5px', textAlign: 'center', margin: '5px' }}>
+                    <Typography variant="body2" fontSize="0.8rem">CNPJ: 00.000.000/0000-00</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={4}>
+                  <Box sx={{ padding: '10px', backgroundColor: 'lightgray', borderRadius: '5px', textAlign: 'center', margin: '5px' }}>
+                    <Typography variant="body2" fontSize="0.8rem">Área de Atuação: Nome da atuação</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
           <Grid container spacing={2}>
-            <Grid item lg={4} sm={6} xs={12} >
+            <Grid item lg={4} sm={6} xs={12}>
               <Budget diff={12} trend="up" sx={{ height: '100%' }} value="200" />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value={dash?.countStatusCall.count.received! || 0} />
+              <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value={dash?.countStatusCall.count.received || 0} />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <TasksProgress sx={{ height: '100%' }} diff={22} trend="up" value={dash?.countStatusCall.count.finished! || 0} />
+              <TasksProgress sx={{ height: '100%' }} diff={22} trend="up" value={dash?.countStatusCall.count.finished || 0} />
             </Grid>
           </Grid>
         </Card>
@@ -80,16 +111,15 @@ export default function ManagerDashboard() {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '20px 40px', // Ajusta o padding horizontal para esticar mais
+              padding: '20px 40px',
               borderRadius: '10px',
-              bgcolor: 'background.default', // Cor de fundo pode ser ajustada
-              width: '100%', // Estica o Box para ocupar toda a largura do Card
+              bgcolor: 'background.default',
+              width: '100%',
             }}
           >
             <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: 'rgba(0, 0, 255, 0.1)', padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Website</a>
             <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: 'rgba(0, 0, 255, 0.1)', padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>LinkedIn</a>
             <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: 'rgba(0, 0, 255, 0.1)', padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Instagram</a>
-            {/* Linha dp*/}
             <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
             <iframe
               title="Mapa"
@@ -100,7 +130,6 @@ export default function ManagerDashboard() {
               style={{ border: '1px solid #ccc', borderRadius: '10px', overflow: 'hidden' }}
               aria-hidden="false"
             ></iframe>
-            {/* Linha dp */}
             <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
           </Box>
         </Card>
