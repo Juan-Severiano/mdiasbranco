@@ -10,6 +10,7 @@ import { Startup } from '../../types/problem';
 import { Trash } from '@phosphor-icons/react';
 import { usePopover } from '../../hooks/use-popover';
 import { ConfirmPopover } from '../core/confirm-popover';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface CustomersTableProps {
   count?: number;
@@ -63,7 +64,7 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup, onStartupClick }) =>
             </Typography>
             <Stack direction="row" spacing={1}>
               <IconButton color="info">
-                {/* <BookmarkOutlined /> */}
+                <EditIcon />
               </IconButton>
               <IconButton color="error" onClick={() => handleDelete(startup.id!, startup.name!)}>
                 <Trash />
