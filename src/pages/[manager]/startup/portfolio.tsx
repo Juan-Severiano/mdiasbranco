@@ -64,13 +64,13 @@ export default function ManagerDashboard() {
               </Box>
             </Grid>
             <Grid item>
-              <Box sx={{ textAlign: 'center', marginTop: '10px'}}>
+              <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
                 <Typography variant="h6" sx={{ color: '#7A8995' }}>(Setor)</Typography>
               </Box>
             </Grid>
           </Grid>
 
-         
+
           <Box
             sx={{
               display: 'flex',
@@ -85,27 +85,25 @@ export default function ManagerDashboard() {
               color: '#3F3D56',
             }}
           >
-            <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px',paddingLeft: '10px' }}>
+            <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '10px' }}>
               Razão Social: <span style={{ fontWeight: 'normal' }}>Nome Razão</span>
             </Typography>
-            <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px',  paddingLeft: '60px' }}>
+            <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '60px' }}>
               CNPJ: <span style={{ fontWeight: 'normal' }}>00.000.000/0000-00</span>
             </Typography>
-            <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px',paddingLeft: '30px'  }}>
+            <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '30px' }}>
               Área de Atuação: <span style={{ fontWeight: 'normal' }}>Nome da atuação</span>
             </Typography>
           </Box>
-
-
           <Grid container spacing={2} sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
             <Grid item lg={4} sm={8} xs={12}>
-              <Budget diff={12} trend="up" sx={{ height: '100%', background: "#F0F4F8" }} value="200" />
+              <Budget diff={12} trend="up" sx={{ height: '100%', background: "#F0F4F8", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="200" />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <TotalCustomers diff={16} trend="down" sx={{ height: '100%', background: "#F0F4F8" }} value={dash?.countStatusCall.count.received || 0} />
+              <TotalCustomers diff={16} trend="down" sx={{ height: '100%', background: "#F0F4F8", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={dash?.countStatusCall.count.received || 0} />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <TasksProgress sx={{ height: '100%', background: "#F0F4F8" }} diff={22} trend="up" value={dash?.countStatusCall.count.finished || 0} />
+              <TasksProgress sx={{ height: '100%', background: "#F0F4F8", display: 'flex', alignItems: 'center', justifyContent: 'center' }} diff={22} trend="up" value={dash?.countStatusCall.count.finished || 0} />
             </Grid>
           </Grid>
         </Card>
@@ -124,12 +122,12 @@ export default function ManagerDashboard() {
               width: '100%',
             }}
           >
-            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue',  background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Website</a>
+            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Website</a>
 
-            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue',  background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>LinkedIn</a>
+            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>LinkedIn</a>
 
-            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue',  background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Instagram</a>
-            
+            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Instagram</a>
+
             <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
             <iframe
               title="Mapa"
