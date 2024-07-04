@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Card, Avatar, Box, Typography } from '@mui/material';
 import { TasksProgress } from '../../../components/dashboard/tasks-progress';
 import { TotalCustomers } from '../../../components/dashboard/total-customers';
@@ -30,7 +30,7 @@ export default function ManagerDashboard() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={8}>
-        <Card sx={{ padding: '20px' }}>
+        <Card>
           <Box
             sx={{
               display: 'flex',
@@ -57,50 +57,53 @@ export default function ManagerDashboard() {
               }}
             />
           </Box>
-          <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
-            <Grid item>
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h4">Nome da Startup</Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h6">(Setor)</Typography>
-              </Box>
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} justifyContent="center" alignItems="center">
-            <Grid item xs={12}>
-              <Grid container spacing={2} justifyContent="center" alignItems="center">
-                <Grid item xs={4}>
-                  <Box sx={{ padding: '10px', backgroundColor: 'lightgray', borderRadius: '5px', textAlign: 'center', margin: '5px' }}>
-                    <Typography variant="body2" fontSize="0.8rem">Razão Social: Nome Razão</Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}>
-                  <Box sx={{ padding: '10px', backgroundColor: 'lightgray', borderRadius: '5px', textAlign: 'center', margin: '5px' }}>
-                    <Typography variant="body2" fontSize="0.8rem">CNPJ: 00.000.000/0000-00</Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}>
-                  <Box sx={{ padding: '10px', backgroundColor: 'lightgray', borderRadius: '5px', textAlign: 'center', margin: '5px' }}>
-                    <Typography variant="body2" fontSize="0.8rem">Área de Atuação: Nome da atuação</Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid container spacing={2}>
-            <Grid item lg={4} sm={6} xs={12}>
-              <Budget diff={12} trend="up" sx={{ height: '100%' }} value="200" />
-            </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
-              <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value={dash?.countStatusCall.count.received || 0} />
-            </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
-              <TasksProgress sx={{ height: '100%' }} diff={22} trend="up" value={dash?.countStatusCall.count.finished || 0} />
-            </Grid>
-          </Grid>
+          <Grid container spacing={2} justifyContent="flex-start" alignItems="center" sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
+  <Grid item>
+    <Box sx={{ textAlign: 'center' }}>
+      <Typography variant="h4">Nome da Startup</Typography>
+    </Box>
+  </Grid>
+  <Grid item>
+    <Box sx={{ textAlign: 'center' }}>
+      <Typography variant="h6">(Setor)</Typography>
+    </Box>
+  </Grid>
+</Grid>
+
+<Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
+  <Grid item xs={12}>
+    <Grid container spacing={2} justifyContent="center" alignItems="center">
+      <Grid item xs={4}>
+        <Box sx={{ padding: '10px', backgroundColor: 'lightgray', borderRadius: '5px', textAlign: 'center', margin: '5px' }}>
+          <Typography variant="body2" fontSize="0.8rem">Razão Social: Nome Razão</Typography>
+        </Box>
+      </Grid>
+      <Grid item xs={4}>
+        <Box sx={{ padding: '10px', backgroundColor: 'lightgray', borderRadius: '5px', textAlign: 'center', margin: '5px' }}>
+          <Typography variant="body2" fontSize="0.8rem">CNPJ: 00.000.000/0000-00</Typography>
+        </Box>
+      </Grid>
+      <Grid item xs={4}>
+        <Box sx={{ padding: '10px', backgroundColor: 'lightgray', borderRadius: '5px', textAlign: 'center', margin: '5px' }}>
+          <Typography variant="body2" fontSize="0.8rem">Área de Atuação: Nome da atuação</Typography>
+        </Box>
+      </Grid>
+    </Grid>
+  </Grid>
+</Grid>
+
+<Grid container spacing={2} sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
+  <Grid item lg={4} sm={8} xs={12}>
+    <Budget diff={12} trend="up" sx={{ height: '100%', background: "lightgray" }} value="200" />
+  </Grid>
+  <Grid item lg={4} sm={6} xs={12}>
+    <TotalCustomers diff={16} trend="down" sx={{ height: '100%', background: "lightgray" }} value={dash?.countStatusCall.count.received || 0} />
+  </Grid>
+  <Grid item lg={4} sm={6} xs={12}>
+    <TasksProgress sx={{ height: '100%', background: "lightgray" }} diff={22} trend="up" value={dash?.countStatusCall.count.finished || 0} />
+  </Grid>
+</Grid>
+
         </Card>
       </Grid>
       <Grid item xs={12} md={3}>
