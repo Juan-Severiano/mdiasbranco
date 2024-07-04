@@ -4,7 +4,6 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import InterestsOutlinedIcon from '@mui/icons-material/InterestsOutlined';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
 import { Startup } from '../../types/problem';
 import { Trash } from '@phosphor-icons/react';
@@ -29,8 +28,8 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup, onStartupClick }) =>
   const navigate = useNavigate();
   const confirmPopover = usePopover<HTMLButtonElement>();
   const [confirm, setConfirm] = React.useState<boolean>(false);
-  const [id, setId] = React.useState<number>(0);
-  const [name, setName] = React.useState<string>('');
+  const [id, setId] = React.useState<number | null>(null);
+  const [name, setName] = React.useState<string | null>(null);
 
   const handleDelete = (id: number, name: string) => {
     confirmPopover.handleOpen();
@@ -81,21 +80,23 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup, onStartupClick }) =>
           <Typography variant="body1" color="textSecondary" gutterBottom>
             {startup.service}
           </Typography>
-          <Stack sx={{ display: 'flex', flexDirection: 'column' }} justifyContent="space-between">
+          <Stack spacing={1}>
             <Stack direction="row" spacing={1} alignItems="center">
               <InterestsOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
               <Typography variant="body2" textTransform="uppercase">
                 {startup.cnpj}
-              </Typography>
-              <AssignmentIndOutlinedIcon color="action" sx={{ fontSize: '1.25rem', marginLeft: 1 }} />
-              <Typography variant="body2" textTransform="uppercase">
-                {startup.corporate_reason}
               </Typography>
             </Stack>
             <Stack direction="row" spacing={1} alignItems="center">
               <EmailOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
               <Typography variant="body1" color="textSecondary" textTransform="capitalize" fontSize={15}>
                 {startup.email}
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <AssignmentIndOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
+              <Typography variant="body2" textTransform="uppercase">
+                {startup.corporate_reason}
               </Typography>
               <SettingsIcon color="action" sx={{ fontSize: '1.25rem', marginLeft: 1 }} />
               <Typography variant="body1" color="textSecondary" textTransform="capitalize" fontSize={15}>
