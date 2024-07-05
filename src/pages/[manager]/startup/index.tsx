@@ -4,6 +4,7 @@ import { Startup } from '../../../types/problem';
 import { StartupTable } from '../../../components/startup/table-list';
 import { CallFilters } from '../../../components/startup/filter';
 import { getStartups } from '../../../services/requests/startup';
+import { StartupGrid } from '../../../components/startup/table-grid';
 
 export default function ManagerStartup() {
   const [startups, setStartups] = React.useState<Startup[]>([])
@@ -27,7 +28,7 @@ export default function ManagerStartup() {
   return (
     <Stack spacing={3}>
       <CallFilters />
-      <StartupTable
+      <StartupGrid
         count={paginatedCustomers.length}
         page={page}
         rows={paginatedCustomers}
