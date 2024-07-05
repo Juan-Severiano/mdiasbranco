@@ -5,7 +5,10 @@ import { TotalCustomers } from '../../../components/dashboard/total-customers';
 import { Budget } from '../../../components/dashboard/budget';
 import { getDashboardData } from '../../../services/requests/dashboard';
 import { DashData } from '../../../types/problem';
-import coringa from '../../../../public/Status/Coringa.jpg';
+import img2 from '../../../../public/img2.jpg'
+import InstagramIcon from '@mui/icons-material/Instagram';
+import WebIcon from '@mui/icons-material/Web';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 export default function ManagerDashboard() {
   const [dash, setDash] = useState<DashData | null>(null);
@@ -39,14 +42,14 @@ export default function ManagerDashboard() {
               borderRadius: '10px',
               marginBottom: '70px',
               bgcolor: 'primary.main',
-              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3)), url(${coringa})`,
+              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3)), url(${img2})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           >
             <Avatar
               alt="Coringa"
-              src={coringa}
+              src={img2}
               sx={{
                 width: 150,
                 height: 150,
@@ -120,11 +123,20 @@ export default function ManagerDashboard() {
               width: '100%',
             }}
           >
-            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Website</a>
+            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
+              <WebIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
+              Website
+            </a>
 
-            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>LinkedIn</a>
+            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
+              <LinkedInIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
+              LinkedIn
+            </a>
 
-            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>Instagram</a>
+            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
+              <InstagramIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
+              Instagram
+            </a>
 
             <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
             <iframe
