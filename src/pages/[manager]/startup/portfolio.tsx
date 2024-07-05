@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Grid, Card, Avatar, Box, Typography } from '@mui/material';
+import { Grid, Card, Avatar, Box, Typography, Divider } from '@mui/material';
 import { TasksProgress } from '../../../components/dashboard/tasks-progress';
 import { TotalCustomers } from '../../../components/dashboard/total-customers';
 import { Budget } from '../../../components/dashboard/budget';
@@ -28,7 +28,7 @@ export default function ManagerDashboard() {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={9}>
         <Card>
           <Box
             sx={{
@@ -69,15 +69,13 @@ export default function ManagerDashboard() {
               </Box>
             </Grid>
           </Grid>
-
-
           <Box
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '10px',
-              backgroundColor: '#F0F4F8',
+              backgroundColor: '#f7f7fd',
               borderRadius: '10px',
               margin: '20px 20px',
               fontSize: '0.9rem',
@@ -97,13 +95,13 @@ export default function ManagerDashboard() {
           </Box>
           <Grid container spacing={2} sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
             <Grid item lg={4} sm={8} xs={12}>
-              <Budget diff={12} trend="up" sx={{ height: '100%', background: "#F0F4F8", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="200" />
+              <Budget diff={12} trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="200" />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <TotalCustomers diff={16} trend="down" sx={{ height: '100%', background: "#F0F4F8", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={dash?.countStatusCall.count.received || 0} />
+              <TotalCustomers diff={16} trend="down" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={dash?.countStatusCall.count.received || 0} />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <TasksProgress sx={{ height: '100%', background: "#F0F4F8", display: 'flex', alignItems: 'center', justifyContent: 'center' }} diff={22} trend="up" value={dash?.countStatusCall.count.finished || 0} />
+              <TasksProgress sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} diff={22} trend="up" value={dash?.countStatusCall.count.finished || 0} />
             </Grid>
           </Grid>
         </Card>

@@ -24,7 +24,7 @@ interface StartupCardProps {
   onStartupClick: (startup: Startup) => void;
 }
 
-const StartupCard: React.FC<StartupCardProps> = ({ startup, onStartupClick }) => {
+const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
   const navigate = useNavigate();
   const confirmPopover = usePopover<HTMLButtonElement>();
   const [confirm, setConfirm] = React.useState<boolean>(false);
@@ -57,7 +57,9 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup, onStartupClick }) =>
               gutterBottom
               fontSize={20}
               sx={{ ':hover': { textDecoration: 'underline' } }}
-              onClick={() => onStartupClick(startup)}
+              onClick={() => {
+                navigate(`/manager/startup/${startup.id}`)
+              }}
             >
               {startup.name}
             </Typography>
@@ -73,7 +75,7 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup, onStartupClick }) =>
                 onClose={confirmPopover.handleClose}
                 open={confirmPopover.open}
                 setConfirm={setConfirm}
-                name={name}
+                name={name!}
               />
             </Stack>
           </Stack>

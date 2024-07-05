@@ -8,6 +8,7 @@ import { StartupGrid } from '../../../components/startup/table-grid';
 
 export default function ManagerStartup() {
   const [startups, setStartups] = React.useState<Startup[]>([])
+  const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
 
   React.useEffect(() => {
     const get = async () => {
@@ -27,13 +28,28 @@ export default function ManagerStartup() {
 
   return (
     <Stack spacing={3}>
-      <CallFilters />
-      <StartupGrid
-        count={paginatedCustomers.length}
-        page={page}
-        rows={paginatedCustomers}
-        rowsPerPage={rowsPerPage}
+      <CallFilters
+        setToogleRender={setToogleRender}
+        toogleRender={toogleRender}
       />
+      {
+        toogleRender === 'grid' ? (
+          <StartupGrid
+            count={paginatedCustomers.length}
+            page={page}
+            rows={paginatedCustomers}
+            rowsPerPage={rowsPerPage} reload={function (): Promise<void> {
+              throw new Error('Function not implemented.');
+            }} />
+        ) : (
+          <StartupTable
+            count={paginatedCustomers.length}
+            page={page}
+            rows={paginatedCustomers}
+            rowsPerPage={rowsPerPage} />
+        )
+      }
+
     </Stack>
   );
 }

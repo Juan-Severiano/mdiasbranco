@@ -16,6 +16,8 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import InterestsOutlinedIcon from '@mui/icons-material/InterestsOutlined';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import { useNavigate } from 'react-router-dom';
+import { Avatar } from '@mui/material';
+import { baseURL } from '../../config';
 
 interface CustomersTableProps {
   count?: number;
@@ -40,6 +42,7 @@ export function StartupTable({
           <TableBody>
             {rows.map((row) => {
               const isSelected = selected?.has(row.id);
+              console.log(row)
               return (
                 <TableRow
                   hover
@@ -47,24 +50,29 @@ export function StartupTable({
                   selected={isSelected}
                 >
                   <TableCell>
-                    <Stack sx={{ marginLeft: 5 }} flexDirection="column">
-                      <Typography
-                        variant="subtitle2"
-                        sx={{
-                          fontSize: '0.875rem',
-                          ":hover": {
-                            textDecoration: 'underline',
-                            cursor: 'pointer'
-                          }
-                        }}
-                        role="button"
-                        onClick={() => {
-                          navigate(`/manager/startup/${row.id}`)
-                        }}
-                      >
-                        {row.name}
-                      </Typography>
-                      <Typography variant="body2">{row.service}</Typography>
+                    <Stack sx={{ marginLeft: 5 }} flexDirection="row">
+                      <Avatar
+                        src={`${baseURL}/startup/attachment/${row.attachments.path.split('\\')[1]}`}
+                      />
+                      <Stack sx={{ marginLeft: 2 }} flexDirection="column">
+                        <Typography
+                          variant="subtitle2"
+                          sx={{
+                            fontSize: '0.875rem',
+                            ":hover": {
+                              textDecoration: 'underline',
+                              cursor: 'pointer'
+                            }
+                          }}
+                          role="button"
+                          onClick={() => {
+                            navigate(`/manager/startup/${row.id}`)
+                          }}
+                        >
+                          {row.name}
+                        </Typography>
+                        <Typography variant="body2">{row.service}</Typography>
+                      </Stack>
                     </Stack>
                   </TableCell>
                   <TableCell>

@@ -68,7 +68,7 @@ export interface Startup {
   email: string
   service: string
   sector: Sector
-  attachments: Attachment[]
+  attachments: Attachment
 }
 
 export interface DashData {
