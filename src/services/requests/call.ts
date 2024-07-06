@@ -40,6 +40,21 @@ export async function getCalls(search?: string) {
   }
 }
 
+export async function getBookmarkedCalls(search?: string) {
+  try {
+    const response = await api.get('/user/save/key_points', {
+      params: {
+        search: search
+      }
+    })
+    console.log(response.data)
+    return response.data
+  } catch (err) {
+    console.log(err)
+    return isAxiosError(err) ? err : err
+  }
+}
+
 export async function deleteCall(id: number) {
   try {
     const response = await api.delete(`/call/${id}`)
@@ -89,6 +104,6 @@ export async function saveCallByKeyPoint(user_id: string, call_id: string, key_p
 
 export async function deleteCallByKeyPoint(user_id: string, call_id: string) {
   console.log(`/user/save/key_points/?user_id=${user_id}&call_id=${call_id}`)
-  const response = await api.delete(`/user/save/key_points/?user_id=${user_id}&call_id=${call_id}`)
+  const response = await api.delete(`/user/save/key_points/${user_id}/${call_id}`)
   return response.data
 }

@@ -1,19 +1,36 @@
 import { useEffect, useState } from 'react';
-import { Grid, Card, Avatar, Box, Typography, Divider } from '@mui/material';
+import { Grid, Card, Avatar, Box, Typography } from '@mui/material';
 import { TasksProgress } from '../../../components/dashboard/tasks-progress';
 import { TotalCustomers } from '../../../components/dashboard/total-customers';
 import { Budget } from '../../../components/dashboard/budget';
 import { getDashboardData } from '../../../services/requests/dashboard';
-import { DashData } from '../../../types/problem';
+import { DashData, Startup } from '../../../types/problem';
 import img2 from '../../../../public/img2.jpg'
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WebIcon from '@mui/icons-material/Web';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { useParams } from 'react-router-dom';
+import { getStartupById } from '../../../services/requests/startup';
+import { baseURL } from '../../../config';
 
 export default function ManagerDashboard() {
   const [dash, setDash] = useState<DashData | null>(null);
-  const [traffic, setTraffic] = useState<number[]>([10, 10, 10, 10, 10]);
+  const [startup, setStartup] = useState<Startup | null>(null);
+  const { id } = useParams()
 
+  async function getStartup() {
+    try {
+      const response = await getStartupById(id!)
+      setStartup(response)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    getStartup()
+  }, [getStartup, id])
+  
   useEffect(() => {
     const get = async () => {
       const res = await getDashboardData();
@@ -21,13 +38,6 @@ export default function ManagerDashboard() {
     };
     get();
   }, []);
-
-  useEffect(() => {
-    if (dash) {
-      const count = dash.countStatusCall.count!;
-      setTraffic(Object.values(count));
-    }
-  }, [dash]);
 
   return (
     <Grid container spacing={2}>
@@ -49,7 +59,7 @@ export default function ManagerDashboard() {
           >
             <Avatar
               alt="Coringa"
-              src={img2}
+              src={`${baseURL}/startup/attachment/${startup?.attachments.path.split('\\')[1]}`}
               sx={{
                 width: 150,
                 height: 150,
@@ -63,12 +73,12 @@ export default function ManagerDashboard() {
           <Grid container spacing={2} justifyContent="flex-start" alignItems="center" sx={{ paddingLeft: '25px', paddingRight: '20px', marginBottom: '20px' }}>
             <Grid item>
               <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h4" sx={{ color: '#003F7D' }}>Nome da Startup</Typography>
+                <Typography variant="h4" sx={{ color: '#003F7D' }}>{startup?.name ?? 'Nome'}</Typography>
               </Box>
             </Grid>
             <Grid item>
               <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
-                <Typography variant="h6" sx={{ color: '#7A8995' }}>(Setor)</Typography>
+                <Typography variant="h6" sx={{ color: '#7A8995' }}>{startup?.sector}</Typography>
               </Box>
             </Grid>
           </Grid>
@@ -87,13 +97,13 @@ export default function ManagerDashboard() {
             }}
           >
             <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '10px' }}>
-              Razão Social: <span style={{ fontWeight: 'normal' }}>Nome Razão</span>
+              Razão Social: <span style={{ fontWeight: 'normal' }}>{startup?.corporate_reason}</span>
             </Typography>
             <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '60px' }}>
-              CNPJ: <span style={{ fontWeight: 'normal' }}>00.000.000/0000-00</span>
+              CNPJ: <span style={{ fontWeight: 'normal' }}>{startup?.cnpj}</span>
             </Typography>
             <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '30px' }}>
-              Área de Atuação: <span style={{ fontWeight: 'normal' }}>Nome da atuação</span>
+              Área de Atuação: <span style={{ fontWeight: 'normal' }}>{startup?.service}</span>
             </Typography>
           </Box>
           <Grid container spacing={2} sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
@@ -123,21 +133,18 @@ export default function ManagerDashboard() {
               width: '100%',
             }}
           >
-            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
+            <a href={startup?.website} target='_blank' style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#f7f7fd", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
               <WebIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
               Website
             </a>
-
-            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
+            <a href={startup?.linkedin} target='_blank' style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#f7f7fd", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
               <LinkedInIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
               LinkedIn
             </a>
-
-            <a href="#" style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#F0F4F8", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
+            <a href={startup?.linkedin} target='_blank' style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#f7f7fd", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
               <InstagramIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
               Instagram
             </a>
-
             <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
             <iframe
               title="Mapa"

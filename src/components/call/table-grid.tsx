@@ -12,6 +12,11 @@ import { status } from '../../constants/status';
 //icones de ações
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import { Trash } from '@phosphor-icons/react';
+import { deleteCall, deleteCallByKeyPoint, saveCallByKeyPoint } from '../../services/requests/call';
+import { localClient } from '../../lib/local/client';
+import { usePopover } from '../../hooks/use-popover';
+import BookmarkOutlined from '@mui/icons-material/BookmarkAddOutlined';
+import { ConfirmPopover } from '../core/confirm-popover';
 
 interface CustomersTableProps {
   count?: number;
@@ -24,9 +29,43 @@ interface CustomersTableProps {
 interface ProblemCardProps {
   problem: Problem;
   onProblemClick: (problem: Problem) => void;
+  reload: () => Promise<void>;
 }
 
-const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onProblemClick }) => {
+const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onProblemClick, reload }) => {
+  const { data: user } = localClient.getUser()
+  const [keypoint] = React.useState('exemplo1')
+  const confirmPopover = usePopover<HTMLButtonElement>()
+  const [confirm, setConfirm] = React.useState<boolean>(false)
+
+  async function onDelete() {
+    await deleteCall(problem.id!)
+    setConfirm(false)
+  }
+  async function handleBookmark() {
+    if (!problem.isBookmarked) {
+      await saveCallByKeyPoint(String(user!.id!), String(problem.id), keypoint)
+      await reload()
+      return
+    }
+    await deleteCallByKeyPoint(String(user!.id!), String(problem.id))
+    await reload()
+  }
+
+  React.useEffect(() => {
+    async function confirmAsd() {
+      if (confirm) {
+        await onDelete()
+        await reload()
+      }
+    }
+    confirmAsd()
+  }, [confirm, confirmPopover.open])
+
+  const handleDelete = async () => {
+    confirmPopover.handleOpen()
+  };
+
   return (
     <Grid item xs={12} sm={6} md={4} key={problem.id}>
       <Card>
@@ -42,10 +81,10 @@ const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onProblemClick }) =>
               {problem.title}
             </Typography>
             <Stack direction="row" spacing={1}>
-              <IconButton aria-label="favoritar" color='info'>
-                <BookmarkAddIcon />
+              <IconButton aria-label="favoritar" onClick={handleBookmark} color='info'>
+                {problem.isBookmarked ? <BookmarkAddIcon /> : <BookmarkOutlined />}
               </IconButton>
-              <IconButton aria-label="excluir" color='error'>
+              <IconButton aria-label="excluir" onClick={handleDelete} color='error'>
                 <Trash />
               </IconButton>
             </Stack>
@@ -56,7 +95,7 @@ const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onProblemClick }) =>
           <Stack sx={{ display: 'flex', flexDirection: 'column' }} justifyContent="space-between">
             <Stack spacing={1} direction="row" alignItems="center">
               <Brightness1Icon
-                color={status[problem.status!] || 'default'}
+                color={status[problem.status!]}
                 sx={{ fontSize: '1.25rem' }}
               />
               <Typography
@@ -83,6 +122,13 @@ const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onProblemClick }) =>
               <Typography variant="body1" color="textSecondary" textTransform="capitalize" fontSize={15}>
                 {problem.sector}
               </Typography>
+              <ConfirmPopover
+                anchorEl={confirmPopover.anchorRef.current}
+                onClose={confirmPopover.handleClose}
+                open={confirmPopover.open}
+                setConfirm={setConfirm}
+                name={problem.title}
+              />
             </Stack>
           </Stack>
         </CardContent>
@@ -91,7 +137,7 @@ const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onProblemClick }) =>
   );
 };
 
-export const ProblemsGrid: React.FC<CustomersTableProps> = ({ rows = [] }) => {
+export const ProblemsGrid: React.FC<CustomersTableProps> = ({ rows = [], reload }) => {
   const { dispatch } = useCustomContext();
 
   const handleProblemClick = (problem: Problem) => {
@@ -103,9 +149,9 @@ export const ProblemsGrid: React.FC<CustomersTableProps> = ({ rows = [] }) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={1.5} columns={{ xs: 4, sm: 8, md: 12 }}>
+      <Grid container spacing={1.5} justifyContent='center' columns={{ xs: 4, sm: 8, md: 12 }}>
         {rows.map((row) => (
-          <ProblemCard key={row.id} problem={row} onProblemClick={handleProblemClick} />
+          <ProblemCard key={row.id} problem={row} onProblemClick={handleProblemClick} reload={reload} />
         ))}
       </Grid>
     </Box>

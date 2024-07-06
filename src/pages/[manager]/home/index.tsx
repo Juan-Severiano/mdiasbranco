@@ -22,9 +22,11 @@ export default function ManagerHome(): React.JSX.Element {
     setProblems(res);
     if (state.modalDetails.modal) {
       const problemToUpdate = problems.filter(problem => problem.id === state.modalDetails.problem?.id)
-      dispatch({ type: 'CHANGE-MODAL-DETAILS', payload: {
-        problem: problemToUpdate[0]
-      } })
+      dispatch({
+        type: 'CHANGE-MODAL-DETAILS', payload: {
+          problem: problemToUpdate[0]
+        }
+      })
     }
     dispatch({ payload: false, type: 'CHANGE-LOADING' });
   }
@@ -32,6 +34,11 @@ export default function ManagerHome(): React.JSX.Element {
   React.useEffect(() => {
     fetch(state.search.search)
   }, [state.modal.modal, state.modalDetails.modal, state.search.search])
+  React.useEffect(() => {
+    if (state.loading.refresh) {
+      fetch(state.search.search)
+    }
+  }, [state.loading.refresh])
 
   const applyFilters = () => {
     // let filtered = problems.filter(problem => {

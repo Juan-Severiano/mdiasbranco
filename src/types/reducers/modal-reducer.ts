@@ -10,13 +10,18 @@ type ChangeLoading = {
   payload: boolean
 }
 
+type ChangeRefresh = {
+  type: 'CHANGE-REFRESH',
+  payload: boolean
+}
+
 type Search = {
   type: 'SEARCH',
   payload: string
 }
 
 export type ModalAction = ChangeModal
-export type LoadingAction = ChangeLoading
+export type LoadingAction = ChangeLoading | ChangeRefresh
 export type SearchAction = Search
 
 type ChangeModalDetails = {

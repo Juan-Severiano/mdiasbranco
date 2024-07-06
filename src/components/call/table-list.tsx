@@ -33,26 +33,43 @@ export function CustomersTable({
   rows = [],
   reload
 }: CustomersTableProps): React.JSX.Element {
+
+  return (
+    <Card>
+      <Box sx={{ overflowX: 'auto' }}>
+        <Table sx={{ minWidth: '800px' }}>
+          <TableBody>
+            {rows.map((row) => {
+              return (
+                <CallRow call={row} reload={reload} />
+              );
+            })}
+          </TableBody>
+        </Table>
+      </Box>
+    </Card>
+  );
+}
+
+function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<void> }) {
   const { data: user } = localClient.getUser()
   const { dispatch } = useCustomContext();
-  const [id, setId] = React.useState(0)
-  const [name, setName] = React.useState('')
   const [keypoint] = React.useState('exemplo1')
   const confirmPopover = usePopover<HTMLButtonElement>()
   const [confirm, setConfirm] = React.useState<boolean>(false)
 
   async function onDelete() {
-    await deleteCall(id)
+    await deleteCall(row.id!)
     setConfirm(false)
   }
-  console.log(rows)
-  async function handleBookmark(id: string, isTrue: boolean) {
-    setId(Number(id))
-    if (!isTrue) {
-      await saveCallByKeyPoint(String(user!.id!), String(id), keypoint)
+  async function handleBookmark() {
+    if (!row.isBookmarked) {
+      await saveCallByKeyPoint(String(user!.id!), String(row.id), keypoint)
+      await reload()
       return
     }
-    await deleteCallByKeyPoint(String(user!.id!), String(id))
+    await deleteCallByKeyPoint(String(user!.id!), String(row.id))
+    await reload()
   }
 
   React.useEffect(() => {
@@ -65,123 +82,109 @@ export function CustomersTable({
     confirmAsd()
   }, [confirm, confirmPopover.open])
 
-  const handleDelete = async (id: number, name: string) => {
+  const handleDelete = async () => {
     confirmPopover.handleOpen()
-    setId(id)
-    setName(name)
   };
 
   return (
-    <Card>
-      <Box sx={{ overflowX: 'auto' }}>
-        <Table sx={{ minWidth: '800px' }}>
-          <TableBody>
-            {rows.map((row) => {
-              return (
-                <TableRow
-                  hover
-                  key={row.id}
-                >
-                  <TableCell>
-                    <Stack sx={{ marginLeft: 5 }} flexDirection="column">
-                      <Typography
-                        variant="subtitle2"
-                        sx={{
-                          fontSize: '0.875rem',
-                          ":hover": {
-                            textDecoration: 'underline',
-                            cursor: 'pointer'
-                          }
-                        }}
-                        role="button"
-                        onClick={() => {
-                          dispatch({
-                            type: 'CHANGE-MODAL-DETAILS',
-                            payload: { problem: row }
-                          });
-                        }}
-                      >
-                        {row.title}
-                      </Typography>
-                      <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
-                        {row.user?.name}
-                      </Typography>
-                    </Stack>
-                  </TableCell>
-                  <TableCell>
-                    <Stack
-                      sx={{ display: 'flex', flexDirection: 'column' }}
-                      justifyContent="center"
-                    >
-                      <Stack spacing={1} flexDirection="row" alignItems="center">
-                        <Brightness1Icon
-                          color={status[row.status!]}
-                          sx={{ fontSize: '1.25rem' }}
-                        />
-                        <Typography
-                          variant="body2"
-                          color="textPrimary"
-                          sx={{ fontSize: '0.875rem' }}
-                          textTransform="capitalize"
-                        >
-                          {!row.status ? 'Pendente' : row.status}
-                        </Typography>
-                      </Stack>
-                      <Stack spacing={1} flexDirection="row" alignItems="center">
-                        <CalendarMonthIcon color="action" sx={{ fontSize: '1.25rem' }} />
-                        <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.875rem' }}>
-                          {dayjs(row.created_at).format('DD/MM/YYYY')}
-                        </Typography>
-                      </Stack>
-                    </Stack>
-                  </TableCell>
-                  <TableCell>
-                    <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
-                      <Typography
-                        variant="body2"
-                        color="textPrimary"
-                        sx={{ fontSize: '0.875rem' }}
-                        textTransform="capitalize"
-                      >
-                        asd
-                      </Typography>
-                    </Stack>
-                    <Stack spacing={1} flexDirection="row" alignItems="center">
-                      <SettingsIcon color="action" sx={{ fontSize: '1.25rem' }} />
-                      <Typography
-                        variant="body2"
-                        color="textPrimary"
-                        sx={{ fontSize: '0.875rem' }}
-                        textTransform="capitalize"
-                      >
-                        {row.sector}
-                      </Typography>
-                    </Stack>
-                  </TableCell>
-                  <TableCell>
-                    <Stack alignItems='center' flexDirection='row' justifyContent='space-between'>
-                      <IconButton color='info' onClick={() => handleBookmark(String(row!.id!), row.isBookmarked)}>
-                        {row.isBookmarked ? <BookmarkAddIcon /> : <BookmarkOutlined />}
-                      </IconButton>
-                      <IconButton color='error' onClick={() => handleDelete(row.id!, row.title!)}>
-                        <Trash />
-                      </IconButton>
-                      <ConfirmPopover
-                        anchorEl={confirmPopover.anchorRef.current}
-                        onClose={confirmPopover.handleClose}
-                        open={confirmPopover.open}
-                        setConfirm={setConfirm}
-                        name={name}
-                      />
-                    </Stack>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </Box>
-    </Card>
-  );
+    <TableRow
+      hover
+      key={row.id}
+    >
+      <TableCell>
+        <Stack sx={{ marginLeft: 5 }} flexDirection="column">
+          <Typography
+            variant="subtitle2"
+            sx={{
+              fontSize: '0.875rem',
+              ":hover": {
+                textDecoration: 'underline',
+                cursor: 'pointer'
+              }
+            }}
+            role="button"
+            onClick={() => {
+              dispatch({
+                type: 'CHANGE-MODAL-DETAILS',
+                payload: { problem: row }
+              });
+            }}
+          >
+            {row.title}
+          </Typography>
+          <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+            {row.user?.name}
+          </Typography>
+        </Stack>
+      </TableCell>
+      <TableCell>
+        <Stack
+          sx={{ display: 'flex', flexDirection: 'column' }}
+          justifyContent="center"
+        >
+          <Stack spacing={1} flexDirection="row" alignItems="center">
+            <Brightness1Icon
+              color={status[row.status!]}
+              sx={{ fontSize: '1.25rem' }}
+            />
+            <Typography
+              variant="body2"
+              color="textPrimary"
+              sx={{ fontSize: '0.875rem' }}
+              textTransform="capitalize"
+            >
+              {!row.status ? 'Pendente' : row.status}
+            </Typography>
+          </Stack>
+          <Stack spacing={1} flexDirection="row" alignItems="center">
+            <CalendarMonthIcon color="action" sx={{ fontSize: '1.25rem' }} />
+            <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.875rem' }}>
+              {dayjs(row.created_at).format('DD/MM/YYYY')}
+            </Typography>
+          </Stack>
+        </Stack>
+      </TableCell>
+      <TableCell>
+        <Stack spacing={1} flexDirection="row" alignItems="center">
+          <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
+          <Typography
+            variant="body2"
+            color="textPrimary"
+            sx={{ fontSize: '0.875rem' }}
+            textTransform="capitalize"
+          >
+            asd
+          </Typography>
+        </Stack>
+        <Stack spacing={1} flexDirection="row" alignItems="center">
+          <SettingsIcon color="action" sx={{ fontSize: '1.25rem' }} />
+          <Typography
+            variant="body2"
+            color="textPrimary"
+            sx={{ fontSize: '0.875rem' }}
+            textTransform="capitalize"
+          >
+            {row.sector}
+          </Typography>
+        </Stack>
+      </TableCell>
+      <TableCell>
+        <Stack alignItems='center' flexDirection='row' justifyContent='space-between'>
+          <IconButton color='info' onClick={handleBookmark}>
+            {row.isBookmarked ? <BookmarkAddIcon /> : <BookmarkOutlined />}
+          </IconButton>
+          <IconButton color='error' onClick={handleDelete}>
+            <Trash />
+          </IconButton>
+          <ConfirmPopover
+            anchorEl={confirmPopover.anchorRef.current}
+            onClose={confirmPopover.handleClose}
+            open={confirmPopover.open}
+            setConfirm={setConfirm}
+            name={row.title}
+          />
+        </Stack>
+      </TableCell>
+    </TableRow>
+  )
 }

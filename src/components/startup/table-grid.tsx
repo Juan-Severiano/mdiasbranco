@@ -10,6 +10,7 @@ import { Trash } from '@phosphor-icons/react';
 import { usePopover } from '../../hooks/use-popover';
 import { ConfirmPopover } from '../core/confirm-popover';
 import EditIcon from '@mui/icons-material/Edit';
+import { deleteStartup } from '../../services/requests/startup';
 
 interface CustomersTableProps {
   count?: number;
@@ -21,7 +22,6 @@ interface CustomersTableProps {
 
 interface StartupCardProps {
   startup: Startup;
-  onStartupClick: (startup: Startup) => void;
 }
 
 const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
@@ -40,7 +40,7 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
   React.useEffect(() => {
     async function confirmDelete() {
       if (confirm) {
-        // Função de exclusão aqui
+        await deleteStartup(`${id}`)
         setConfirm(false);
       }
     }
@@ -113,15 +113,12 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
 };
 
 export const StartupGrid: React.FC<CustomersTableProps> = ({ rows = [] }) => {
-  const handleStartupClick = (startup: Startup) => {
-    // Ação ao clicar no card
-  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={1.5} columns={{ xs: 4, sm: 8, md: 12 }}>
+      <Grid container alignItems='center' justifyContent='center' spacing={1.5} columns={{ xs: 4, sm: 8, md: 12 }}>
         {rows.map((row) => (
-          <StartupCard key={row.id} startup={row} onStartupClick={handleStartupClick} />
+          <StartupCard key={row.id} startup={row} />
         ))}
       </Grid>
     </Box>

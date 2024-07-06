@@ -2,7 +2,7 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { CustomersTable } from '../../../components/call/table-list';
 import { Problem } from '../../../types/problem';
-import { getCalls } from '../../../services/requests/call';
+import { getBookmarkedCalls } from '../../../services/requests/call';
 import { useCustomContext } from '../../../contexts/context';
 
 export default function ManagerBookmarked(): React.JSX.Element {
@@ -11,7 +11,7 @@ export default function ManagerBookmarked(): React.JSX.Element {
 
   const fetch = async (search?: string) => {
     dispatch({ payload: true, type: 'CHANGE-LOADING' });
-    const res = await getCalls(search);
+    const res = await getBookmarkedCalls(search);
     setProblems(res);
     if (state.modalDetails.modal) {
       const problemToUpdate = problems.filter(problem => problem.id === state.modalDetails.problem?.id)

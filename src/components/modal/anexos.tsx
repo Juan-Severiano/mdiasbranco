@@ -11,7 +11,7 @@ interface ProblemAnexosProps {
 export function ProblemAnexos({ anexos = [] }: ProblemAnexosProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const newAnexos = anexos.map(anexo => anexo.path.split(`/`)[1]);
+  const newAnexos = anexos.map(anexo => anexo.path);
   console.log(anexos);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
