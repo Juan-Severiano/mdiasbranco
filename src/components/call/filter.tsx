@@ -83,6 +83,7 @@ export function CallFilters({
                   <CalendarMonth color="disabled" />
                 </InputAdornment>
               }
+              value='dd/mm/2024'
               onChange={handleDateChange}
               aria-label="Filtrar por Data"
             />

@@ -5,7 +5,7 @@ import { Formik, Field } from 'formik';
 import { RotatingLines } from 'react-loader-spinner';
 import { useCustomContext } from '../../../contexts/context';
 import { useNavigate } from 'react-router-dom';
-import { loginRequest } from '../../../services/requests/auth';
+import { getUserById, loginRequest } from '../../../services/requests/auth';
 import { PasswordInput, CustomInput } from '../../../components/custom/custom-input';
 import { Email } from '@mui/icons-material';
 import { StyledLink } from '../../../styles/theme/components/styled-link';
@@ -48,9 +48,10 @@ const LoginForm: React.FC = () => {
           setErrors({ submit: 'Erro ao fazer login. Verifique suas credenciais.' });
           return;
         } else if (response.message === 'Sucesso ao realizar o Login.!') {
+          const user = await getUserById(response.data.user.id)
           dispatch({
             type: 'SIGN_IN', payload: {
-              user: response.data.user,
+              user,
               access: response.data.token
             }
           });

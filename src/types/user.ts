@@ -1,4 +1,4 @@
-import { Sector } from "./problem"
+import { Attachment, Sector } from "./problem"
 
 export interface LoginParams {
   email: string
@@ -18,4 +18,5 @@ export interface RegisterUser {
 export interface User extends RegisterUser {
   role: 'manager' | 'base'
   id: number
+  image_id: Attachment
 }

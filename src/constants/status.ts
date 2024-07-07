@@ -2,7 +2,7 @@ import { IconOwnProps } from "@mui/material"
 
 export const status = {
   'Pendente': 'warning',
-  'Rebebido': 'primary',
+  'Aberto': 'primary',
   'Aprovado': 'success',
   'Análise': 'action',
   'Finalizado': 'info',
@@ -12,7 +12,7 @@ export const status = {
 
 export enum Status {
   pending = 'Pendente',
-  received = 'Recebido',
+  received = 'Aberto',
   approved = 'Aprovado',
   analysis = 'Análise',
   finished = 'Finalizado'

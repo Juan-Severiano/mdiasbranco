@@ -90,7 +90,7 @@ const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onProblemClick, relo
             </Stack>
           </Stack>
           <Typography variant="body1" color="textSecondary" gutterBottom>
-            {problem.user?.name || 'Usuário desconhecido'}
+            {problem.user_id?.name || 'Usuário desconhecido'}
           </Typography>
           <Stack sx={{ display: 'flex', flexDirection: 'column' }} justifyContent="space-between">
             <Stack spacing={1} direction="row" alignItems="center">

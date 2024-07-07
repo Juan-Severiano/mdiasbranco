@@ -113,7 +113,7 @@ function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<v
             {row.title}
           </Typography>
           <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
-            {row.user?.name}
+            {row.user_id?.name}
           </Typography>
         </Stack>
       </TableCell>

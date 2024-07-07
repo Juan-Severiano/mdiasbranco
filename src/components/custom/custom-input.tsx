@@ -4,6 +4,7 @@ import { FieldProps } from "formik";
 import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import CustomOutlinedInput from "../../styles/theme/custom-outlined-input";
 import CustomSelect from "../../styles/theme/custom-select";
+import { status } from "../../constants/status";
 
 interface CustomInputProps extends FieldProps {
   label: string;
@@ -144,9 +145,9 @@ export function SelectPure({ options, value, onChange, onBlur }: SelectPureProps
       >
         {Object.entries(options).map(([key, value]) => (
           <MenuItem key={key} value={value}>
-            <Stack justifyContent='space-between' alignItems='center' flexDirection='row' width='100%'>
+            <Stack alignItems='center' flexDirection='row' width='100%'>
+              { status[value] &&  <Avatar sx={{ width: 15, height: 15, mr: 2 }} src={`/Status/${key}.jpeg`} alt={`${value}sta tus`} /> }
               <Typography fontSize={15}>{value}</Typography>
-              <Avatar sx={{ width: 15, height: 15 }} src={`/Status/${key}.jpeg`} alt={`${value} status`} />
             </Stack>
           </MenuItem>
         ))}

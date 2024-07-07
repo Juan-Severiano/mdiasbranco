@@ -47,7 +47,7 @@ export default function TopNav() {
                   <Typography align="right" variant="subtitle1" color='#323232' fontSize={12} fontWeight={700}>{user?.name}</Typography>
                   <Typography align="right" variant="body2" color='#323232' fontSize={9}>{user?.role === 'manager' ? 'Gerente' : 'Colaborador'}</Typography>
                 </Stack>
-                <Avatar sx={{ ml: 2, maxWidth: 50 }} src={`${baseURL}/user/attachment/${user?.name.startsWith('Liliana') ? 'liliana.jpeg' : 'martonio-perfil.jpg'}`} />
+                <Avatar sx={{ ml: 2, maxWidth: 50 }} src={`${baseURL}/user/attachment/${user?.image_id?.path}`} />
               </Button>
             </Tooltip>
           </Stack>

@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Grid, Card, Avatar, Box, Typography } from '@mui/material';
-import { TasksProgress } from '../../../components/dashboard/tasks-progress';
-import { TotalCustomers } from '../../../components/dashboard/total-customers';
-import { Budget } from '../../../components/dashboard/budget';
-import { getDashboardData } from '../../../services/requests/dashboard';
-import { DashData, Startup } from '../../../types/problem';
+import { Startup } from '../../../types/problem';
 import img2 from '../../../../public/img2.jpg'
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WebIcon from '@mui/icons-material/Web';
@@ -12,9 +8,9 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { useParams } from 'react-router-dom';
 import { getStartupById } from '../../../services/requests/startup';
 import { baseURL } from '../../../config';
+import { StartupCardDetails } from '../../../components/startup/startup-card';
 
 export default function ManagerDashboard() {
-  const [dash, setDash] = useState<DashData | null>(null);
   const [startup, setStartup] = useState<Startup | null>(null);
   const { id } = useParams()
 
@@ -22,7 +18,7 @@ export default function ManagerDashboard() {
     try {
       const response = await getStartupById(id!)
       setStartup(response)
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
   }
@@ -30,14 +26,6 @@ export default function ManagerDashboard() {
   useEffect(() => {
     getStartup()
   }, [getStartup, id])
-  
-  useEffect(() => {
-    const get = async () => {
-      const res = await getDashboardData();
-      setDash(res);
-    };
-    get();
-  }, []);
 
   return (
     <Grid container spacing={2}>
@@ -58,8 +46,8 @@ export default function ManagerDashboard() {
             }}
           >
             <Avatar
-              alt="Coringa"
-              src={`${baseURL}/startup/attachment/${startup?.attachments.path.split('\\')[1]}`}
+              alt={`Logo da Startup: ${startup?.name}`}
+              src={`${baseURL}/startup/attachment/${startup?.attachments.path}`}
               sx={{
                 width: 150,
                 height: 150,
@@ -108,13 +96,13 @@ export default function ManagerDashboard() {
           </Box>
           <Grid container spacing={2} sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
             <Grid item lg={4} sm={8} xs={12}>
-              <Budget diff={12} trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="200" />
+              <StartupCardDetails topmessage="Posição" message='Entre as mais utilizadas' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="8ª" />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <TotalCustomers diff={16} trend="down" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={dash?.countStatusCall.count.received || 0} />
+              <StartupCardDetails message='Socilitações Finalizadas' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="23" />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <TasksProgress sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} diff={22} trend="up" value={dash?.countStatusCall.count.finished || 0} />
+              <StartupCardDetails message='Proximo dado' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="200" />
             </Grid>
           </Grid>
         </Card>

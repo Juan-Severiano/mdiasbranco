@@ -31,16 +31,16 @@ export default function ManagerDashboard() {
   return (
     <Grid container spacing={3}>
       <Grid item lg={3} sm={6} xs={12}>
-        <Budget diff={12} trend="up" sx={{ height: '100%' }} value="200" />
+        <Budget trend="up" sx={{ height: '100%' }} value="200" />
       </Grid>
       <Grid item lg={3} sm={6} xs={12}>
-        <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value={dash?.countStatusCall.count.received! || 0} />
+        <TotalCustomers trend="down" sx={{ height: '100%' }} value={dash?.countStatusCall.count.received! || 0} />
       </Grid>
       <Grid item lg={3} sm={6} xs={12}>
-        <TasksProgress sx={{ height: '100%' }} diff={22} trend="up" value={dash?.countStatusCall.count.finished! || 0} />
+        <TasksProgress sx={{ height: '100%' }} trend="up" value={dash?.countStatusCall.count.finished! || 0} />
       </Grid>
       <Grid item lg={3} sm={6} xs={12}>
-        <TotalProfit sx={{ height: '100%' }} value={dash?.countUsers.count! || 0} diff={16} trend="up" />
+        <TotalProfit sx={{ height: '100%' }} value={dash?.countUsers.count! || 0} trend="up" />
       </Grid>
       <Grid item lg={8} xs={12}>
         <Sales
@@ -51,7 +51,7 @@ export default function ManagerDashboard() {
         />
       </Grid>
       <Grid item lg={4} md={6} xs={12}>
-        <Traffic chartSeries={traffic} labels={['Aprovado', 'Análise', 'Pendente', 'Recebido', 'Finalizado']} sx={{ height: '100%' }} />
+        <Traffic chartSeries={traffic} labels={['Aprovado', 'Análise', 'Pendente', 'Aberto', 'Finalizado']} sx={{ height: '100%' }} />
       </Grid>
     </Grid>
   )

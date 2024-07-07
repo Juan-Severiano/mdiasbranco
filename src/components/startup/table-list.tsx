@@ -52,7 +52,7 @@ export function StartupTable({
                   <TableCell>
                     <Stack sx={{ marginLeft: 5 }} flexDirection="row">
                       <Avatar
-                        src={`${baseURL}/startup/attachment/${row.attachments.path.split('\\')[1]}`}
+                        src={`${baseURL}/startup/attachment/${row.attachments.path}`}
                       />
                       <Stack sx={{ marginLeft: 2 }} flexDirection="column">
                         <Typography

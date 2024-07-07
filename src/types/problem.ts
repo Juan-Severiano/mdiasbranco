@@ -12,7 +12,7 @@ export interface Problem {
   responsible_startup?: Startup
   resolve_at?: string
   feedback?: string
-  user?: User
+  user_id?: User
   attachments: Attachment[]
   created_at: string
   isBookmarked: boolean
