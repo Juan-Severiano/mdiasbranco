@@ -3,6 +3,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import Loading from '../../components/core/loading';
 import ErrorBoundary from '../../components/core/error-boundary';
 import ManagerStartupPortfolio from '../../pages/[manager]/startup/portfolio';
+import NotFound from '../../pages/(errors)/not-found/page';
+// import NotFound from '../../pages/(errors)/not-found/page';
 
 const UserHome = lazy(() => import('../../pages/[user]/home'));
 const Login = lazy(() => import('../../pages/[auth]/login'));
@@ -184,5 +186,9 @@ export const router = createBrowserRouter([
         ),
       }
     ]
-  }
+  },
+  {
+    path: '*',
+    element: <NotFound />, // Replace with your NotFound component
+  },
 ])

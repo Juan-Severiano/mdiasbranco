@@ -6,6 +6,7 @@ import { ProblemsGrid } from '../../../components/call/table-grid';
 import { getCalls } from '../../../services/requests/call';
 import { useCustomContext } from '../../../contexts/context';
 import { CallFilters } from '../../../components/call/filter';
+import NotFoundItem from '../../(errors)/not-found-item';
 
 export default function ManagerHome(): React.JSX.Element {
   const [problems, setProblems] = React.useState<Problem[]>([])
@@ -70,8 +71,6 @@ export default function ManagerHome(): React.JSX.Element {
   const page = 0;
   const rowsPerPage = 10;
 
-  const paginatedCustomers = applyPagination(problems, page, rowsPerPage);
-
   return (
     <Stack spacing={3}>
       <CallFilters
@@ -85,24 +84,20 @@ export default function ManagerHome(): React.JSX.Element {
       {problems.length > 0 ?
         (
           toogleRender === 'grid' ? <ProblemsGrid
-            count={paginatedCustomers.length}
+            count={problems.length}
             page={page}
-            rows={paginatedCustomers}
+            rows={problems}
             rowsPerPage={rowsPerPage}
             reload={fetch}
           /> : <CustomersTable
             reload={fetch}
-            count={paginatedCustomers.length}
+            count={problems.length}
             page={page}
-            rows={paginatedCustomers}
+            rows={problems}
             rowsPerPage={rowsPerPage}
           />
-        ) : null
+        ) : <NotFoundItem message='Não foi encontrado nenhum chamado aqui' />
       }
     </Stack>
   );
-}
-
-function applyPagination(rows: Problem[], page: number, rowsPerPage: number): Problem[] {
-  return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 }

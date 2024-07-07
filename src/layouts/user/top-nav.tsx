@@ -1,27 +1,8 @@
-import { Avatar, Button, FormControl, Grid, OutlinedInput, Stack, Tooltip, Typography, styled } from "@mui/material";
+import { Avatar, Button, Grid, Stack, Tooltip, Typography } from "@mui/material";
 import { usePopover } from "../../hooks/use-popover";
 import { UnloggedPopover } from "./unlogged-popover";
-import { Search } from "@mui/icons-material";
 import { localClient } from "../../lib/local/client";
-
-const CustomOutlinedInput = styled(OutlinedInput)(({ theme }) => ({
-  border: 'none !important',
-  outline: 'none',
-  '& .MuiOutlinedInput-input::placeholder': {
-    fontSize: '12px', // Defina o tamanho do placeholder aqui
-    color: '#999', // Defina a cor do placeholder se necessário
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    border: 'none', // Remove a borda
-  },
-  '&:hover .MuiOutlinedInput-notchedOutline': {
-    border: 'none', // Remove a borda no hover também, se necessário
-  },
-  '&:focus .MuiOutlinedInput-notchedOutline': {
-    boxShadow: `0 0 0 3px ${theme.palette.primary.main}80`, // Sombra com a cor do tema principal
-  },
-  backgroundColor: 'white'
-}));
+import { SearchBar } from "../../components/core/search-bar";
 
 export default function TopNav() {
   // const { toggleTheme, mode } = useTheme();
@@ -42,15 +23,7 @@ export default function TopNav() {
         bgcolor: '#F7F7FDd0'
       }}>
         <Grid item xs={6} md={6.5}>
-          <FormControl fullWidth>
-            <CustomOutlinedInput
-              sx={{
-                height: 40
-              }}
-              placeholder="Pesquisar"
-              startAdornment={<Search color="disabled" fontSize="small" sx={{ mr: 2 }} />}
-            />
-          </FormControl>
+          <SearchBar />
         </Grid>
         <Grid item xs={0} md={2.5}></Grid>
         <Grid item xs={6} md={3} justifyItems='end'>

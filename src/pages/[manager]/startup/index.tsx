@@ -5,6 +5,7 @@ import { StartupTable } from '../../../components/startup/table-list';
 import { CallFilters } from '../../../components/startup/filter';
 import { getStartups } from '../../../services/requests/startup';
 import { StartupGrid } from '../../../components/startup/table-grid';
+import NotFoundItem from '../../(errors)/not-found-item';
 
 export default function ManagerStartup() {
   const [startups, setStartups] = React.useState<Startup[]>([])
@@ -18,13 +19,8 @@ export default function ManagerStartup() {
     get()
   }, [])
 
-  const applyPagination = (rows: Startup[], page: number, rowsPerPage: number): Startup[] => {
-    return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-  };
-
   const page = 0;
   const rowsPerPage = 10;
-  const paginatedCustomers = applyPagination(startups, page, rowsPerPage);
 
   return (
     <Stack spacing={3}>
@@ -33,23 +29,23 @@ export default function ManagerStartup() {
         toogleRender={toogleRender}
       />
       {
+        startups.length > 0 ? (
         toogleRender === 'grid' ? (
           <StartupGrid
-            count={paginatedCustomers.length}
+            count={startups.length}
             page={page}
-            rows={paginatedCustomers}
+            rows={startups}
             rowsPerPage={rowsPerPage} reload={function (): Promise<void> {
               throw new Error('Function not implemented.');
             }} />
         ) : (
           <StartupTable
-            count={paginatedCustomers.length}
+            count={startups.length}
             page={page}
-            rows={paginatedCustomers}
+            rows={startups}
             rowsPerPage={rowsPerPage} />
-        )
+        )) : <NotFoundItem message='Nenhuma startup aqui ainda' />
       }
-
     </Stack>
   );
 }

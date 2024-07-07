@@ -1,11 +1,12 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
-import { CustomersTable } from '../../components/call/table-list';
 import { Problem } from '../../types/problem';
-import { ProblemsGrid } from '../../components/call/table-grid';
 import { getCalls } from '../../services/requests/call';
 import { HistoricFilters } from '../../components/historic/filter';
 import { useCustomContext } from '../../contexts/context';
+import NotFoundItem from '../(errors)/not-found-item';
+import { ProblemsGridUser } from '../../components/call-user/table-grid';
+import { ProblemsTableUser } from '../../components/call-user/table-list';
 
 export default function ManagerHome(): React.JSX.Element {
   const [problems, setProblems] = React.useState<Problem[]>([])
@@ -55,8 +56,6 @@ export default function ManagerHome(): React.JSX.Element {
   const page = 0;
   const rowsPerPage = 10;
 
-  const paginatedCustomers = applyPagination(problems, page, rowsPerPage);
-
   return (
     <Stack spacing={3}>
       <HistoricFilters
@@ -69,25 +68,21 @@ export default function ManagerHome(): React.JSX.Element {
       />
       {problems.length > 0 ?
         (
-          toogleRender === 'grid' ? <ProblemsGrid
-            count={paginatedCustomers.length}
+          toogleRender === 'grid' ? <ProblemsGridUser
+            count={problems.length}
             page={page}
-            rows={paginatedCustomers}
+            rows={problems}
             rowsPerPage={rowsPerPage}
             reload={fetch}
-          /> : <CustomersTable
+          /> : <ProblemsTableUser
             reload={fetch}
-            count={paginatedCustomers.length}
+            count={problems.length}
             page={page}
-            rows={paginatedCustomers}
+            rows={problems}
             rowsPerPage={rowsPerPage}
           />
-        ) : null
+        ) : <NotFoundItem message='Nenhum chamado encontrado' />
       }
     </Stack>
   );
-}
-
-function applyPagination(rows: Problem[], page: number, rowsPerPage: number): Problem[] {
-  return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 }

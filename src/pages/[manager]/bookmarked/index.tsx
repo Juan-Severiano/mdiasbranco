@@ -4,6 +4,7 @@ import { CustomersTable } from '../../../components/call/table-list';
 import { Problem } from '../../../types/problem';
 import { getBookmarkedCalls } from '../../../services/requests/call';
 import { useCustomContext } from '../../../contexts/context';
+import NotFoundItem from '../../(errors)/not-found-item';
 
 export default function ManagerBookmarked(): React.JSX.Element {
   const [problems, setProblems] = React.useState<Problem[]>([])
@@ -31,24 +32,19 @@ export default function ManagerBookmarked(): React.JSX.Element {
   const page = 0;
   const rowsPerPage = 10;
 
-  const paginatedCustomers = applyPagination(problems, page, rowsPerPage);
-
   return (
     <Stack spacing={3}>
       {problems.length > 0 ?
         <CustomersTable
           reload={fetch}
-          count={paginatedCustomers.length}
+          count={problems.length}
           page={page}
-          rows={paginatedCustomers}
+          rows={problems}
           rowsPerPage={rowsPerPage}
         />
-        : null
+        : <NotFoundItem message='Você ainda não tem chamados salvos' />
       }
     </Stack>
   );
 }
 
-function applyPagination(rows: Problem[], page: number, rowsPerPage: number): Problem[] {
-  return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-}
