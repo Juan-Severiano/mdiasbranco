@@ -87,7 +87,7 @@ export default function ManagerDashboard() {
             <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '10px' }}>
               Razão Social: <span style={{ fontWeight: 'normal' }}>{startup?.corporate_reason}</span>
             </Typography>
-            <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '60px' }}>
+            <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '20px' }}>
               CNPJ: <span style={{ fontWeight: 'normal' }}>{startup?.cnpj}</span>
             </Typography>
             <Typography variant="body2" sx={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '0 10px', paddingLeft: '30px' }}>
