@@ -149,7 +149,7 @@ export const ProblemsGrid: React.FC<CustomersTableProps> = ({ rows = [], reload 
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={1.5} justifyContent='center' columns={{ xs: 4, sm: 8, md: 12 }}>
+      <Grid container spacing={1.5} justifyContent='flex-start' columns={{ xs: 4, sm: 8, md: 12 }}>
         {rows.map((row) => (
           <ProblemCard key={row.id} problem={row} onProblemClick={handleProblemClick} reload={reload} />
         ))}

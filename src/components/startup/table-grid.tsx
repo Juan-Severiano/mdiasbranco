@@ -116,7 +116,7 @@ export const StartupGrid: React.FC<CustomersTableProps> = ({ rows = [] }) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container alignItems='center' justifyContent='center' spacing={1.5} columns={{ xs: 4, sm: 8, md: 12 }}>
+      <Grid container alignItems='center' justifyContent='flex-start' spacing={1.5} columns={{ xs: 4, sm: 8, md: 12 }}>
         {rows.map((row) => (
           <StartupCard key={row.id} startup={row} />
         ))}
