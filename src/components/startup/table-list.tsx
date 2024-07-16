@@ -42,37 +42,35 @@ export function StartupTable({
           <TableBody>
             {rows.map((row) => {
               const isSelected = selected?.has(row.id);
-              console.log(row)
               return (
                 <TableRow
                   hover
                   key={row.id}
                   selected={isSelected}
                 >
-                  <TableCell>
-                    <Stack sx={{ marginLeft: 5 }} flexDirection="row">
-                      <Avatar
-                        src={`${baseURL}/startup/attachment/${row.attachments.path}`}
-                      />
-                      <Stack sx={{ marginLeft: 2 }} flexDirection="column">
-                        <Typography
-                          variant="subtitle2"
-                          sx={{
-                            fontSize: '0.875rem',
-                            ":hover": {
-                              textDecoration: 'underline',
-                              cursor: 'pointer'
-                            }
-                          }}
-                          role="button"
-                          onClick={() => {
-                            navigate(`/manager/startup/${row.id}`)
-                          }}
-                        >
-                          {row.name}
-                        </Typography>
-                        <Typography variant="body2">{row.service}</Typography>
-                      </Stack>
+                  <TableCell sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center' }}>
+                    <Avatar
+                      src={`${baseURL}/startup/attachment/${row.attachments.path}`}
+                      sx={{ width: { xs: 30, sm: 50 }, height: { xs: 30, sm: 50 } }}
+                    />
+                    <Stack sx={{ marginLeft: { xs: 2, sm: 5 } }} flexDirection="column">
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          fontSize: '0.875rem',
+                          ":hover": {
+                            textDecoration: 'underline',
+                            cursor: 'pointer'
+                          }
+                        }}
+                        role="button"
+                        onClick={() => {
+                          navigate(`/manager/startup/${row.id}`)
+                        }}
+                      >
+                        {row.name}
+                      </Typography>
+                      <Typography variant="body2">{row.service}</Typography>
                     </Stack>
                   </TableCell>
                   <TableCell>
