@@ -16,7 +16,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import InterestsOutlinedIcon from '@mui/icons-material/InterestsOutlined';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Grid } from '@mui/material';
+import { Avatar, Grid, useMediaQuery, useTheme } from '@mui/material';
 import { baseURL } from '../../config';
 
 interface CustomersTableProps {
@@ -34,11 +34,13 @@ export function StartupTable({
   }, [rows]);
   const { selected } = useSelection(rowIds);
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Card>
       <Box sx={{ overflowX: 'auto' }}>
-        <Table sx={{ minWidth: '800px' }}>
+        <Table sx={{ minWidth: isMobile ? '100%' : '800px' }}>
           <TableBody>
             {rows.map((row) => {
               const isSelected = selected?.has(row.id);

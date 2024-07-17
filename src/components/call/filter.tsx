@@ -71,7 +71,7 @@ export function CallFilters({
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2}>
-        <Grid item sm={12} md={3}>
+        <Grid item sm={12} md={2}>
           <FormControl fullWidth >
             <InputLabel>Filtrar por Data</InputLabel>
             <CustomOutlinedInput
@@ -90,7 +90,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item sm={6} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             <InputLabel>Prioridade</InputLabel>
             <CustomSelect
@@ -110,7 +110,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item sm={6} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             <InputLabel>Status</InputLabel>
             <CustomSelect
@@ -139,7 +139,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item sm={12} md={2}>
+        <Grid item  sm={12} md={3}>
           <ToggleButtonGroup
             value={toogleRender}
             exclusive

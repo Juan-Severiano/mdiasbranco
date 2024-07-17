@@ -1,19 +1,22 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import { Button, FormControl, Grid, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup,  } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import CustomSelect from '../../styles/theme/custom-select';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const priority = [
   { value: 'juan', label: 'Juan' },
   { value: 'Industria', label: 'Industria' },
   { value: 'Vendas', label: 'Vendas' }
 ];
+
 interface CallProps {
   setSearchKeyword?: React.Dispatch<React.SetStateAction<string>>,
   setSelectedDate?: React.Dispatch<React.SetStateAction<string>>,
@@ -24,18 +27,18 @@ interface CallProps {
 }
 
 export function CallFilters({
-  // setSelectedPriority,
   setToogleRender,
   toogleRender
 }: CallProps) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handlePriorityChange = (event: SelectChangeEvent<unknown>) => {
-    console.log(event)
-    // setSelectedPriority(event.target.value as string);
+    console.log(event);
   };
 
   const handleRenderFile1 = () => {
-    setToogleRender!("grid")
+    setToogleRender!("grid");
   };
 
   const handleRenderFile2 = () => {
@@ -43,15 +46,15 @@ export function CallFilters({
   };
 
   return (
-    <Card sx={{  py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
+    <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2} alignItems="center">
-        <Grid item sm={12} md={2}>
+        <Grid item  sm={6} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
-            <InputLabel>Área de Atuação</InputLabel>
+            {!isSmallScreen && <InputLabel>Área de Atuação</InputLabel>}
             <CustomSelect
-              label='Prioridade'
+              label={isSmallScreen ? '' : 'Prioridade'}
               sx={{ backgroundColor: '#fff' }}
-              startAdornment={<GroupOutlinedIcon color='disabled' />}
+              startAdornment={<GroupOutlinedIcon color="disabled" />}
               onChange={handlePriorityChange}
               aria-label="Prioridade"
             >
@@ -63,13 +66,13 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-        <Grid item sm={12}  md={2}>
+        <Grid item  sm={6} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
-            <InputLabel>Localização</InputLabel>
+            {!isSmallScreen && <InputLabel>Localização</InputLabel>}
             <CustomSelect
-              label='Prioridade'
+              label={isSmallScreen ? '' : 'Prioridade'}
               sx={{ backgroundColor: '#fff' }}
-              startAdornment={<LocationOnOutlinedIcon color='disabled' />}
+              startAdornment={<LocationOnOutlinedIcon color="disabled" />}
               onChange={handlePriorityChange}
               aria-label="Prioridade"
             >
@@ -82,15 +85,15 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item sm={12} md={6}>
-          <Stack direction="row" spacing={2} alignItems="center">
+        <Grid item  sm={6} md={6}>
+          <Stack direction="row" spacing={2} alignItems="center" justifyContent={isSmallScreen ? 'center' : 'flex-start'}>
             <ToggleButtonGroup
               value={toogleRender}
               exclusive
               aria-label="file-toggle-buttons"
-              sx={{ height: '100% ', bgcolor: '#fff' }}
+              sx={{ height: '100%', bgcolor: '#fff' }}
             >
-           <ToggleButton sx={{ border: 'none', fontSize: '1.5rem', padding: '17px 9px' }} value="grid" onClick={handleRenderFile1}>
+              <ToggleButton sx={{ border: 'none', fontSize: '1.5rem', padding: '17px 9px' }} value="grid" onClick={handleRenderFile1}>
                 <WindowOutlinedIcon sx={{ fontSize: '1.5rem' }} />
               </ToggleButton>
               <ToggleButton sx={{ border: 'none', fontSize: '1.5rem', padding: '12px 9px' }} value="list" onClick={handleRenderFile2}>
@@ -99,13 +102,14 @@ export function CallFilters({
             </ToggleButtonGroup>
           </Stack>
         </Grid>
-        
-        <Grid item sm={12} md={2}>
+
+        <Grid item 
+        sm={6} md={2}>
           <Button
             sx={{
               height: '100%',
               width: '100%',
-              fontSize: '0.9rem', 
+              fontSize: '0.9rem',
               padding: '16px 20px',
               alignItems: 'center',
               justifyContent: 'center'

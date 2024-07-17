@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
 import IconButton from '@mui/material/IconButton';
-import { Table, TableBody, TableCell, TableRow, Grid, Avatar } from '@mui/material';
+import { Table, TableBody, TableCell, TableRow, Grid, Avatar, useMediaQuery, useTheme } from '@mui/material';
 import { Trash } from '@phosphor-icons/react';
 import { usePopover } from '../../hooks/use-popover';
 import { deleteCall, deleteCallByKeyPoint, saveCallByKeyPoint } from '../../services/requests/call';
@@ -26,22 +26,24 @@ interface CustomersTableProps {
   page?: number;
   rows?: Problem[];
   rowsPerPage?: number;
-  reload: () => Promise<void>
+  reload: () => Promise<void>;
 }
 
 export function CustomersTable({
   rows = [],
   reload
 }: CustomersTableProps): React.JSX.Element {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Card>
       <Box sx={{ overflowX: 'auto' }}>
-        <Table sx={{ minWidth: '800px' }}>
+        <Table sx={{ minWidth: isMobile ? '100%' : '800px' }}>
           <TableBody>
             {rows.map((row) => {
               return (
-                <CallRow call={row} reload={reload} />
+                <CallRow key={row.id} call={row} reload={reload} />
               );
             })}
           </TableBody>
@@ -52,38 +54,39 @@ export function CustomersTable({
 }
 
 function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<void> }) {
-  const { data: user } = localClient.getUser()
+  const { data: user } = localClient.getUser();
   const { dispatch } = useCustomContext();
-  const [keypoint] = React.useState('exemplo1')
-  const confirmPopover = usePopover<HTMLButtonElement>()
-  const [confirm, setConfirm] = React.useState<boolean>(false)
+  const [keypoint] = React.useState('exemplo1');
+  const confirmPopover = usePopover<HTMLButtonElement>();
+  const [confirm, setConfirm] = React.useState<boolean>(false);
 
   async function onDelete() {
-    await deleteCall(row.id!)
-    setConfirm(false)
+    await deleteCall(row.id!);
+    setConfirm(false);
   }
+
   async function handleBookmark() {
     if (!row.isBookmarked) {
-      await saveCallByKeyPoint(String(user!.id!), String(row.id), keypoint)
-      await reload()
-      return
+      await saveCallByKeyPoint(String(user!.id!), String(row.id), keypoint);
+      await reload();
+      return;
     }
-    await deleteCallByKeyPoint(String(user!.id!), String(row.id))
-    await reload()
+    await deleteCallByKeyPoint(String(user!.id!), String(row.id));
+    await reload();
   }
 
   React.useEffect(() => {
     async function confirmAsd() {
       if (confirm) {
-        await onDelete()
-        await reload()
+        await onDelete();
+        await reload();
       }
     }
-    confirmAsd()
-  }, [confirm, confirmPopover.open])
+    confirmAsd();
+  }, [confirm, confirmPopover.open]);
 
   const handleDelete = async () => {
-    confirmPopover.handleOpen()
+    confirmPopover.handleOpen();
   };
 
   return (
@@ -180,8 +183,8 @@ function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<v
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <Stack direction="row" spacing={5} justifyContent="flex-end">
+          <Grid item xs={12} sm={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Stack direction="row" spacing={5}>
               <IconButton color="info" onClick={handleBookmark}>
                 {row.isBookmarked ? <BookmarkAddIcon /> : <BookmarkOutlined />}
               </IconButton>
@@ -200,5 +203,5 @@ function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<v
         </Grid>
       </TableCell>
     </TableRow>
-  )
+  );
 }
