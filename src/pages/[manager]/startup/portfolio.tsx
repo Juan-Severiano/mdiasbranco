@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Grid, Card, Avatar, Box, Typography } from '@mui/material';
 import { Startup } from '../../../types/problem';
 import img2 from '../../../../public/img2.jpg'
+import Link from '../../../../public/link.svg'
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WebIcon from '@mui/icons-material/Web';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -53,8 +54,8 @@ export default function ManagerDashboard() {
                 height: 150,
                 left: 20,
                 borderRadius: '50%',
-                marginBottom: '-38px',
-                transform: 'translateY(27%)',
+                marginBottom: '-2px',
+                transform: 'translateY(55%)',
               }}
             />
           </Box>
@@ -95,7 +96,7 @@ export default function ManagerDashboard() {
             </Typography>
           </Box>
           <Grid container spacing={2} sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
-            <Grid item lg={4} sm={8} xs={12}>
+            <Grid item lg={4} sm={6} xs={12}>
               <StartupCardDetails topmessage="Posição" message='Entre as mais utilizadas' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="8ª" />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
@@ -121,17 +122,74 @@ export default function ManagerDashboard() {
               width: '100%',
             }}
           >
-            <a href={startup?.website} target='_blank' style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#f7f7fd", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
-              <WebIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
+            <a
+              href={startup?.website}
+              target='_blank'
+              style={{
+                margin: '3px 0',
+                textDecoration: 'none',
+                color: 'white',
+                background: "#003F7D",
+                padding: '10px 20px',
+                paddingLeft: '10px',
+                borderRadius: '5px',
+                fontSize: '15px',
+                width: '100%',
+                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start'
+              }}
+            >
+              <WebIcon style={{ marginRight: '5px' }} />
               Website
+              <img src={Link} style={{ marginLeft: 'auto', filter: 'invert(1)', height: '24px', width: 'auto' }} />
             </a>
-            <a href={startup?.linkedin} target='_blank' style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#f7f7fd", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
-              <LinkedInIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
+            <a
+              href={startup?.linkedin}
+              target='_blank'
+              style={{
+                margin: '3px 0',
+                textDecoration: 'none',
+                color: 'white',
+                background: "#003F7D",
+                padding: '10px 20px',
+                paddingLeft: '10px',
+                borderRadius: '5px',
+                fontSize: '15px',
+                width: '100%',
+                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start'
+              }}
+            >
+              <LinkedInIcon style={{ marginRight: '5px' }} />
               LinkedIn
+              <img src={Link} style={{ marginLeft: 'auto', filter: 'invert(1)', height: '24px', width: 'auto' }} />
             </a>
-            <a href={startup?.linkedin} target='_blank' style={{ margin: '3px 0', textDecoration: 'none', color: 'blue', background: "#f7f7fd", padding: '10px 20px', borderRadius: '5px', fontSize: '16px', width: '100%', textAlign: 'center' }}>
-              <InstagramIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
+            <a
+              href={startup?.linkedin}
+              target='_blank'
+              style={{
+                margin: '3px 0',
+                textDecoration: 'none',
+                color: 'white',
+                background: "#003F7D",
+                padding: '10px 20px',
+                paddingLeft: '10px',
+                borderRadius: '5px',
+                fontSize: '15px',
+                width: '100%',
+                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start'
+              }}
+            >
+              <InstagramIcon style={{ marginRight: '5px' }} />
               Instagram
+              <img src={Link} style={{ marginLeft: 'auto', filter: 'invert(1)', height: '24px', width: 'auto' }} />
             </a>
             <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
             <iframe
