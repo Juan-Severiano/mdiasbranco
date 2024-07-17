@@ -21,7 +21,7 @@ const DefaultLayout = () => {
     if (user?.role === 'manager') {
       navigate('/manager/home')
     } else if (user?.role === 'base') {
-      navigate('/')
+      return
     }
   }, [])
 

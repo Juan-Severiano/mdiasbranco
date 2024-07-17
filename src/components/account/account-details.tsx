@@ -17,11 +17,10 @@ import { CustomInput } from '../custom/custom-input';
 import { AddIcCall, Assignment, Email, PermContactCalendar } from '@mui/icons-material';
 import CustomSelect from '../../styles/theme/custom-select';
 import { RotatingLines } from 'react-loader-spinner';
+import { patchUser } from '../../services/requests/auth';
 
 export function AccountDetails(): React.JSX.Element {
   const { data } = localClient.getUser()
-  // const defaultValues = { ...data };
-  // const [isPending, setIsPending] = React.useState<boolean>(false);
   const theme = useTheme()
   const [success] = React.useState(false);
 
@@ -38,8 +37,9 @@ export function AccountDetails(): React.JSX.Element {
           validationSchema={optionalSchema}
           onSubmit={async function (values, { setErrors }) {
             try {
-              // const response = await patchUser(values, data.id);
-              console.log(values);
+              const response = await patchUser(values, data.id);
+              localClient.addUser(response)
+              location.reload()
             } catch (error) {
               if (isAxiosError(error)) {
                 if (error.response) {
@@ -138,7 +138,7 @@ export function AccountDetails(): React.JSX.Element {
                     <>
                       <RotatingLines width='20' strokeColor='#b2cbdc' /> Carregando ...
                     </>
-                    : 'Registrar'}
+                    : 'Atualizar'}
                 </Button>
               </Box>
             </form>

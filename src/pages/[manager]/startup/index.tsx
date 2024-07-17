@@ -26,25 +26,32 @@ export default function ManagerStartup() {
     <Stack spacing={3}>
       <CallFilters
         setToogleRender={setToogleRender}
-        toogleRender={toogleRender}
-      />
+        toogleRender={toogleRender} setSearchKeyword={function (_: React.SetStateAction<string>): void {
+          
+        }} setSelectedDate={function (_: React.SetStateAction<string>): void {
+          
+        }} setSelectedPriority={function (_: React.SetStateAction<string>): void {
+          
+        }} setSelectedStatus={function (_: React.SetStateAction<string>): void {
+          
+        }} />
       {
         startups.length > 0 ? (
-        toogleRender === 'grid' ? (
-          <StartupGrid
-            count={startups.length}
-            page={page}
-            rows={startups}
-            rowsPerPage={rowsPerPage} reload={function (): Promise<void> {
-              throw new Error('Function not implemented.');
-            }} />
-        ) : (
-          <StartupTable
-            count={startups.length}
-            page={page}
-            rows={startups}
-            rowsPerPage={rowsPerPage} />
-        )) : <NotFoundItem message='Nenhuma startup aqui ainda' />
+          toogleRender === 'grid' ? (
+            <StartupGrid
+              count={startups.length}
+              page={page}
+              rows={startups}
+              rowsPerPage={rowsPerPage} reload={function (): Promise<void> {
+                throw new Error('Function not implemented.');
+              }} />
+          ) : (
+            <StartupTable
+              count={startups.length}
+              page={page}
+              rows={startups}
+              rowsPerPage={rowsPerPage} />
+          )) : <NotFoundItem message='Nenhuma startup aqui ainda' />
       }
     </Stack>
   );

@@ -16,7 +16,7 @@ export default function NotFoundItem({ message }: NotFoundItemProps): React.JSX.
             component="img"
             alt="Under development"
             src="/assets/error-404.png"
-            sx={{ display: 'inline-block', height: 'auto', maxWidth: '100%', width: '400px' }}
+            sx={{ display: 'inline-block', height: 'auto', maxWidth: '100%', width: '250px' }}
           />
         </Box>
         <Typography variant="h3" sx={{ textAlign: 'center' }}>

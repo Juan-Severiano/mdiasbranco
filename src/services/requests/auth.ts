@@ -1,3 +1,4 @@
+import { localClient } from "../../lib/local/client";
 import { Sector } from "../../types/problem";
 import { LoginParams, RegisterUser } from "../../types/user";
 import { api } from "../api";
@@ -24,6 +25,23 @@ export async function registerRequest(registerParams: RegisterUser) {
   console.log(registerParams.files[0])
   console.log(formData)
   const response = await api.post('/user', formData);
+  return response.data
+}
+
+export async function updateUserImage(file: File) {
+  const formData = new FormData();
+  const { data } = localClient.getUser();
+  formData.append('file', file);
+  console.log(formData)
+  const response = await api.patch(`/user/attachment/${data.image_id.path}`, formData);
+  console.log(response)
+  localClient.addUser({
+    ...data,
+    image_id: {
+      id: data.image_id.id,
+      path: file.name
+    }
+  })
   return response.data
 }
 

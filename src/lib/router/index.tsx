@@ -4,6 +4,8 @@ import Loading from '../../components/core/loading';
 import ErrorBoundary from '../../components/core/error-boundary';
 import ManagerStartupPortfolio from '../../pages/[manager]/startup/portfolio';
 import NotFound from '../../pages/(errors)/not-found/page';
+import UserHistoric from '../../pages/[user]/historic';
+import UserAccount from '../../pages/[user]/account';
 // import NotFound from '../../pages/(errors)/not-found/page';
 
 const UserHome = lazy(() => import('../../pages/[user]/home'));
@@ -38,6 +40,26 @@ export const router = createBrowserRouter([
           <Suspense fallback={<Loading />}>
             <ErrorBoundary>
               <UserHome />
+            </ErrorBoundary>
+          </Suspense>
+        ),
+      },
+      {
+        path: '/historic',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <UserHistoric />
+            </ErrorBoundary>
+          </Suspense>
+        ),
+      },
+      {
+        path: '/account',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <UserAccount />
             </ErrorBoundary>
           </Suspense>
         ),

@@ -7,7 +7,7 @@ import MenuList from '@mui/material/MenuList';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import { Login } from '@mui/icons-material';
+import { Assignment, Login, Person, Restore } from '@mui/icons-material';
 import { useCustomContext } from '../../contexts/context';
 import { localClient } from '../../lib/local/client';
 
@@ -20,7 +20,7 @@ export interface UserPopoverProps {
 export function UnloggedPopover({ anchorEl, onClose, open }: UserPopoverProps): React.JSX.Element {
   const navigate = useNavigate();
   const { dispatch } = useCustomContext()
-  const { data : user } = localClient.getUser()!
+  const { data: user } = localClient.getUser()!
   const handleSignIn = React.useCallback(async (): Promise<void> => {
     dispatch({ type: 'SIGN_OUT' })
     navigate('/auth/login')
@@ -39,6 +39,32 @@ export function UnloggedPopover({ anchorEl, onClose, open }: UserPopoverProps): 
         <Typography variant="subtitle1" color='#0B2B70' fontWeight={700}>{user?.name}</Typography>
         <Typography variant="body1" fontSize={'10px'} color={'#0B2B70'}>{user?.email}</Typography>
       </Box>
+      <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
+        <MenuItem onClick={() => navigate('/')}>
+          <ListItemIcon color='primary'>
+            <Assignment color="primary" />
+          </ListItemIcon>
+          <Typography variant='body1' color='primary' fontWeight={600}>
+            Solicitações
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={() => navigate('/historic')}>
+          <ListItemIcon color='primary'>
+            <Restore color="primary" />
+          </ListItemIcon>
+          <Typography variant='body1' color='primary' fontWeight={600}>
+            Histórico
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={() => navigate('/account')}>
+          <ListItemIcon color='primary'>
+            <Person color="primary" />
+          </ListItemIcon>
+          <Typography variant='body1' color='primary' fontWeight={600}>
+            Conta
+          </Typography>
+        </MenuItem>
+      </MenuList>
       <Divider />
       <MenuList disablePadding sx={{ p: '8px', '& .MuiMenuItem-root': { borderRadius: 1 } }}>
         <MenuItem onClick={handleSignIn}>
