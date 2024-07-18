@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
 import IconButton from '@mui/material/IconButton';
-import { Table, TableBody, TableCell, TableRow, Grid, Avatar, useMediaQuery, useTheme } from '@mui/material';
+import { Table, TableBody, TableCell, TableRow, Grid, useMediaQuery, useTheme } from '@mui/material';
 import { Trash } from '@phosphor-icons/react';
 import { usePopover } from '../../hooks/use-popover';
 import { deleteCall, deleteCallByKeyPoint, saveCallByKeyPoint } from '../../services/requests/call';

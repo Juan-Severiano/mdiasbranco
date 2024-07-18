@@ -8,6 +8,7 @@ import TopNav from "./top-nav";
 import StepForm from "../../components/form/modal-step";
 import ModalProblem from "../../components/modal";
 import { localClient } from "../../lib/local/client";
+import { getUserById } from "../../services/requests/auth";
 
 const ManagerLayout = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -21,7 +22,17 @@ const ManagerLayout = () => {
     }
   }, [])
 
+  async function getUser() {
+    if (user) {
+      const newUser = await getUserById(String(user?.id!))
+      if (newUser) {
+        localClient.addUser(newUser)
+      }
+    }
+  }
+
   useEffect(() => {
+    getUser()
     if (user?.role === 'manager') {
       return
     } else if (user?.role === 'base') {

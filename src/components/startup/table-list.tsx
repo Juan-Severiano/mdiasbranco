@@ -11,13 +11,17 @@ import { useSelection } from '../../hooks/use-selection';
 import Settings from '@mui/icons-material/Settings';
 import { Startup } from '../../types/problem';
 import IconButton from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import InterestsOutlinedIcon from '@mui/icons-material/InterestsOutlined';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Grid, useMediaQuery, useTheme } from '@mui/material';
+import { Avatar, Grid } from '@mui/material';
 import { baseURL } from '../../config';
+import { Trash } from '@phosphor-icons/react';
+import { usePopover } from '../../hooks/use-popover';
+import { deleteStartup } from '../../services/requests/startup';
+import { ConfirmPopover } from '../core/confirm-popover';
 
 interface CustomersTableProps {
   count?: number;
@@ -34,20 +38,38 @@ export function StartupTable({
   }, [rows]);
   const { selected } = useSelection(rowIds);
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const confirmPopover = usePopover<HTMLButtonElement>();
+  const [confirm, setConfirm] = React.useState<boolean>(false);
+  const [id, setId] = React.useState<number | null>(null);
+  const [name, setName] = React.useState<string | null>(null);
+
+  const handleDelete = (id: number, name: string) => {
+    confirmPopover.handleOpen();
+    setId(id);
+    setName(name);
+  };
+  
+  React.useEffect(() => {
+    async function confirmDelete() {
+      if (confirm) {
+        await deleteStartup(`${id}`)
+        setConfirm(false);
+      }
+    }
+    confirmDelete();
+  }, [confirm]);
 
   return (
     <Card>
       <Box sx={{ overflowX: 'auto' }}>
-        <Table sx={{ minWidth: isMobile ? '100%' : '800px' }}>
+        <Table sx={{ minWidth: '200px' }}>
           <TableBody>
             {rows.map((row) => {
               const isSelected = selected?.has(row.id);
               return (
                 <TableRow hover key={row.id} selected={isSelected}>
                   <TableCell>
-                    <Grid container spacing={2} alignItems="center">
+                    <Grid container spacing={1} alignItems="center">
                       <Grid item xs={12} sm={3}>
                         <Stack direction="row" alignItems="center">
                           <Avatar
@@ -101,14 +123,21 @@ export function StartupTable({
                           </Typography>
                         </Stack>
                       </Grid>
-                      <Grid item xs={12} sm={2}>
-                        <Typography variant="body2" color="action">Lorem</Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={1}>
-                        <Stack alignItems="center" justifyContent="flex-end">
-                          <IconButton>
-                            <MoreVertIcon sx={{ fontSize: '1.25rem' }} />
+                      <Grid item xs={12} sm={3}>
+                        <Stack direction="row" justifyContent='end' spacing={1}>
+                          <IconButton color="info">
+                            <EditIcon />
                           </IconButton>
+                          <IconButton color="error" onClick={() => handleDelete(row.id!, row.name!)}>
+                            <Trash />
+                          </IconButton>
+                          <ConfirmPopover
+                            anchorEl={confirmPopover.anchorRef.current}
+                            onClose={confirmPopover.handleClose}
+                            open={confirmPopover.open}
+                            setConfirm={setConfirm}
+                            name={name!}
+                          />
                         </Stack>
                       </Grid>
                     </Grid>

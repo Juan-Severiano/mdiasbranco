@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import { Button, FormControl, Grid, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Button, FormControl, Grid, Hidden, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import CustomSelect from '../../styles/theme/custom-select';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
@@ -48,7 +48,7 @@ export function CallFilters({
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2} alignItems="center">
-        <Grid item  sm={3} md={2}>
+        <Grid item xs={3} sm={3} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             {!isSmallScreen && <InputLabel>Área de Atuação</InputLabel>}
             <CustomSelect
@@ -66,7 +66,7 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-        <Grid item  sm={3} md={2}>
+        <Grid item xs={3} sm={3} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             {!isSmallScreen && <InputLabel>Localização</InputLabel>}
             <CustomSelect
@@ -84,7 +84,7 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-        <Grid item sm={12} md={5}>
+        <Grid item xs={3} sm={2} md={5}>
           <Stack direction="row" spacing={2} alignItems="center">
             <ToggleButtonGroup
               value={toogleRender}
@@ -101,22 +101,39 @@ export function CallFilters({
             </ToggleButtonGroup>
           </Stack>
         </Grid>
-        <Grid item sm={12} md={3}>
-          <Button
-            sx={{
-              height: '100%',
-              width: '100%',
-              fontSize: '0.9rem',
-              padding: '16px 20px',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            variant="contained"
-            color="primary"
-            startIcon={<AddToPhotosIcon sx={{ fontSize: '2rem' }} />}
-          >
-            Adicionar Startup
-          </Button>
+        <Grid item xs={3} sm={4} md={3}>
+          <Hidden smUp>
+            <Button
+              variant="contained"
+              sx={{
+                height: 55,
+                width: 50,
+              }}
+              onClick={() => {
+                
+              }}
+            >
+              <AddToPhotosIcon sx={{ fontSize: '2rem' }} />
+            </Button>
+          </Hidden>
+          <Hidden smDown>
+            <Button
+              variant="contained"
+              sx={{
+                height: '100%',
+                width: '100%',
+                fontSize: '0.9rem',
+                padding: '16px 20px',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onClick={() => {
+              }}
+              startIcon={<AddToPhotosIcon sx={{ fontSize: '2rem' }} />}
+            >
+              Adicionar Startup
+            </Button>
+          </Hidden>
         </Grid>
       </Grid>
     </Card>
