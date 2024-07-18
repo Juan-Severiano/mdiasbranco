@@ -2,10 +2,11 @@ import { Avatar, Box, IconButton, Stack, Typography } from "@mui/material";
 import CustomOutlinedInput from "../../styles/theme/custom-outlined-input";
 import { useState } from "react";
 import { useCustomContext } from "../../contexts/context";
-import { createComment } from "../../services/requests/call";
+import { createComment, deleteComment } from "../../services/requests/call";
 import { localClient } from "../../lib/local/client";
-import { PaperPlaneTilt } from "@phosphor-icons/react";
+import { ArrowCircleDown, ArrowCircleUp, PaperPlaneTilt, Trash } from "@phosphor-icons/react";
 import { Comments } from "../../types/problem";
+import { baseURL } from "../../config";
 
 interface WriteCommentProps {
   comments: Comments[];
@@ -17,6 +18,7 @@ export function WriteComment({ comments, setComments, reload }: WriteCommentProp
   const [message, setMessage] = useState('');
   const { dispatch, state } = useCustomContext();
   const { data } = localClient.getUser();
+  const [showComments, setShowComments] = useState(false)
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -29,9 +31,7 @@ export function WriteComment({ comments, setComments, reload }: WriteCommentProp
         problem: state.modalDetails.problem?.title!,
         user: data.id
       });
-      if (res && res.data && res.data.comment) {
-        setComments(prevComments => [...prevComments, res.data.comment]);
-      }
+      setComments(prevComments => [...prevComments, res]);
       setMessage('');
       if (reload) reload()
     } catch (error) {
@@ -41,11 +41,24 @@ export function WriteComment({ comments, setComments, reload }: WriteCommentProp
     }
   }
 
+  async function handleDelete(id: number) {
+    try {
+      dispatch({ type: 'CHANGE-LOADING', payload: true });
+      await deleteComment(id);
+      setComments(prevComments => prevComments.filter(comment => comment.id !== id));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: 'CHANGE-LOADING', payload: false });
+      if (reload) reload()
+    }
+  }
+
   return (
     <>
       <form onSubmit={e => onSubmit(e)}>
         <Stack flexDirection='row' width='100%' alignItems='center' sx={{ mt: 2 }}>
-          <Avatar sx={{ width: 30, height: 30, mr: 2 }} />
+          <Avatar src={`${baseURL}/user/attachment/${data?.image_id?.path}`} sx={{ width: 30, height: 30, mr: 2 }} />
           <CustomOutlinedInput
             sx={{ height: 40 }}
             fullWidth
@@ -58,15 +71,32 @@ export function WriteComment({ comments, setComments, reload }: WriteCommentProp
           </IconButton>
         </Stack>
       </form>
-      {comments?.map((item, index) => (
-        <Stack key={index} flexDirection='row' width='80%' alignItems='center' sx={{ mt: 2, ml: 3 }}>
-          <Avatar sx={{ width: 30, height: 30, mr: 2 }} />
-          <Box>
-            <Typography fontWeight={600}>Dono do comentário</Typography>
-            <Typography>{item.message}</Typography>
-          </Box>
-        </Stack>
-      ))}
+      <Box maxHeight={100} sx={{ overflow: 'auto' }}>
+        {showComments && comments?.map((item, index) => (
+          <Stack key={index} flexDirection='row' width='90%' alignItems='center' sx={{ mt: 2, ml: 6 }}>
+            <Avatar sx={{ width: 30, height: 30, mr: 2 }} />
+            <Box>
+              <Typography fontWeight={600}>Dono do comentário</Typography>
+              <Typography>{item.message}</Typography>
+            </Box>
+            <IconButton sx={{ ml: 'auto' }} color='error' onClick={() => handleDelete(item.id!)}>
+              <Trash />
+            </IconButton>
+          </Stack>
+        ))}
+      </Box>
+      {
+        comments?.length > 0 && <Typography
+          sx={{ my: 2, ":hover": { cursor: 'pointer' } }}
+          color='#174AE4' variant="body2"
+          onClick={() => setShowComments(prev => !prev)}
+        >
+          <Stack flexDirection='row' spacing={1} alignItems='center' justifyContent='center'>
+            {showComments ? 'Esconder comentários' : 'Mostrar comentários'}
+            {showComments ? <ArrowCircleUp /> : <ArrowCircleDown />}
+          </Stack>
+        </Typography>
+      }
     </>
   );
 }

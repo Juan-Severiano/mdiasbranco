@@ -82,7 +82,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item sm={12} md={6}>
+        <Grid item sm={12} md={5}>
           <Stack direction="row" spacing={2} alignItems="center">
             <ToggleButtonGroup
               value={toogleRender}
@@ -100,7 +100,7 @@ export function CallFilters({
           </Stack>
         </Grid>
         
-        <Grid item sm={12} md={2}>
+        <Grid item sm={12} md={3}>
           <Button
             sx={{
               height: '100%',
@@ -112,7 +112,7 @@ export function CallFilters({
             }}
             variant="contained"
             color="primary"
-            startIcon={<AddToPhotosIcon sx={{ fontSize: '2rem' }} />} // Increase icon size
+            startIcon={<AddToPhotosIcon sx={{ fontSize: '2rem' }} />}
           >
             Adicionar Startup
           </Button>

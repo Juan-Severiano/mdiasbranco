@@ -12,13 +12,20 @@ import MarkDownEditor from './markdown-editor';
 import { WriteComment } from './write-comment';
 import { ProblemAnexos } from './anexos';
 import { SolutionDetails } from './solution';
+import CustomOutlinedInput from '../../styles/theme/custom-outlined-input';
 
 function ModalProblem() {
   const { dispatch, state } = useCustomContext();
   const { modalDetails: { problem } } = state;
-  // const [problem, setProblem] = useState<Problem>(problem2!);
+  const [editTitle, setEditTitle] = useState(false)
   const [markdownContent, setMarkdownContent] = useState<string>(state.modalDetails.problem?.description!);
+  const [title, setTitle] = useState<string>(state.modalDetails.problem?.title!);
   const [comments, setComments] = useState(state.modalDetails.problem?.comments!);
+
+  useEffect(() => {
+    setComments(state.modalDetails.problem?.comments!)
+    setTitle(state.modalDetails.problem?.title!)
+  }, [state.modalDetails.problem])
 
   // async function getProblem() {
   //   const res = await getCallByID(problem!.id!);
@@ -55,6 +62,15 @@ function ModalProblem() {
     }, 800);
   };
 
+  async function handleEditTitle() {
+    if (editTitle) {
+      dispatch({ payload: true, type: 'CHANGE-LOADING' });
+      await updateCallPartial({ 'title': title }, problem?.id!);
+      dispatch({ payload: false, type: 'CHANGE-LOADING' });
+    }
+    setEditTitle(prev => !prev)
+  }
+
   return (
     <Modal
       open={state.modalDetails.modal}
@@ -66,12 +82,12 @@ function ModalProblem() {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',
-        overflow: 'auto', pb: 2
+        overflow: 'auto', py: 2
       }}
     >
       <Grid container justifyContent='center' alignItems='center' >
         <Grid item xs={11} md={9}>
-          <Card sx={{ position: 'relative' }}>
+          <Card sx={{ position: 'relative', mt: 2 }}>
             <CardHeader
               sx={{ position: 'absolute', right: 0 }}
               action={
@@ -86,20 +102,42 @@ function ModalProblem() {
               <Grid container>
                 <Grid item container xs={12} md={8} spacing={3}>
                   <Grid item xs={12}>
-                    <Heading color='primary' fontWeight={600} text={problem?.title!} icon={<Keyboard fontSize='medium' style={{ marginRight: 20 }} />} />
+                    {
+                      !editTitle ? (
+                        <Heading
+                          color='primary'
+                          fontWeight={600}
+                          text={title}
+                          icon={<Keyboard fontSize='medium' style={{ marginRight: 20 }} />}
+                          onClick={handleEditTitle}
+                        />
+                      ) : (
+                        <CustomOutlinedInput
+                          type='text'
+                          label='Titulo'
+                          placeholder='Titulo'
+                          value={title}
+                          onChange={e => setTitle(e.target.value)}
+                          startAdornment={<Keyboard fontSize='medium' style={{ marginRight: 20 }} />}
+                          onBlur={handleEditTitle}
+                          fullWidth
+                          sx={{ height: 40, fontSize: 24, fontWeight: 600, color: '#0b2b70' }}
+                        />
+                      )
+                    }
                   </Grid>
                   <Grid item xs={12} container spacing={2}>
                     <Grid item xs={4}>
                       <ProblemDetail
                         title="Status"
-                        state={problem?.status!}
+                        state={problem?.status! ?? 'Pendente'}
                       />
                     </Grid>
                     <Grid item xs={5}>
                       <ProblemDetailSector
                         icon={<CrisisAlert color="action" fontSize='small' sx={{ mr: .5 }} />}
                         title="Setor"
-                        state={problem?.sector!}
+                        state={problem?.sector! ?? ''}
                       />
                     </Grid>
                   </Grid>

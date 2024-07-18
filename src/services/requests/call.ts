@@ -25,6 +25,24 @@ export async function createCall(data: CreateProblem) {
   return response;
 }
 
+export async function updateCallImages(files: File[], id: number) {
+  const { data: user } = localClient.getUser();
+
+  const formData = new FormData();
+
+  if (files) {
+    files.forEach((file) => {
+      formData.append('attachment', file);
+    });
+  }
+  const response = await api.patch('/call/' + id, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response;
+}
+
 export async function getCalls(search?: string) {
   try {
     const response = await api.get('/call', {
@@ -92,6 +110,11 @@ interface CreateComment {
 
 export async function createComment(comment: CreateComment) {
   const response = await api.post('/comment', comment)
+  return response.data
+}
+
+export async function deleteComment(id: number) {
+  const response = await api.delete('/comment/' + id)
   return response.data
 }
 

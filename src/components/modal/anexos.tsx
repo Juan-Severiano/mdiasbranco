@@ -3,18 +3,21 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { Attachment } from "../../types/problem";
 import { baseURL } from "../../config";
+import { updateCallImages } from "../../services/requests/call";
+import { useCustomContext } from "../../contexts/context";
 
 interface ProblemAnexosProps {
   anexos?: Attachment[]
 }
 
 export function ProblemAnexos({ anexos = [] }: ProblemAnexosProps) {
+  const { dispatch, state } = useCustomContext();
   const [files, setFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const newAnexos = anexos.map(anexo => anexo.path);
   console.log(anexos);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const selectedFiles = Array.from(event.target.files).slice(0, 3 - files.length); // Limit to 10 files
       setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
@@ -32,6 +35,9 @@ export function ProblemAnexos({ anexos = [] }: ProblemAnexosProps) {
       Promise.all(readerPromises).then((newPreviews) => {
         setImagePreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
       });
+      dispatch({ type: 'CHANGE-LOADING', payload: true })
+      await updateCallImages(files, state.modalDetails?.problem?.id!)
+      dispatch({ type: 'CHANGE-LOADING', payload: false })
     }
   };
 

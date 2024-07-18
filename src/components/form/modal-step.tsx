@@ -189,11 +189,10 @@ function StepForm() {
                             sx={{
                               height: 48,
                               width: '45%',
-                              color: 'black',
                               borderColor: 'transparent',
                             }}
-                            variant="contained"
-                            color='secondary'
+                            variant="outlined"
+                            color='error'
                           >
                             Cancelar
                           </Button>
@@ -207,7 +206,7 @@ function StepForm() {
                             type='submit'
                             disabled={isSubmitting}
                           >
-                            {isSubmitting ? 'Carregando ...' : 'Solicitar resolução'}
+                            {isSubmitting ? 'Carregando ...' : 'Solicitar Resolução'}
                           </Button>
                         </Stack>
                       </Grid>
