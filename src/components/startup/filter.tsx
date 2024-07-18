@@ -48,7 +48,7 @@ export function CallFilters({
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2} alignItems="center">
-        <Grid item  sm={6} md={2}>
+        <Grid item  sm={3} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             {!isSmallScreen && <InputLabel>Área de Atuação</InputLabel>}
             <CustomSelect
@@ -66,7 +66,7 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-        <Grid item  sm={6} md={2}>
+        <Grid item  sm={3} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             {!isSmallScreen && <InputLabel>Localização</InputLabel>}
             <CustomSelect
@@ -85,7 +85,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item  sm={6} md={6}>
+        <Grid item  sm={2} md={6}>
           <Stack direction="row" spacing={2} alignItems="center" justifyContent={isSmallScreen ? 'center' : 'flex-start'}>
             <ToggleButtonGroup
               value={toogleRender}
@@ -104,7 +104,7 @@ export function CallFilters({
         </Grid>
 
         <Grid item 
-        sm={6} md={2}>
+        sm={5} md={2}>
           <Button
             sx={{
               height: '100%',
