@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import { useCustomContext } from '../../contexts/context';
 import { Problem } from '../../types/problem';
 import IconButton from '@mui/material/IconButton';
-import { Table, TableBody, TableCell, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableRow, Grid, Avatar, useMediaQuery, useTheme } from '@mui/material';
 import { Trash } from '@phosphor-icons/react';
 import { usePopover } from '../../hooks/use-popover';
 import { deleteCall, deleteCallByKeyPoint, saveCallByKeyPoint } from '../../services/requests/call';
@@ -26,22 +26,24 @@ interface CustomersTableProps {
   page?: number;
   rows?: Problem[];
   rowsPerPage?: number;
-  reload: () => Promise<void>
+  reload: () => Promise<void>;
 }
 
 export function CustomersTable({
   rows = [],
   reload
 }: CustomersTableProps): React.JSX.Element {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Card>
       <Box sx={{ overflowX: 'auto' }}>
-        <Table sx={{ minWidth: '800px' }}>
+        <Table sx={{ minWidth: isMobile ? '100%' : '800px' }}>
           <TableBody>
             {rows.map((row) => {
               return (
-                <CallRow call={row} reload={reload} />
+                <CallRow key={row.id} call={row} reload={reload} />
               );
             })}
           </TableBody>
@@ -52,38 +54,39 @@ export function CustomersTable({
 }
 
 function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<void> }) {
-  const { data: user } = localClient.getUser()
+  const { data: user } = localClient.getUser();
   const { dispatch } = useCustomContext();
-  const [keypoint] = React.useState('exemplo1')
-  const confirmPopover = usePopover<HTMLButtonElement>()
-  const [confirm, setConfirm] = React.useState<boolean>(false)
+  const [keypoint] = React.useState('exemplo1');
+  const confirmPopover = usePopover<HTMLButtonElement>();
+  const [confirm, setConfirm] = React.useState<boolean>(false);
 
   async function onDelete() {
-    await deleteCall(row.id!)
-    setConfirm(false)
+    await deleteCall(row.id!);
+    setConfirm(false);
   }
+
   async function handleBookmark() {
     if (!row.isBookmarked) {
-      await saveCallByKeyPoint(String(user!.id!), String(row.id), keypoint)
-      await reload()
-      return
+      await saveCallByKeyPoint(String(user!.id!), String(row.id), keypoint);
+      await reload();
+      return;
     }
-    await deleteCallByKeyPoint(String(user!.id!), String(row.id))
-    await reload()
+    await deleteCallByKeyPoint(String(user!.id!), String(row.id));
+    await reload();
   }
 
   React.useEffect(() => {
     async function confirmAsd() {
       if (confirm) {
-        await onDelete()
-        await reload()
+        await onDelete();
+        await reload();
       }
     }
-    confirmAsd()
-  }, [confirm, confirmPopover.open])
+    confirmAsd();
+  }, [confirm, confirmPopover.open]);
 
   const handleDelete = async () => {
-    confirmPopover.handleOpen()
+    confirmPopover.handleOpen();
   };
 
   return (
@@ -92,99 +95,112 @@ function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<v
       key={row.id}
     >
       <TableCell>
-        <Stack sx={{ marginLeft: 5 }} flexDirection="column">
-          <Typography
-            variant="subtitle2"
-            sx={{
-              fontSize: '0.875rem',
-              ":hover": {
-                textDecoration: 'underline',
-                cursor: 'pointer'
-              }
-            }}
-            role="button"
-            onClick={() => {
-              dispatch({
-                type: 'CHANGE-MODAL-DETAILS',
-                payload: { problem: row }
-              });
-            }}
-          >
-            {row.title}
-          </Typography>
-          <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
-            {row.user_id?.name}
-          </Typography>
-        </Stack>
-      </TableCell>
-      <TableCell>
-        <Stack
-          sx={{ display: 'flex', flexDirection: 'column' }}
-          justifyContent="center"
-        >
-          <Stack spacing={1} flexDirection="row" alignItems="center">
-            <Brightness1Icon
-              color={status[row.status!]}
-              sx={{ fontSize: '1.25rem' }}
-            />
-            <Typography
-              variant="body2"
-              color="textPrimary"
-              sx={{ fontSize: '0.875rem' }}
-              textTransform="capitalize"
-            >
-              {!row.status ? 'Pendente' : row.status}
-            </Typography>
-          </Stack>
-          <Stack spacing={1} flexDirection="row" alignItems="center">
-            <CalendarMonthIcon color="action" sx={{ fontSize: '1.25rem' }} />
-            <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.875rem' }}>
-              {dayjs(row.created_at).format('DD/MM/YYYY')}
-            </Typography>
-          </Stack>
-        </Stack>
-      </TableCell>
-      <TableCell>
-        <Stack spacing={1} flexDirection="row" alignItems="center">
-          <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
-          <Typography
-            variant="body2"
-            color="textPrimary"
-            sx={{ fontSize: '0.875rem' }}
-            textTransform="capitalize"
-          >
-            asd
-          </Typography>
-        </Stack>
-        <Stack spacing={1} flexDirection="row" alignItems="center">
-          <SettingsIcon color="action" sx={{ fontSize: '1.25rem' }} />
-          <Typography
-            variant="body2"
-            color="textPrimary"
-            sx={{ fontSize: '0.875rem' }}
-            textTransform="capitalize"
-          >
-            {row.sector}
-          </Typography>
-        </Stack>
-      </TableCell>
-      <TableCell>
-        <Stack alignItems='center' flexDirection='row' justifyContent='space-between'>
-          <IconButton color='info' onClick={handleBookmark}>
-            {row.isBookmarked ? <BookmarkAddIcon /> : <BookmarkOutlined />}
-          </IconButton>
-          <IconButton color='error' onClick={handleDelete}>
-            <Trash />
-          </IconButton>
-          <ConfirmPopover
-            anchorEl={confirmPopover.anchorRef.current}
-            onClose={confirmPopover.handleClose}
-            open={confirmPopover.open}
-            setConfirm={setConfirm}
-            name={row.title}
-          />
-        </Stack>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} sm={3}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Stack sx={{ marginLeft: 5 }} flexDirection="column">
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    fontSize: '0.875rem',
+                    ":hover": {
+                      textDecoration: 'underline',
+                      cursor: 'pointer'
+                    }
+                  }}
+                  role="button"
+                  onClick={() => {
+                    dispatch({
+                      type: 'CHANGE-MODAL-DETAILS',
+                      payload: { problem: row }
+                    });
+                  }}
+                >
+                  {row.title}
+                </Typography>
+                <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+                  {row.user_id?.name}
+                </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Stack spacing={1} direction="row" alignItems="center">
+              <Brightness1Icon color={status[row.status!]} sx={{ fontSize: '1.25rem' }} />
+              <Typography
+                variant="body2"
+                color="textPrimary"
+                sx={{
+                  fontSize: '0.875rem',
+                  textTransform: 'capitalize',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}
+              >
+                {!row.status ? 'Pendente' : row.status}
+              </Typography>
+            </Stack>
+            <Stack spacing={1} direction="row" alignItems="center">
+              <CalendarMonthIcon color="action" sx={{ fontSize: '1.25rem' }} />
+              <Typography variant="body2" color="textPrimary" sx={{ fontSize: '0.875rem' }}>
+                {dayjs(row.created_at).format('DD/MM/YYYY')}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Stack spacing={1} direction="row" alignItems="center">
+              <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
+              <Typography
+                variant="body2"
+                color="textPrimary"
+                sx={{
+                  fontSize: '0.875rem',
+                  textTransform: 'capitalize',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}
+              >
+                {row.sector}
+              </Typography>
+            </Stack>
+            <Stack spacing={1} direction="row" alignItems="center">
+              <SettingsIcon color="action" sx={{ fontSize: '1.25rem' }} />
+              <Typography
+                variant="body2"
+                color="textPrimary"
+                sx={{
+                  fontSize: '0.875rem',
+                  textTransform: 'capitalize',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}
+              >
+                {row.sector}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} sm={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Stack direction="row" spacing={5}>
+              <IconButton color="info" onClick={handleBookmark}>
+                {row.isBookmarked ? <BookmarkAddIcon /> : <BookmarkOutlined />}
+              </IconButton>
+              <IconButton color="error" onClick={handleDelete}>
+                <Trash />
+              </IconButton>
+              <ConfirmPopover
+                anchorEl={confirmPopover.anchorRef.current}
+                onClose={confirmPopover.handleClose}
+                open={confirmPopover.open}
+                setConfirm={setConfirm}
+                name={row.title}
+              />
+            </Stack>
+          </Grid>
+        </Grid>
       </TableCell>
     </TableRow>
-  )
+  );
 }

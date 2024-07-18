@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import { Button, FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography, useMediaQuery } from '@mui/material';
 import { CalendarMonth, LibraryAdd } from '@mui/icons-material';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
@@ -12,8 +12,6 @@ import Ciano from '../../../public/Status/open.jpeg';
 import Vermelho from '../../../public/Status/concluted.jpeg';
 import CustomOutlinedInput from '../../styles/theme/custom-outlined-input';
 import CustomSelect from '../../styles/theme/custom-select';
-
-// Icon do botão de alternancia
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import { useCustomContext } from '../../contexts/context';
@@ -47,7 +45,9 @@ export function CallFilters({
   setToogleRender,
   toogleRender
 }: CallProps) {
-  const { dispatch } = useCustomContext()
+  const isSmallScreen = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+  const { dispatch } = useCustomContext();
+  
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
   };
@@ -61,7 +61,7 @@ export function CallFilters({
   };
 
   const handleRenderFile1 = () => {
-    setToogleRender("grid")
+    setToogleRender("grid");
   };
 
   const handleRenderFile2 = () => {
@@ -71,11 +71,11 @@ export function CallFilters({
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2}>
-        <Grid item sm={12} md={3}>
-          <FormControl fullWidth >
-            <InputLabel>Filtrar por Data</InputLabel>
+        <Grid item sm={4} md={2}>
+          <FormControl fullWidth>
+            {!isSmallScreen && <InputLabel>Filtrar por Data</InputLabel>}
             <CustomOutlinedInput
-              label='Filtrar por Data'
+              label={!isSmallScreen ? 'Filtrar por Data' : ''}
               type='date'
               sx={{ backgroundColor: '#fff' }}
               startAdornment={
@@ -90,14 +90,13 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item sm={3} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
-            <InputLabel>Prioridade</InputLabel>
+            {!isSmallScreen && <InputLabel>Prioridade</InputLabel>}
             <CustomSelect
-              label='Prioridade'
+              label={!isSmallScreen ? 'Prioridade' : ''}
               sx={{ backgroundColor: '#fff' }}
-              startAdornment={
-              <CrisisAlertIcon color='disabled' />}
+              startAdornment={<CrisisAlertIcon color='disabled' />}
               onChange={handlePriorityChange}
               aria-label="Prioridade"
             >
@@ -110,11 +109,11 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item sm={3} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
-            <InputLabel>Status</InputLabel>
+            {!isSmallScreen && <InputLabel>Status</InputLabel>}
             <CustomSelect
-              label="Status"
+              label={!isSmallScreen ? 'Status' : ''}
               sx={{ backgroundColor: '#fff' }}
               startAdornment={
                 <AvatarGroup max={4}>
@@ -139,7 +138,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item sm={12} md={2}>
+        <Grid item sm={4} md={3}>
           <ToggleButtonGroup
             value={toogleRender}
             exclusive
@@ -155,9 +154,8 @@ export function CallFilters({
           </ToggleButtonGroup>
         </Grid>
 
-
-        <Grid item sm={12} md={.5} />
-        <Grid item sm={12} md={2.5}>
+        <Grid item sm={3} md={.5} />
+        <Grid item sm={3} md={2.5}>
           <Button
             variant="contained"
             sx={{
@@ -165,7 +163,7 @@ export function CallFilters({
               width: '100%'
             }}
             onClick={() => {
-              dispatch({ type: 'CHANGE-MODAL', payload: true })
+              dispatch({ type: 'CHANGE-MODAL', payload: true });
             }}
             startIcon={<LibraryAdd />}
           >
