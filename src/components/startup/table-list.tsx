@@ -73,7 +73,7 @@ export function StartupTable({
                       <Grid item xs={12} sm={3}>
                         <Stack direction="row" alignItems="center">
                           <Avatar
-                            src={`${baseURL}/startup/attachment/${row.attachments.path}`}
+                            src={`${baseURL}/startup/attachment/${row.attachments?.path}`}
                             sx={{ width: { xs: 30, sm: 50 }, height: { xs: 30, sm: 50 } }}
                           />
                           <Stack sx={{ marginLeft: { xs: 2, sm: 5 } }} flexDirection="column">
@@ -112,7 +112,7 @@ export function StartupTable({
                       <Grid item xs={12} sm={3}>
                         <Stack spacing={1} direction="row" alignItems="center">
                           <EmailOutlinedIcon color="action" sx={{ fontSize: '1.25rem' }} />
-                          <Typography variant="body2" color="action" textTransform="capitalize">
+                          <Typography variant="body2" color="action">
                             {row.email}
                           </Typography>
                         </Stack>
@@ -125,7 +125,7 @@ export function StartupTable({
                       </Grid>
                       <Grid item xs={12} sm={3}>
                         <Stack direction="row" justifyContent='end' spacing={1}>
-                          <IconButton color="info">
+                          <IconButton color="info" onClick={() => navigate(`/manager/startup/edit/${row.id!}`)}>
                             <EditIcon />
                           </IconButton>
                           <IconButton color="error" onClick={() => handleDelete(row.id!, row.name!)}>

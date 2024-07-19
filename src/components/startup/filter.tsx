@@ -10,6 +10,7 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 const priority = [
   { value: 'juan', label: 'Juan' },
@@ -30,6 +31,7 @@ export function CallFilters({
   setToogleRender,
   toogleRender
 }: CallProps) {
+  const navigate = useNavigate()
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -128,6 +130,7 @@ export function CallFilters({
                 justifyContent: 'center'
               }}
               onClick={() => {
+                navigate('/manager/startup/create')
               }}
               startIcon={<AddToPhotosIcon sx={{ fontSize: '2rem' }} />}
             >

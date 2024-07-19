@@ -17,6 +17,8 @@ const ManagerDashboard = lazy(() => import('../../pages/[manager]/dashboard'));
 const ManagerHome = lazy(() => import('../../pages/[manager]/home'));
 const ManagerHistoric = lazy(() => import('../../pages/[manager]/historic'));
 const ManagerStartup = lazy(() => import('../../pages/[manager]/startup'));
+const ManagerCreateStartup = lazy(() => import('../../pages/[manager]/startup/create'));
+const ManagerEditStartup = lazy(() => import('../../pages/[manager]/startup/edit'));
 const DefaultLayout = lazy(() => import('../../layouts/user'));
 const ForgotPassword = lazy(() => import('../../pages/[auth]/forgot-password'));
 const SimpleLayout = lazy(() => import('../../layouts/simple'));
@@ -142,6 +144,26 @@ export const router = createBrowserRouter([
           <Suspense fallback={<Loading />}>
             <ErrorBoundary>
               <ManagerStartup />
+            </ErrorBoundary>
+          </Suspense>
+        ),
+      },
+      {
+        path: '/manager/startup/create',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ManagerCreateStartup />
+            </ErrorBoundary>
+          </Suspense>
+        ),
+      },
+      {
+        path: '/manager/startup/edit/:id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ErrorBoundary>
+              <ManagerEditStartup />
             </ErrorBoundary>
           </Suspense>
         ),

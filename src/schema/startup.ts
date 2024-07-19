@@ -23,6 +23,27 @@ export const startupSchema = Yup.object().shape({
     .max(2, 'Você pode enviar no máximo 2 arquivos')
 });
 
+export const startupEditSchema = Yup.object().shape({
+  name: Yup.string().optional(),
+  corporate_reason: Yup.string().optional(),
+  cnpj: Yup.string().optional(),
+  website: Yup.string().optional(),
+  linkedin: Yup.string().optional(),
+  email: Yup.string().optional(),
+  service: Yup.string().optional(),
+  sector: Yup.string().optional(),
+  attachment: Yup.array()
+    .of(
+      Yup.mixed().test('fileSize', 'O arquivo é muito grande', (value) => {
+        if (value) {
+          return (value as File).size <= 1024 * 1024;
+        }
+        return true;
+      })
+    )
+    .max(2, 'Você pode enviar no máximo 2 arquivos').optional()
+});
+
 type StartupValues = {
   name: string;
   corporate_reason: string;
@@ -36,6 +57,7 @@ type StartupValues = {
 };
 
 export interface StartupSchemaObject {
+  [x: string]: any;
   name: keyof StartupValues;
   label: string;
   type?: string;

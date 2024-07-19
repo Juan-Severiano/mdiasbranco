@@ -52,7 +52,7 @@ export function SelectStartup({ atualStartup }: { atualStartup: string }) {
             {startups?.map((startup) => (
               <MenuItem key={startup.id} value={startup.name}>
                 <Stack alignItems='center' flexDirection='row' width='100%'>
-                  <Avatar sx={{ width: 25, height: 25, mr: 2 }} src={`${baseURL}/startup/attachment/${startup.attachments.path}`} alt={`${startup.name}`} />
+                  <Avatar sx={{ width: 25, height: 25, mr: 2 }} src={`${baseURL}/startup/attachment/${startup.attachments?.path}`} alt={`${startup.name}`} />
                   <Typography fontSize={15}>{startup.name}</Typography>
                 </Stack>
               </MenuItem>

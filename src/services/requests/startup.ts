@@ -1,3 +1,4 @@
+import { Startup } from "../../types/problem";
 import { api } from "../api";
 
 export async function getStartups() {
@@ -21,5 +22,10 @@ export async function createStartup(data: FormData) {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return response;
+}
+
+export async function patchStartup(data: Partial<Startup>, id: string) {
+  const response = await api.patch('/startup/' + id, data);
   return response;
 }
