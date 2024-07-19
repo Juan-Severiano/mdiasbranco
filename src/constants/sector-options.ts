@@ -24,3 +24,9 @@ export enum Solution {
   IA = 'Inteligência Artificial',
   STARTUP = 'Startup'
 }
+
+export enum Priority {
+  INDUSTRY = 'Indústria',
+  LOGISTIC = 'Logística',
+  STORE = 'Vendas',
+}

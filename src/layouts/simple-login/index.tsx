@@ -3,61 +3,61 @@ import { Outlet } from "react-router-dom";
 
 const SimpleLogin = () => {
   return (
-    <>
+    <Box
+      sx={{
+        position: 'relative',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundImage: "url(/login-bg.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        zIndex: 1,
+      }}
+    >
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: "#0B2B70e0",
+          zIndex: 2,
+        }}
+      />
       <Container
         maxWidth="md"
         sx={{
-          zIndex: 2,
-          position: "absolute",
-          minWidth: "100vw",
-          minHeight: "100vh",
+          position: 'relative',
+          zIndex: 5,
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
         <Container maxWidth="sm" sx={{ my: 'auto' }}>
-          <Box sx={{ md: {mx: 5} }}>
+          <Box sx={{ mx: { md: 5 } }}>
             <Outlet />
           </Box>
         </Container>
       </Container>
       <Box
+        component="footer"
         sx={{
-          position: "relative",
-          width: "100vw",
-          minHeight: "100vh",
-          backgroundImage: "url(/login-bg.png)",
-          backgroundSize: "cover",
-          zIndex: 1,
-          flex: 1,
-          "&::after": {
-            content: '""',
-            position: "fixed",
-            top: 0,
-            left: 0,
-            minHeight: "100vh",
-            minWidth: "100vw",
-            backgroundColor: "#0B2B70e0",
-            zIndex: 2,
-          },
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          zIndex: 4,
         }}
       >
-        <Box
-          component="footer"
-          sx={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: "100vw",
-            zIndex: 3,
-          }}
-        >
-          <img src="/borda-branca.svg" style={{ marginBottom: -10, width: '100%' }} />
-          <Box sx={{ backgroundColor: "#fff", height: 100 }} />
-        </Box>
+        <img src="/borda-branca.svg" style={{ width: '100%' }} alt="Footer Decoration" />
+        <Box sx={{ backgroundColor: "#fff", height: 100, mt: -2 }} />
       </Box>
-    </>
+    </Box>
   );
 };
 

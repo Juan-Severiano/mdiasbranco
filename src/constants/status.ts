@@ -10,6 +10,14 @@ export const status = {
   [x: string]: IconOwnProps['color']
 }
 
+export const statusAsIndex = {
+  'Pendente': 'warning',
+  'Aberto': 'primary',
+  'Aprovado': 'success',
+  'Análise': 'action',
+  'Finalizado': 'info',
+}
+
 export enum Status {
   pending = 'Pendente',
   received = 'Aberto',

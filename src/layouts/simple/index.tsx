@@ -1,38 +1,51 @@
-import { Box, Container } from "@mui/material"
-import { Logo } from "../../components/core/logo";
+import { Box, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 const SimpleLayout = () => {
   return (
-    <>
-      <Container maxWidth='md' sx={{
-        zIndex: 2,
-        position: 'absolute',
-        p: 2,
-        minWidth: '100vw',
-        height: '100vh'
-      }}>
-        <Logo width={150} />
+    <Box sx={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Container maxWidth='lg' sx={{ zIndex: 2, flex: 1 }}>
         <Outlet />
       </Container>
-      <Box sx={{
-        position: 'relative',
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: "#0b2b70"
-      }}>
-        <Box component='footer' sx={{
-          position: 'absolute',
-          bottom: 0,
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
           left: 0,
-          width: '100vw',
-        }}>
-          <img src="/borda-branca.svg" style={{ marginBottom: -10 }} />
-          <Box sx={{ backgroundColor: '#fff', height: 100 }} />
+          width: "100vw",
+          minHeight: "100vh",
+          backgroundImage: "url(/login-bg.png)",
+          backgroundSize: "cover",
+          zIndex: 1,
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#0B2B70e0",
+            zIndex: 2,
+          },
+        }}
+      >
+        <Box
+          component="footer"
+          sx={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: "100%",
+            zIndex: 3,
+            textAlign: 'center'
+          }}
+        >
+          <img src="/borda-branca.svg" style={{ width: '100%' }} />
+          <Box sx={{ height: 100, bgcolor: '#fff', mt: -2 }} />
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
 
-export default SimpleLayout
+export default SimpleLayout;

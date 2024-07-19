@@ -1,5 +1,5 @@
-import { Avatar, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography, useTheme } from "@mui/material";
-import { useState } from "react";
+import { Avatar, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, SxProps, Theme, Typography, useTheme } from "@mui/material";
+import { ReactNode, useState } from "react";
 import { FieldProps } from "formik";
 import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import CustomOutlinedInput from "../../styles/theme/custom-outlined-input";
@@ -130,18 +130,21 @@ interface SelectPureProps {
   value: string;
   onChange: (e: SelectChangeEvent<unknown>) => void;
   onBlur?: () => void;
+  sx?: SxProps<Theme>;
+  startAdornment?: ReactNode
 }
 
-export function SelectPure({ options, value, onChange, onBlur }: SelectPureProps) {
+export function SelectPure({ options, value, onChange, onBlur, sx, startAdornment }: SelectPureProps) {
   return (
     <>
       <CustomSelect
         label="Status"
-        sx={{ maxHeight: 40, fontSize: 18 }}
+        sx={{ maxHeight: 40, fontSize: 18, ...sx }}
         onBlur={onBlur}
         onChange={onChange}
         aria-label="Status"
         value={value}
+        startAdornment={startAdornment}
       >
         {Object.entries(options).map(([key, value]) => (
           <MenuItem key={key} value={value}>

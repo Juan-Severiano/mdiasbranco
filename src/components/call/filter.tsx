@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import { Button, FormControl, Grid, Hidden, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography, useMediaQuery } from '@mui/material';
+import { Button, FormControl, Grid, Hidden, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { CalendarMonth, LibraryAdd } from '@mui/icons-material';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
@@ -15,18 +15,13 @@ import CustomSelect from '../../styles/theme/custom-select';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import { useCustomContext } from '../../contexts/context';
+import { statusAsIndex, status as stts } from "../../constants/status";
+import { Status } from '../../constants/status';
 
 const priority = [
   { value: 'Tecnologia', label: 'Tecnologia' },
   { value: 'Industria', label: 'Industria' },
   { value: 'Vendas', label: 'Vendas' }
-];
-
-const status = [
-  { value: 'pending', label: 'Pendente' },
-  { value: 'open', label: 'Aberto' },
-  { value: 'analisys', label: 'Analise' },
-  { value: 'concluted', label: 'Concluido' },
 ];
 
 interface CallProps {
@@ -50,12 +45,14 @@ export function CallFilters({
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
   };
+  const [status, setStatus] = useState('');
 
   const handlePriorityChange = (event: SelectChangeEvent<unknown>) => {
     setSelectedPriority(event.target.value as string);
   };
 
   const handleStatusChange = (event: SelectChangeEvent<unknown>) => {
+    setStatus(event.target.value as string)
     setSelectedStatus(event.target.value as string);
   };
 
@@ -66,6 +63,8 @@ export function CallFilters({
   const handleRenderFile2 = () => {
     setToogleRender("list");
   };
+
+  const theme = useTheme()
 
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
@@ -113,7 +112,7 @@ export function CallFilters({
         <Grid item xs={3} sm={2} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             {!isSmallScreen && <InputLabel>Status</InputLabel>}
-            <CustomSelect
+            {/* <CustomSelect
               label={!isSmallScreen ? 'Status' : ''}
               sx={{ backgroundColor: '#fff' }}
               startAdornment={
@@ -126,12 +125,47 @@ export function CallFilters({
               }
               onChange={handleStatusChange}
               aria-label="Status"
-            >
-              {status.map((option) => (
+            > */}
+            {/* {status.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   <Stack justifyContent='space-between' alignItems='center' flexDirection='row' width='100%'>
                     <Typography fontSize={15}>{option.label}</Typography>
                     <Avatar sx={{ width: 15, height: 15 }} src={`/Status/${option.value}.jpeg`} alt={`${option.label} status`} />
+                  </Stack>
+                </MenuItem>
+              ))} */}
+            <CustomSelect
+              label="Status"
+              sx={{ backgroundColor: '#fff' }}
+              onChange={handleStatusChange}
+              aria-label="Status"
+              value={status}
+              startAdornment={
+                <AvatarGroup max={4}>
+                  <Avatar sx={{ width: 13, height: 13 }} src={Vermelho} alt="Vermelho" />
+                  <Avatar sx={{ width: 13, height: 13 }} src={Ciano} alt="Ciano" />
+                  <Avatar sx={{ width: 13, height: 13 }} src={Azul} alt="Azul" />
+                  <Avatar sx={{ width: 13, height: 13 }} src={Amarelo} alt="Amarelo" />
+                </AvatarGroup>
+              }
+            >
+              {Object.entries(Status).map(([key, value]) => (
+                <MenuItem key={key} value={value}>
+                  <Stack alignItems='center' flexDirection='row' width='100%'>
+                    {stts[value] && (
+                      <Avatar
+                        sx={{
+                          width: 15,
+                          height: 15,
+                          mr: 2,
+                          // @ts-ignore
+                          bgcolor: theme.palette[statusAsIndex[value]][stts[value] !== 'action' ? 'main' : 'active']
+                        }}
+                        src='/Status/avatar-bg.png'
+                        alt={`${value} status`}
+                      />
+                    )}
+                    <Typography fontSize={15}>{value}</Typography>
                   </Stack>
                 </MenuItem>
               ))}
