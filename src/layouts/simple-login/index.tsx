@@ -10,14 +10,14 @@ const SimpleLogin = () => {
           zIndex: 2,
           position: "absolute",
           minWidth: "100vw",
-          height: "100vh",
+          minHeight: "100vh",
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
         <Container maxWidth="sm" sx={{ my: 'auto' }}>
-          <Box sx={{ mx: 5 }}>
+          <Box sx={{ md: {mx: 5} }}>
             <Outlet />
           </Box>
         </Container>
@@ -26,10 +26,11 @@ const SimpleLogin = () => {
         sx={{
           position: "relative",
           width: "100vw",
-          height: "100vh",
+          minHeight: "100vh",
           backgroundImage: "url(/login-bg.png)",
           backgroundSize: "cover",
           zIndex: 1,
+          flex: 1,
           "&::after": {
             content: '""',
             position: "fixed",

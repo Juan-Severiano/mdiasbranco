@@ -11,15 +11,16 @@ const Register = () => {
 
   return (
     <Card sx={{
-      my: 'auto',
-      mx: 2,
+      my: 4,
+      md: {mx: 2, p: 3},
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      p: 3,
+      p: 2,
       maxWidth: { xs: '100%', sm: '400px' },
       boxShadow: theme.shadows[3],
+      mt: 4
     }}>
       <Box sx={{ width: '100%' }}>
         <Grid container spacing={1} alignItems="center" justifyContent="center">

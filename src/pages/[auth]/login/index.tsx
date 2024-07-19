@@ -11,14 +11,14 @@ const Login = () => {
   return (
     <Card sx={{
       my: 'auto',
-      mx: 2,
+      md: { mx: 2, px: 5 },
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
       p: 3,
       py: 6,
-      px: 5,
+      px: 2,
       maxWidth: { xs: '100%', sm: '400px' },
       boxShadow: theme.shadows[3],
     }}>
