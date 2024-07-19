@@ -19,9 +19,9 @@ export function ProblemAnexos({ anexos = [] }: ProblemAnexosProps) {
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      const selectedFiles = Array.from(event.target.files).slice(0, 3 - files.length); // Limit to 10 files
+      const selectedFiles = Array.from(event.target.files).slice(0, 6 - files.length); // Limit to 6 files
       setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
-
+  
       const readerPromises = selectedFiles.map((file) => {
         return new Promise<string>((resolve) => {
           const reader = new FileReader();
@@ -31,15 +31,21 @@ export function ProblemAnexos({ anexos = [] }: ProblemAnexosProps) {
           reader.readAsDataURL(file);
         });
       });
-
+  
       Promise.all(readerPromises).then((newPreviews) => {
         setImagePreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
       });
-      dispatch({ type: 'CHANGE-LOADING', payload: true })
-      await updateCallImages(files, state.modalDetails?.problem?.id!)
-      dispatch({ type: 'CHANGE-LOADING', payload: false })
+  
+      try {
+        dispatch({ type: 'CHANGE-LOADING', payload: true });
+        await updateCallImages(selectedFiles, state.modalDetails?.problem?.id!);
+        dispatch({ type: 'CHANGE-LOADING', payload: false });
+      } catch (err) {
+        console.error(err);
+        dispatch({ type: 'CHANGE-LOADING', payload: false });
+      }
     }
-  };
+  };  
 
   return (
     <Stack>

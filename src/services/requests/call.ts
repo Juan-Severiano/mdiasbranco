@@ -26,21 +26,25 @@ export async function createCall(data: CreateProblem) {
 }
 
 export async function updateCallImages(files: File[], id: number) {
-  const { data: user } = localClient.getUser();
-
   const formData = new FormData();
 
-  if (files) {
-    files.forEach((file) => {
-      formData.append('attachment', file);
-    });
-  }
-  const response = await api.patch('/call/' + id, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
+  files.forEach((file) => {
+    formData.append('attachment', file);
   });
-  return response;
+
+  try {
+    console.log(`Enviando imagens para atualização do chamado com id: ${id}`);
+    const response = await api.patch(`/call/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log('Resposta do servidor:', response.data);
+    return response;
+  } catch (error) {
+    console.error('Erro ao atualizar as imagens da chamada:', error);
+    throw error;
+  }
 }
 
 export async function getCalls(search?: string) {
@@ -96,7 +100,7 @@ export async function getCallByID(id: number) {
 }
 
 
-export async function updateCallPartial(partialCall:Partial<Problem>, id: number) {
+export async function updateCallPartial(partialCall: Partial<Problem>, id: number) {
   const response = await api.patch(`/call/${id}/`, partialCall)
   return response.data
 }
