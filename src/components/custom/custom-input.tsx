@@ -137,7 +137,7 @@ export function SelectPure({ options, value, onChange, onBlur }: SelectPureProps
     <>
       <CustomSelect
         label="Status"
-        sx={{ maxHeight: 30 }}
+        sx={{ maxHeight: 40, fontSize: 18 }}
         onBlur={onBlur}
         onChange={onChange}
         aria-label="Status"

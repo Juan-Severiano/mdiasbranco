@@ -36,9 +36,10 @@ export function ProblemDetailSector({ icon, title, ...rest }: ProblemDetailProps
         edit ? (
           <SelectPure label="Status" onBlur={() => setEdit(false)} onChange={handleChange} options={Sector} value={value} />
         ) : (
-          <Chip onClick={() => setEdit(true)} label={
+          <Chip onClick={() => setEdit(true)} sx={{ height: 40, fontSize: 14 }} label={
             <Stack flexDirection='row' alignItems='center'>
-              {icon} {value}
+              {icon}
+              <Typography variant="body2" fontWeight={500}>{value}</Typography>
             </Stack>
           } />
         )

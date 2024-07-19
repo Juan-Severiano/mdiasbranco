@@ -70,7 +70,7 @@ export function CallFilters({
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2}>
-        <Grid item xs={2} sm={2} md={3} lg={4}>
+        <Grid item xs={2} sm={2} md={3} lg={2}>
           <FormControl fullWidth>
             {!isSmallScreen && <InputLabel>Filtrar por Data</InputLabel>}
             <CustomOutlinedInput
@@ -153,7 +153,7 @@ export function CallFilters({
           </ToggleButtonGroup>
         </Grid>
         <Hidden smDown>
-          <Grid item xs={0} sm={0} md={.5} />
+          <Grid item xs={0} sm={0} md={1.5} />
         </Hidden>
         <Grid item xs={2} sm={3} md={2.5}>
           <Hidden smUp>

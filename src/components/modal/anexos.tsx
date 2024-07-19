@@ -1,10 +1,12 @@
 import { Collections } from "@mui/icons-material";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import { useState } from "react";
 import { Attachment } from "../../types/problem";
 import { baseURL } from "../../config";
 import { updateCallImages } from "../../services/requests/call";
 import { useCustomContext } from "../../contexts/context";
+import { Heading } from "../custom/heading";
+import { CameraPlus } from "@phosphor-icons/react";
 
 interface ProblemAnexosProps {
   anexos?: Attachment[]
@@ -21,7 +23,7 @@ export function ProblemAnexos({ anexos = [] }: ProblemAnexosProps) {
     if (event.target.files) {
       const selectedFiles = Array.from(event.target.files).slice(0, 6 - files.length); // Limit to 6 files
       setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
-  
+
       const readerPromises = selectedFiles.map((file) => {
         return new Promise<string>((resolve) => {
           const reader = new FileReader();
@@ -31,11 +33,11 @@ export function ProblemAnexos({ anexos = [] }: ProblemAnexosProps) {
           reader.readAsDataURL(file);
         });
       });
-  
+
       Promise.all(readerPromises).then((newPreviews) => {
         setImagePreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
       });
-  
+
       try {
         dispatch({ type: 'CHANGE-LOADING', payload: true });
         await updateCallImages(selectedFiles, state.modalDetails?.problem?.id!);
@@ -45,27 +47,11 @@ export function ProblemAnexos({ anexos = [] }: ProblemAnexosProps) {
         dispatch({ type: 'CHANGE-LOADING', payload: false });
       }
     }
-  };  
+  };
 
   return (
     <Stack>
-      <Typography variant="h6" sx={{ mb: .5 }}>Anexos</Typography>
-      <Button
-        variant="outlined"
-        component="label"
-        fullWidth
-        sx={{ height: 30, justifyContent: 'flex-start', borderColor: 'transparent' }}
-        startIcon={<Collections />}
-      >
-        Upload
-        <input
-          type="file"
-          hidden
-          onChange={handleFileChange}
-          multiple
-          accept="image/*"
-        />
-      </Button>
+      <Heading text='Anexos' variant="h6" icon={<Collections fontSize="small" sx={{ mr: 2 }} />} />
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mt: 2 }}>
         {newAnexos.map((preview, index) => (
           <Box key={index} sx={{ width: '50px', height: '50px' }}>
@@ -77,6 +63,16 @@ export function ProblemAnexos({ anexos = [] }: ProblemAnexosProps) {
             <img src={preview} alt="" style={{ width: '50px', height: '50px' }} />
           </Box>
         ))}
+        <IconButton color='primary' component="label" sx={{ height: 50, width: 50, borderColor: 'transparent' }}>
+          <CameraPlus />
+          <input
+            type="file"
+            hidden
+            onChange={handleFileChange}
+            multiple
+            accept="image/*"
+          />
+        </IconButton>
       </Box>
     </Stack>
   );

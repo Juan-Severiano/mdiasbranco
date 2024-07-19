@@ -99,8 +99,11 @@ export async function getCallByID(id: number) {
   }
 }
 
+interface PartialProblem extends Partial<Omit<Problem, 'responsible_startup'>> {
+  responsible_startup?: string
+}
 
-export async function updateCallPartial(partialCall: Partial<Problem>, id: number) {
+export async function updateCallPartial(partialCall: PartialProblem, id: number) {
   const response = await api.patch(`/call/${id}/`, partialCall)
   return response.data
 }

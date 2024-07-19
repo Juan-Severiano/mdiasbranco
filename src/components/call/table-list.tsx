@@ -5,8 +5,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkOutlined from '@mui/icons-material/BookmarkAddOutlined';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 import dayjs from 'dayjs';
@@ -20,6 +18,7 @@ import { deleteCall, deleteCallByKeyPoint, saveCallByKeyPoint } from '../../serv
 import { ConfirmPopover } from '../core/confirm-popover';
 import { status } from '../../constants/status';
 import { localClient } from '../../lib/local/client';
+import { CrisisAlert, PrecisionManufacturing } from '@mui/icons-material';
 
 interface CustomersTableProps {
   count?: number;
@@ -150,7 +149,7 @@ function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<v
           </Grid>
           <Grid item xs={12} sm={3}>
             <Stack spacing={1} direction="row" alignItems="center">
-              <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
+              <PrecisionManufacturing color="action" sx={{ fontSize: '1.25rem' }} />
               <Typography
                 variant="body2"
                 color="textPrimary"
@@ -162,11 +161,11 @@ function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<v
                   textOverflow: 'ellipsis'
                 }}
               >
-                {row.sector}
+                {row.solution ?? 'Esperando solução'}
               </Typography>
             </Stack>
             <Stack spacing={1} direction="row" alignItems="center">
-              <SettingsIcon color="action" sx={{ fontSize: '1.25rem' }} />
+              <CrisisAlert color="action" sx={{ fontSize: '1.25rem' }} />
               <Typography
                 variant="body2"
                 color="textPrimary"

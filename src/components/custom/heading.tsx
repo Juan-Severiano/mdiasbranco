@@ -6,9 +6,9 @@ interface HeadingProps extends TypographyProps {
   icon: ReactNode
 }
 
-export function Heading({ icon, text, ...rest }: HeadingProps) {
+export function Heading({ icon, text, variant, ...rest }: HeadingProps) {
   return (
-    <Typography {...rest} variant="h5" sx={{ display: 'flex', alignItems: 'center' }}>
+    <Typography {...rest} variant={variant ?? 'h5'} sx={{ display: 'flex', alignItems: 'center' }}>
       {icon} {text}
     </Typography>
   )

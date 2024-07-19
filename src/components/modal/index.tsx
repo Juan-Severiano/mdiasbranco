@@ -13,6 +13,7 @@ import { WriteComment } from './write-comment';
 import { ProblemAnexos } from './anexos';
 import { SolutionDetails } from './solution';
 import CustomOutlinedInput from '../../styles/theme/custom-outlined-input';
+import { ResolutionDate } from './resolution-date';
 
 function ModalProblem() {
   const { dispatch, state } = useCustomContext();
@@ -99,7 +100,7 @@ function ModalProblem() {
                 </Stack>
               } />
             <CardContent>
-              <Grid container>
+              <Grid container spacing={2}>
                 <Grid item container xs={12} md={8} spacing={3}>
                   <Grid item xs={12}>
                     {
@@ -127,13 +128,13 @@ function ModalProblem() {
                     }
                   </Grid>
                   <Grid item xs={12} container spacing={2}>
-                    <Grid item xs={4}>
+                    <Grid item xs={5}>
                       <ProblemDetail
                         title="Status"
                         state={problem?.status! ?? 'Pendente'}
                       />
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={7}>
                       <ProblemDetailSector
                         icon={<CrisisAlert color="action" fontSize='small' sx={{ mr: .5 }} />}
                         title="Setor"
@@ -168,10 +169,15 @@ function ModalProblem() {
                 </Grid>
                 <Grid item container sx={{ mt: 3 }} xs={12} md={4} spacing={3}>
                   <Grid item xs={12}>
+                    <ResolutionDate title='Data de Resolução' state={problem?.resolve_at!} />
+                  </Grid>
+                  <Grid item xs={12}>
                     <ProblemAnexos anexos={problem?.attachments!} />
                   </Grid>
                   <Grid item xs={12}>
-                    <SolutionDetails />
+                    <SolutionDetails
+                      solution={problem?.solution!}
+                    />
                   </Grid>
                 </Grid>
               </Grid>

@@ -16,3 +16,11 @@ export enum KeyPoints {
   FIFTEEN = "exemplo15",
   SIXTEEN = "exemplo16"
 }
+
+export enum Solution {
+  RPA = 'RPA (Robotic Proccess Automation)',
+  LOW_CODE = 'Low Code',
+  NO_CODE = 'No Code',
+  IA = 'Inteligência Artificial',
+  STARTUP = 'Startup'
+}

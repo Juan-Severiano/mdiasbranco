@@ -36,9 +36,10 @@ export function ProblemDetail({ title, ...rest }: ProblemDetailProps) {
         edit ? (
           <SelectPure onBlur={() => setEdit(false)} label="Status" onChange={handleChange} options={Status} value={value} />
         ) : (
-          <Chip onClick={() => setEdit(true)} label={
+          <Chip onClick={() => setEdit(true)} sx={{ height: 40, fontSize: 14 }} label={
             <Stack flexDirection='row' alignItems='center'>
-              <Circle color={status[value]} fontSize='small' sx={{ mr: .5 }} /> {value}
+              <Circle color={status[value]} fontSize='small' sx={{ mr: .5 }} />
+              <Typography variant="body2" fontWeight={500}>{value}</Typography>
             </Stack>
           } />
         )

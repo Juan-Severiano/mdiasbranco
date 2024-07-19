@@ -7,9 +7,10 @@ export interface Problem {
   // keywords?: string[]
   sector?: Sector
   // anexo: File | File[]
+  solution?: string
   status?: string
   description_solution?: string
-  responsible_startup?: Startup
+  responsible_startup?: string
   resolve_at?: string
   feedback?: string
   user_id?: User
