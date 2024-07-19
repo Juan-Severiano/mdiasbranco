@@ -70,26 +70,28 @@ export function CallFilters({
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2}>
-        <Grid item xs={2} sm={2} md={3} lg={2}>
-          <FormControl fullWidth>
-            {!isSmallScreen && <InputLabel>Filtrar por Data</InputLabel>}
-            <CustomOutlinedInput
-              label={!isSmallScreen ? 'Filtrar por Data' : ''}
-              type='date'
-              sx={{ backgroundColor: '#fff' }}
-              startAdornment={
-                <InputAdornment position="start">
-                  <CalendarMonth color="disabled" />
-                </InputAdornment>
-              }
-              value='dd/mm/2024'
-              onChange={handleDateChange}
-              aria-label="Filtrar por Data"
-            />
-          </FormControl>
-        </Grid>
+        <Hidden smDown>
+          <Grid item xs={2} sm={2} md={3} lg={2}>
+            <FormControl fullWidth>
+              {!isSmallScreen && <InputLabel>Filtrar por Data</InputLabel>}
+              <CustomOutlinedInput
+                label={!isSmallScreen ? 'Filtrar por Data' : ''}
+                type='date'
+                sx={{ backgroundColor: '#fff' }}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <CalendarMonth color="disabled" />
+                  </InputAdornment>
+                }
+                value='dd/mm/2024'
+                onChange={handleDateChange}
+                aria-label="Filtrar por Data"
+              />
+            </FormControl>
+          </Grid>
+        </Hidden>
 
-        <Grid item xs={2} sm={2} md={2}>
+        <Grid item xs={3} sm={2} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             {!isSmallScreen && <InputLabel>Prioridade</InputLabel>}
             <CustomSelect
@@ -108,7 +110,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item xs={2.5} sm={2} md={2}>
+        <Grid item xs={3} sm={2} md={2}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             {!isSmallScreen && <InputLabel>Status</InputLabel>}
             <CustomSelect
@@ -137,7 +139,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item sm={2} md={2}>
+        <Grid item xs={3} sm={2} md={2}>
           <ToggleButtonGroup
             value={toogleRender}
             exclusive
@@ -153,7 +155,7 @@ export function CallFilters({
           </ToggleButtonGroup>
         </Grid>
         <Hidden smDown>
-          <Grid item xs={0} sm={0} md={1.5} />
+          <Grid item xs={0} sm={0} md={.5} />
         </Hidden>
         <Grid item xs={2} sm={3} md={2.5}>
           <Hidden smUp>
@@ -162,6 +164,7 @@ export function CallFilters({
               sx={{
                 height: 55,
                 width: 50,
+                ml: 'auto'
               }}
               onClick={() => {
                 dispatch({ type: 'CHANGE-MODAL', payload: true });

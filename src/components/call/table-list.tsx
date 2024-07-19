@@ -33,7 +33,7 @@ export function CustomersTable({
   reload
 }: CustomersTableProps): React.JSX.Element {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Card>
