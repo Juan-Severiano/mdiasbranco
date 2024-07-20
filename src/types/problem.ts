@@ -10,7 +10,7 @@ export interface Problem {
   solution?: string
   status?: string
   description_solution?: string
-  responsible_startup?: string
+  responsible_startup?: Startup
   resolve_at?: string
   feedback?: string
   user_id?: User

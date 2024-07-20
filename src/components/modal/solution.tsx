@@ -54,7 +54,7 @@ export function SolutionDetails({ solution }: SolutionDetailsProps) {
       }
       {
         value === 'Startup' ? (
-          <SelectStartup atualStartup={problem?.responsible_startup!} />
+          <SelectStartup atualStartup={problem?.responsible_startup?.name!} />
         ) : null
       }
       <Typography variant="body2" fontWeight={500}>Descreva sua solução</Typography>
