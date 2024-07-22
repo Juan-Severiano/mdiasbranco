@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import { CustomersTable } from '../../../components/call/table-list';
 import { Problem } from '../../../types/problem';
 import { ProblemsGrid } from '../../../components/call/table-grid';
-import { getCalls } from '../../../services/requests/call';
+import { getHistoricCalls } from '../../../services/requests/call';
 import { HistoricFilters } from '../../../components/historic/filter';
 import { useCustomContext } from '../../../contexts/context';
 import NotFoundItem from '../../(errors)/not-found-item';
@@ -18,7 +18,7 @@ export default function ManagerHome(): React.JSX.Element {
   const { state } = useCustomContext()
 
   const fetch = async () => {
-    const res = await getCalls();
+    const res = await getHistoricCalls();
     setProblems(res)
   }
 

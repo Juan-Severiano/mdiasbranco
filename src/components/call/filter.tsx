@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import { Button, FormControl, Grid, Hidden, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Button, FormControl, Grid, Hidden, IconButton, InputAdornment, InputLabel, SelectChangeEvent, Stack, ToggleButton, ToggleButtonGroup, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { CalendarMonth, LibraryAdd } from '@mui/icons-material';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import Avatar from '@mui/material/Avatar';
@@ -17,6 +17,7 @@ import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBullet
 import { useCustomContext } from '../../contexts/context';
 import { statusAsIndex, status as stts } from "../../constants/status";
 import { Status } from '../../constants/status';
+import { Broom } from '@phosphor-icons/react';
 
 const priority = [
   { value: 'Tecnologia', label: 'Tecnologia' },
@@ -30,7 +31,10 @@ interface CallProps {
   setSelectedPriority: React.Dispatch<React.SetStateAction<string>>,
   setSelectedStatus: React.Dispatch<React.SetStateAction<string>>,
   setToogleRender: React.Dispatch<React.SetStateAction<'list' | 'grid'>>,
-  toogleRender: string
+  toogleRender: string,
+  selectedStatus: string,
+  selectedDate: string,
+  selectedPriority: string,
 }
 
 export function CallFilters({
@@ -38,14 +42,23 @@ export function CallFilters({
   setSelectedPriority,
   setSelectedStatus,
   setToogleRender,
+  selectedStatus,
+  selectedDate,
+  selectedPriority,
   toogleRender
 }: CallProps) {
   const isSmallScreen = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
   const { dispatch } = useCustomContext();
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedDate(event.target.value);
+    const date = event.target.value;
+    setSelectedDate(date);
   };
-  const [status, setStatus] = useState('');
+  
+  const [status, setStatus] = useState(selectedStatus);
+
+  useEffect(() => {
+    setStatus(selectedStatus)
+  }, [selectedStatus])
 
   const handlePriorityChange = (event: SelectChangeEvent<unknown>) => {
     setSelectedPriority(event.target.value as string);
@@ -63,6 +76,12 @@ export function CallFilters({
   const handleRenderFile2 = () => {
     setToogleRender("list");
   };
+
+  function handleClearFilters() {
+    setSelectedDate('')
+    setSelectedPriority('')
+    setSelectedStatus('')
+  }
 
   const theme = useTheme()
 
@@ -82,7 +101,7 @@ export function CallFilters({
                     <CalendarMonth color="disabled" />
                   </InputAdornment>
                 }
-                value='dd/mm/2024'
+                value={selectedDate ?? 'dd/mm/yyyy'}
                 onChange={handleDateChange}
                 aria-label="Filtrar por Data"
               />
@@ -99,6 +118,7 @@ export function CallFilters({
               startAdornment={<CrisisAlertIcon color='disabled' />}
               onChange={handlePriorityChange}
               aria-label="Prioridade"
+              value={selectedPriority}
             >
               {priority.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -173,7 +193,7 @@ export function CallFilters({
           </FormControl>
         </Grid>
 
-        <Grid item xs={3} sm={2} md={2}>
+        <Grid item xs={2} sm={1} md={1}>
           <ToggleButtonGroup
             value={toogleRender}
             exclusive
@@ -188,9 +208,15 @@ export function CallFilters({
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
-        <Hidden smDown>
-          <Grid item xs={0} sm={0} md={.5} />
-        </Hidden>
+        <Grid item xs={1.5}>
+          <Tooltip title='Limpar filtros' sx={{ height: '100%' }}>
+            <Stack alignItems='center' justifyContent='center'>
+              <IconButton onClick={handleClearFilters}>
+                <Broom />
+              </IconButton>
+            </Stack>
+          </Tooltip>
+        </Grid>
         <Grid item xs={2} sm={3} md={2.5}>
           <Hidden smUp>
             <Button

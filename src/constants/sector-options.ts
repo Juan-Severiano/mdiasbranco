@@ -30,3 +30,9 @@ export enum Priority {
   LOGISTIC = 'Logística',
   STORE = 'Vendas',
 }
+
+export enum KeySectors {
+  SALES = 'Vendas',
+  INDUSTRY = 'Indústria',
+  LOGISTIC = 'Logística',
+}

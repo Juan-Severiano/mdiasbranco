@@ -1,5 +1,5 @@
 import { isAxiosError } from 'axios';
-import { CreateProblem, Problem } from '../../types/problem';
+import { CreateProblem, FilterParams, Problem } from '../../types/problem';
 import { localClient } from '../../lib/local/client';
 import { api } from '../api';
 
@@ -47,9 +47,26 @@ export async function updateCallImages(files: File[], id: number) {
   }
 }
 
-export async function getCalls(search?: string) {
+export async function getCalls(search?: string, params?: FilterParams) {
   try {
     const response = await api.get('/call', {
+      params: {
+        search: search,
+        ...params,
+        date: params?.date || '' 
+      }
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return isAxiosError(err) ? err : err;
+  }
+}
+
+export async function getHistoricCalls(search?: string) {
+  try {
+    const response = await api.get('/admin/all-finished-calls', {
       params: {
         search: search
       }

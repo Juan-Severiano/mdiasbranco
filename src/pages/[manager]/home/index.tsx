@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { CustomersTable } from '../../../components/call/table-list';
-import { Problem } from '../../../types/problem';
+import { FilterParams, Problem } from '../../../types/problem';
 import { ProblemsGrid } from '../../../components/call/table-grid';
 import { getCalls } from '../../../services/requests/call';
 import { useCustomContext } from '../../../contexts/context';
@@ -17,9 +17,9 @@ export default function ManagerHome(): React.JSX.Element {
   const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
   const { state, dispatch } = useCustomContext()
 
-  const fetch = async (search?: string) => {
+  const fetch = async (search?: string, params?: FilterParams) => {
     dispatch({ payload: true, type: 'CHANGE-LOADING' });
-    const res = await getCalls(search);
+    const res = await getCalls(search, params);
     setProblems(res);
     if (state.modalDetails.modal) {
       const problemToUpdate = problems.filter(problem => problem.id === state.modalDetails.problem?.id)
@@ -41,28 +41,27 @@ export default function ManagerHome(): React.JSX.Element {
     }
   }, [state.loading.refresh])
 
-  const applyFilters = () => {
-    // let filtered = problems.filter(problem => {
-    //   // Filtrar por palavra-chave
-    //   if (searchKeyword.toLowerCase() && !problem.title!.toLowerCase().includes(searchKeyword.toLowerCase())) {
-    //     return false;
-    //   }
-    //   // Filtrar por data
-    //   if (selectedDate.toLowerCase() && problem.resolve_at !== selectedDate.toLowerCase()) {
-    //     return false;
-    //   }
-    //   // Filtrar por prioridade
-    //   if (selectedPriority.toLowerCase() && problem.sector !== selectedPriority.toLowerCase()) {
-    //     return false;
-    //   }
-    //   // Filtrar por status
-    //   if (selectedStatus.toLowerCase() && problem.status !== selectedStatus.toLowerCase()) {
-    //     return false;
-    //   }
-    //   return true;
-    // });
-    // setFilteredProblems(filtered);
-  }
+  React.useEffect(() => {
+    console.log(selectedDate)
+  }, [selectedDate])
+
+  const applyFilters = async () => {
+    try {
+      const formattedDate = selectedDate ? new Date(selectedDate).toISOString() : '';
+      fetch(state.search.search, {
+        date: formattedDate,
+        keySector: selectedPriority,
+        status: selectedStatus
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  React.useEffect(() => {
+    applyFilters();
+  }, [searchKeyword, selectedDate, selectedPriority, selectedStatus]);
+  
 
   React.useEffect(() => {
     applyFilters();
@@ -74,6 +73,9 @@ export default function ManagerHome(): React.JSX.Element {
   return (
     <Stack spacing={3}>
       <CallFilters
+        selectedDate={selectedDate}
+        selectedPriority={selectedPriority}
+        selectedStatus={selectedStatus}
         setSearchKeyword={setSearchKeyword}
         setSelectedDate={setSelectedDate}
         setSelectedPriority={setSelectedPriority}

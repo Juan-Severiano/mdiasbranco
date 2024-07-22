@@ -31,7 +31,7 @@ export default function ManagerDashboard() {
   return (
     <Grid container spacing={3}>
       <Grid item lg={3} sm={6} xs={12}>
-        <Budget trend="up" sx={{ height: '100%' }} value="200" />
+        <Budget trend="up" sx={{ height: '100%' }} value={Number(dash?.countStartups.total ?? 0)} />
       </Grid>
       <Grid item lg={3} sm={6} xs={12}>
         <TotalCustomers trend="down" sx={{ height: '100%' }} value={dash?.countStatusCall.count.received! || 0} />

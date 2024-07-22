@@ -85,4 +85,19 @@ export interface DashData {
   countUsers: {
     count: number
   }
+  countStartups: {
+    total: number
+    sectors: {
+      [x: string]: {
+        count: number
+        startups: Startup[]
+      }
+    }
+  }
+}
+
+export interface FilterParams {
+  status: string
+  date: string
+  keySector: string
 }
