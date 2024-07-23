@@ -29,3 +29,22 @@ export async function patchStartup(data: Partial<Startup>, id: string) {
   const response = await api.patch('/startup/' + id, data);
   return response;
 }
+
+export async function getStartupDetails(id: number): Promise<StartupDetails> {
+  try {
+    const res = await api.get(`/admin/startup/${id}/count-finished-calls`)
+    const position = await api.get<{ result: number }>(`/startup/rank/finished-calls/${id}`)
+    console.log(res)
+    return {
+      finished_calls: res.data.result ?? 0,
+      position: position.data.result ?? 0,
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
+export interface StartupDetails {
+  position: number
+  finished_calls: number
+}

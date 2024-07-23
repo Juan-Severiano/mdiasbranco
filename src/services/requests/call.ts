@@ -2,6 +2,7 @@ import { isAxiosError } from 'axios';
 import { CreateProblem, FilterParams, Problem } from '../../types/problem';
 import { localClient } from '../../lib/local/client';
 import { api } from '../api';
+import dayjs from 'dayjs';
 
 export async function createCall(data: CreateProblem) {
   const { data: user } = localClient.getUser();
@@ -53,7 +54,7 @@ export async function getCalls(search?: string, params?: FilterParams) {
       params: {
         search: search,
         ...params,
-        date: params?.date || '' 
+        date: params?.date ? dayjs(params.date).add(1, 'day').toISOString() : ''
       }
     });
     console.log(response.data);

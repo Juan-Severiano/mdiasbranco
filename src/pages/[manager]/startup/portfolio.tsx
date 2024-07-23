@@ -1,19 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Grid, Card, Avatar, Box, Typography } from '@mui/material';
 import { Startup } from '../../../types/problem';
-import img2 from '../../../../public/img2.jpg'
 import Link from '../../../../public/link.svg'
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WebIcon from '@mui/icons-material/Web';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { useParams } from 'react-router-dom';
-import { getStartupById } from '../../../services/requests/startup';
+import { getStartupById, getStartupDetails, StartupDetails } from '../../../services/requests/startup';
 import { baseURL } from '../../../config';
 import { StartupCardDetails } from '../../../components/startup/startup-card';
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { geocodeAddress } from '../../../lib/geocode-address';
+import { Email } from '@mui/icons-material';
 
-export default function ManagerDashboard() {
+export default function StartupPortfolio() {
   const [startup, setStartup] = useState<Startup | null>(null);
   const { id } = useParams()
+  const [location, setLocation] = useState<{ lat: number, lon: number } | null>(null);
+  const [details, setDetails] = useState<StartupDetails | null>(null);
 
   async function getStartup() {
     try {
@@ -24,9 +29,29 @@ export default function ManagerDashboard() {
     }
   }
 
+  async function getdet() {
+    const res = await getStartupDetails(Number(id!))
+    setDetails(res)
+  }
+
   useEffect(() => {
     getStartup()
-  }, [getStartup, id])
+    getdet()
+  }, [id])
+
+  useEffect(() => {
+    const getLocation = async () => {
+      if (!startup?.localization) return
+      try {
+        const { lat, lon } = await geocodeAddress(startup?.localization!);
+        setLocation({ lat, lon });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getLocation();
+  }, [startup]);
 
   return (
     <Grid container spacing={2}>
@@ -41,14 +66,14 @@ export default function ManagerDashboard() {
               borderRadius: '10px',
               marginBottom: '70px',
               bgcolor: 'primary.main',
-              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3)), url(${img2})`,
+              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3)), url(${baseURL}/startup/attachment/${startup?.attachments?.path})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           >
             <Avatar
-              alt={`Logo da Startup: ${startup?.name}`}
-              src={`${baseURL}/startup/attachment/${startup?.attachments.path}`}
+              alt={`${startup?.name}`}
+              src={`${baseURL}/startup/attachment/${startup?.attachments?.path}`}
               sx={{
                 width: 150,
                 height: 150,
@@ -97,13 +122,13 @@ export default function ManagerDashboard() {
           </Box>
           <Grid container spacing={2} sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
             <Grid item lg={4} sm={6} xs={12}>
-              <StartupCardDetails topmessage="Posição" message='Entre as mais utilizadas' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="8ª" />
+              <StartupCardDetails topmessage="Posição" message='Entre as mais utilizadas' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={`${details?.position ?? 0}ª`} />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <StartupCardDetails message='Socilitações Finalizadas' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="23" />
+              <StartupCardDetails message='Socilitações Finalizadas' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={String(details?.finished_calls ?? 0)} />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <StartupCardDetails message='Proximo dado' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value="200" />
+              <StartupCardDetails message='Colaboradores Internos' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={`${startup?.size ?? 1}`} />
             </Grid>
           </Grid>
         </Card>
@@ -146,6 +171,29 @@ export default function ManagerDashboard() {
               <img src={Link} style={{ marginLeft: 'auto', filter: 'invert(1)', height: '24px', width: 'auto' }} />
             </a>
             <a
+              href={`mailto:${startup?.email}`}
+              target='_blank'
+              style={{
+                margin: '3px 0',
+                textDecoration: 'none',
+                color: 'white',
+                background: "#003F7D",
+                padding: '10px 20px',
+                paddingLeft: '10px',
+                borderRadius: '5px',
+                fontSize: '15px',
+                width: '100%',
+                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start'
+              }}
+            >
+              <Email style={{ marginRight: '5px' }} />
+              E-mail
+              <img src={Link} style={{ marginLeft: 'auto', filter: 'invert(1)', height: '24px', width: 'auto' }} />
+            </a>
+            <a
               href={startup?.linkedin}
               target='_blank'
               style={{
@@ -169,7 +217,7 @@ export default function ManagerDashboard() {
               <img src={Link} style={{ marginLeft: 'auto', filter: 'invert(1)', height: '24px', width: 'auto' }} />
             </a>
             <a
-              href={startup?.linkedin}
+              href={`https://instagram.com/${startup?.instagram}`}
               target='_blank'
               style={{
                 margin: '3px 0',
@@ -192,15 +240,19 @@ export default function ManagerDashboard() {
               <img src={Link} style={{ marginLeft: 'auto', filter: 'invert(1)', height: '24px', width: 'auto' }} />
             </a>
             <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
-            <iframe
-              title="Mapa"
-              width="100%"
-              height="155"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15931.810043721269!2d-39.841159468339214!3d-3.3617796248803655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c02d4be71cab27%3A0x76f1d2207639ec62!2sAmontada%2C%20CE%2C%2062500-000!5e0!3m2!1spt-BR!2sbr!4v1720024815652!5m2!1spt-BR!2sbr"
-              frameBorder="0"
-              style={{ border: '1px solid #ccc', borderRadius: '10px', overflow: 'hidden' }}
-              aria-hidden="false"
-            ></iframe>
+            {location && (
+              <MapContainer center={[location.lat, location.lon]} zoom={13} style={{ height: '400px', width: '100%' }}>
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                />
+                <Marker position={[location.lat, location.lon]}>
+                  <Popup>
+                    A localização da startup cadastrada.
+                  </Popup>
+                </Marker>
+              </MapContainer>
+            )}
             <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }} />
           </Box>
         </Card>

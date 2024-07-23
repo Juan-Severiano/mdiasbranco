@@ -8,6 +8,7 @@ import { Budget } from "../../../components/dashboard/budget";
 import { useEffect, useState } from "react";
 import { getDashboardData } from "../../../services/requests/dashboard";
 import { DashData } from "../../../types/problem";
+import { RankingStartups } from "../../../components/dashboard/latest-products";
 
 export default function ManagerDashboard() {
   const [dash, setDash] = useState<DashData | null>(null)
@@ -45,13 +46,16 @@ export default function ManagerDashboard() {
       <Grid item lg={8} xs={12}>
         <Sales
           chartSeries={[
-            { name: 'Este mês', data: [18, 16, 5, 8, 3, 14, 14, 16, 17, 19, 18, 20, 34, 11, 21, 22] },
+            { name: 'Este mês', data: ( dash?.graphData.map(item => item.count) ?? [18, 16, 5, 8, 3, 14, 14, 16, 17, 19, 18, 20, 34, 11, 21, 22]) },
           ]}
           sx={{ height: '100%' }}
         />
       </Grid>
       <Grid item lg={4} md={6} xs={12}>
         <Traffic chartSeries={traffic} labels={['Aprovado', 'Análise', 'Pendente', 'Aberto', 'Finalizado']} sx={{ height: '100%' }} />
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <RankingStartups startups={dash?.ranking ?? []} sx={{ height: '100%' }} />
       </Grid>
     </Grid>
   )

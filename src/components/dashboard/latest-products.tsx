@@ -1,74 +1,56 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
 import type { SxProps } from '@mui/material/styles';
-import dayjs from 'dayjs';
+import { Startup } from '../../types/problem';
+import { Avatar, ListItemText, Stack, Tooltip, Typography } from '@mui/material';
+import { baseURL } from '../../config';
 
-export interface Product {
-  id: string;
-  image: string;
-  name: string;
-  updatedAt: Date;
+export interface IRankingStartups {
+  position: number
+  startup: Startup
+  qtde: number
 }
 
 export interface LatestProductsProps {
-  products?: Product[];
+  startups?: IRankingStartups[];
   sx?: SxProps;
 }
 
-export function LatestProducts({ products = [], sx }: LatestProductsProps): React.JSX.Element {
+export function RankingStartups({ startups = [], sx }: LatestProductsProps): React.JSX.Element {
   return (
     <Card sx={sx}>
-      <CardHeader title="Latest products" />
+      <CardHeader title="Ranking de Startups" />
       <Divider />
       <List>
-        {products.map((product, index) => (
-          <ListItem divider={index < products.length - 1} key={product.id}>
-            <ListItemAvatar>
-              {product.image ? (
-                <Box component="img" src={product.image} sx={{ borderRadius: 1, height: '48px', width: '48px' }} />
-              ) : (
-                <Box
-                  sx={{
-                    borderRadius: 1,
-                    backgroundColor: 'var(--mui-palette-neutral-200)',
-                    height: '48px',
-                    width: '48px',
-                  }}
-                />
-              )}
-            </ListItemAvatar>
-            <ListItemText
-              primary={product.name}
-              primaryTypographyProps={{ variant: 'subtitle1' }}
-              secondary={`Updated ${dayjs(product.updatedAt).format('MMM D, YYYY')}`}
-              secondaryTypographyProps={{ variant: 'body2' }}
-            />
-            <IconButton edge="end">
-              asd
-            </IconButton>
+        {startups.map((startup, index) => (
+          <ListItem divider={index < startups.length - 1} key={startup.position}>
+            <Stack flexDirection='row' sx={{ width: '100%' }}>
+              <Typography variant="h3" color="primary" fontWeight={600} sx={{ mr: 3 }}>
+                {startup.position}
+              </Typography>
+              <ListItemAvatar>
+                <Avatar src={`${baseURL}/startup/attachment/${startup?.startup?.attachments?.path}`} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={startup.startup.name}
+                primaryTypographyProps={{ variant: 'subtitle1' }}
+                // secondary={`Sessão: ${product.sessao}, ${product.endereco.bairro_distrito}`}
+                secondaryTypographyProps={{ variant: 'body2' }}
+              />
+              <Tooltip title='Quantidade de chamados finalizados'>
+                <Typography variant="h6" color="primary" fontWeight={600} sx={{ ml: 'auto' }}>
+                  {startup.qtde}
+                </Typography>
+              </Tooltip>
+            </Stack>
           </ListItem>
         ))}
       </List>
-      <Divider />
-      <CardActions sx={{ justifyContent: 'flex-end' }}>
-        <Button
-          color="inherit"
-          size="small"
-          variant="text"
-        >
-          View all
-        </Button>
-      </CardActions>
     </Card>
   );
 }

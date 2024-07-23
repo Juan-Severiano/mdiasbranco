@@ -6,15 +6,14 @@ import CustomSelect from '../../styles/theme/custom-select';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 const priority = [
-  { value: 'juan', label: 'Juan' },
-  { value: 'Industria', label: 'Industria' },
+  { value: 'Logística', label: 'Logística' },
+  { value: 'Indústria', label: 'Indústria' },
   { value: 'Vendas', label: 'Vendas' }
 ];
 
@@ -50,31 +49,13 @@ export function CallFilters({
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={3} sm={3} md={2}>
+        <Grid item xs={6} sm={3} md={4}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             {!isSmallScreen && <InputLabel>Área de Atuação</InputLabel>}
             <CustomSelect
               label={isSmallScreen ? '' : 'Prioridade'}
               sx={{ backgroundColor: '#fff' }}
               startAdornment={<GroupOutlinedIcon color="disabled" />}
-              onChange={handlePriorityChange}
-              aria-label="Prioridade"
-            >
-              {priority.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </CustomSelect>
-          </FormControl>
-        </Grid>
-        <Grid item xs={3} sm={3} md={2}>
-          <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
-            {!isSmallScreen && <InputLabel>Localização</InputLabel>}
-            <CustomSelect
-              label={isSmallScreen ? '' : 'Prioridade'}
-              sx={{ backgroundColor: '#fff' }}
-              startAdornment={<LocationOnOutlinedIcon color="disabled" />}
               onChange={handlePriorityChange}
               aria-label="Prioridade"
             >

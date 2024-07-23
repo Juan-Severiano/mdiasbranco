@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Unstable_Grid2';
 import { AccountInfo } from '../../../components/account/account-info';
 import { AccountDetails } from '../../../components/account/account-details';
+import { Grid } from '@mui/material';
 
 export default function ManagerAccount(): React.JSX.Element {
   return (

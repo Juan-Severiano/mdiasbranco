@@ -28,7 +28,6 @@ export interface CreateProblem {
 }
 
 export enum Sector {
-  SECTOR = 'Setor',
   FINANCIAL = 'Financeiro',
   HUMAN_RESOURCES = 'Recursos Humanos',
   INFORMATION_TECHNOLOGY = 'Tecnologia da Informação (TI)',
@@ -67,6 +66,9 @@ export interface Startup {
   website: string
   linkedin: string
   email: string
+  localization: string
+  size: string
+  instagram: string
   service: string
   sector: Sector
   attachments: Attachment
@@ -94,6 +96,13 @@ export interface DashData {
       }
     }
   }
+  graphData: SectorsGraph[]
+  ranking: { position: number, startup: Startup, qtde: number }[]
+}
+
+interface SectorsGraph {
+  sector: string
+  count: number
 }
 
 export interface FilterParams {

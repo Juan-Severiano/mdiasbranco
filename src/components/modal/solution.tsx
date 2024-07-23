@@ -27,7 +27,12 @@ export function SolutionDetails({ solution }: SolutionDetailsProps) {
     const selectedValue = e.target.value as Solution;
     if (Object.values(Solution).includes(selectedValue)) {
       setValue(selectedValue);
-      await updateCallPartial({ 'solution': selectedValue }, problem?.id!);
+      if (selectedValue === 'Startup') {
+        await updateCallPartial({ 'solution': selectedValue }, problem?.id!);
+      } else {
+        // @ts-ignore
+        await updateCallPartial({ 'solution': selectedValue, responsible_startup: null }, problem?.id!);
+      }
     }
     dispatch({ payload: false, type: 'CHANGE-LOADING' })
   };

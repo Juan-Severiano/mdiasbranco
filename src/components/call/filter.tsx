@@ -20,8 +20,8 @@ import { Status } from '../../constants/status';
 import { Broom } from '@phosphor-icons/react';
 
 const priority = [
-  { value: 'Tecnologia', label: 'Tecnologia' },
-  { value: 'Industria', label: 'Industria' },
+  { value: 'Logística', label: 'Logística' },
+  { value: 'Indústria', label: 'Indústria' },
   { value: 'Vendas', label: 'Vendas' }
 ];
 

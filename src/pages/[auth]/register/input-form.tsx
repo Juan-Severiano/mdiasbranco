@@ -72,7 +72,7 @@ const RegisterForm = ({ ...others }) => {
           telphone: '',
           mat: '',
           files: [] as File[],
-          sector: Sector.SECTOR,
+          sector: Sector.ADMINISTRATION,
           submit: null,
         }}
         validationSchema={registerSchema}

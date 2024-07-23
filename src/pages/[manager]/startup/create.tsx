@@ -13,6 +13,9 @@ import InputMask from 'react-input-mask';
 import CustomOutlinedInput from '../../../styles/theme/custom-outlined-input';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { geocodeAddress } from '../../../lib/geocode-address';
 
 type FormValues = {
   [key: string]: string | File[] | null;
@@ -22,7 +25,8 @@ const ManagerCreateStartup: React.FC = () => {
   const [attachments, setAttachments] = useState<File[]>([]);
   const [preview, setPreview] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
-  const navigate = useNavigate()
+  const [location, setLocation] = useState<{ lat: number, lon: number } | null>(null);
+  const navigate = useNavigate();
   const initialValues: FormValues = startupSchemaObject.reduce((acc, field) => {
     acc[field.name] = field.name === 'attachment' ? [] : '';
     return acc;
@@ -68,33 +72,38 @@ const ManagerCreateStartup: React.FC = () => {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 4 }}>
       <Formik
-        initialValues={{ ...initialValues, submit: null}}
+        initialValues={{ ...initialValues, submit: null }}
         validationSchema={validationSchema}
         onSubmit={async (values: FormValues, { resetForm, setErrors }) => {
           const formData = new FormData();
+          console.log(values);
           for (const key in values) {
             if (key === 'attachment') {
               attachments.forEach((file, _) => {
                 formData.append(`attachment`, file);
               });
+            } else if (key === 'address') {
+              formData.append(`localization`, values[key]);
             } else {
               formData.append(key, values[key] as string);
             }
           }
           try {
-            await createStartup(formData)
-            setSuccess(true)
-            navigate('/manager/startup')
+            const { lat, lon } = await geocodeAddress(values?.localization! as string);
+            setLocation({ lat: parseFloat(lat), lon: parseFloat(lon) });
+            await createStartup(formData);
+            setSuccess(true);
+            navigate('/manager/startup');
             setTimeout(() => {
-              setSuccess(false)
-            }, 2000)
+              setSuccess(false);
+            }, 2000);
             resetForm(startupSchemaObject.reduce((acc, field) => {
               acc[field.name] = field.name === 'attachment' ? [] : '';
               return acc;
-            }, {} as FormValues))
+            }, {} as FormValues));
           } catch (error) {
-            console.log(error.response.data)
-            if (isAxiosError(error)) setErrors({ submit: error.response.data.message as string })
+            console.log(error);
+            if (isAxiosError(error)) setErrors({ submit: error.response.data.message as string });
           }
         }}
       >
@@ -102,7 +111,7 @@ const ManagerCreateStartup: React.FC = () => {
           <form noValidate onSubmit={handleSubmit}>
             <Grid container spacing={1}>
               {startupSchemaObject.map((field) => (
-                <Grid item xs={field.name === 'linkedin' || field.name === 'website' || field.name === 'sector' || field.name === 'service' ? 6 : 12} key={field.name}>
+                <Grid item xs={field.name === 'linkedin' || field.name === 'website' || field.name === 'sector' || field.name === 'service' || field.name === 'instagram' || field.name === 'email' ? 6 : 12} key={field.name}>
                   {field.name === 'attachment' ? (
                     <Box
                       display="flex"
@@ -178,24 +187,33 @@ const ManagerCreateStartup: React.FC = () => {
                     />
                   )}
                 </Grid>
-
-              ))
-              }
+              ))}
               {errors.submit && (
                 <Alert color="error" sx={{ mt: 2, width: '100%' }}>
-                 {errors.submit}
+                  {errors.submit}
                 </Alert>
               )}
               {success && (
                 <Alert color="success" sx={{ mt: 2 }}>
-                  Sua startup foi cadastrada com sucesso, muito obrigado pela colaboração !
+                  Sua startup foi cadastrada com sucesso, muito obrigado pela colaboração!
                 </Alert>
+              )}
+              {location && (
+                <MapContainer center={[location?.lat ?? -3.14, location?.lon ?? -39.6]} zoom={13} style={{ height: '400px', width: '100%', marginTop: '20px' }}>
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  />
+                  <Marker position={[location?.lat ?? -3.14, location?.lon ?? -39.6]}>
+                    <Popup>
+                      A localização da startup cadastrada.
+                    </Popup>
+                  </Marker>
+                </MapContainer>
               )}
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <Button variant='contained' color='secondary' sx={{ color: '#0B2B70', mt: 4, border: 1, borderColor: '#0B2B70' }} fullWidth type="submit" disabled={isSubmitting}>
-                  {
-                    isSubmitting ? 'Criando ...' : 'Criar'
-                  }
+                  {isSubmitting ? 'Criando ...' : 'Criar'}
                 </Button>
               </Grid>
             </Grid>
@@ -203,7 +221,7 @@ const ManagerCreateStartup: React.FC = () => {
         )}
       </Formik>
     </Card>
-  )
+  );
 };
 
 export default ManagerCreateStartup;

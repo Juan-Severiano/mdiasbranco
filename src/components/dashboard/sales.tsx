@@ -35,7 +35,7 @@ export function Sales({ chartSeries, sx }: SalesProps): React.JSX.Element {
   );
 }
 
-const categories = Object.values(Sector)
+const categories = Object.values(Sector).map(cat => cat.length > 24 ? cat.slice(0, 14) + '...' : cat)
 
 function useChartOptions() {
   const theme = useTheme();
