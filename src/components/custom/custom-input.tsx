@@ -4,7 +4,7 @@ import { FieldProps } from "formik";
 import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import CustomOutlinedInput from "../../styles/theme/custom-outlined-input";
 import CustomSelect from "../../styles/theme/custom-select";
-import { status } from "../../constants/status";
+import { statusAsIndex, status as stts } from "../../constants/status";
 
 interface CustomInputProps extends FieldProps {
   label: string;
@@ -149,7 +149,19 @@ export function SelectPure({ options, value, onChange, onBlur, sx, startAdornmen
         {Object.entries(options).map(([key, value]) => (
           <MenuItem key={key} value={value}>
             <Stack alignItems='center' flexDirection='row' width='100%'>
-              { status[value] &&  <Avatar sx={{ width: 15, height: 15, mr: 2 }} src={`/Status/${key}.jpeg`} alt={`${value}sta tus`} /> }
+              {stts[value] && (
+                <Avatar
+                  sx={{
+                    width: 15,
+                    height: 15,
+                    mr: 2,
+                    // @ts-ignore
+                    bgcolor: theme.palette[statusAsIndex[value]][stts[value] !== 'action' ? 'main' : 'active']
+                  }}
+                  src='/Status/avatar-bg.png'
+                  alt={`${value} status`}
+                />
+              )}
               <Typography fontSize={15}>{value}</Typography>
             </Stack>
           </MenuItem>
