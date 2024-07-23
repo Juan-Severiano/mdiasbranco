@@ -3,8 +3,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Brightness1Icon from '@mui/icons-material/Brightness1';
 import dayjs from 'dayjs';
@@ -14,6 +12,7 @@ import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 import { usePopover } from '../../hooks/use-popover';
 import { deleteCall } from '../../services/requests/call';
 import { status } from '../../constants/status';
+import { CrisisAlert, PrecisionManufacturing } from '@mui/icons-material';
 
 interface CustomersTableProps {
   count?: number;
@@ -128,24 +127,34 @@ function CallRow({ call: row, reload }: { call: Problem, reload: () => Promise<v
         </Stack>
       </TableCell>
       <TableCell>
-        <Stack spacing={1} flexDirection="row" alignItems="center">
-          <WarningAmberIcon color="action" sx={{ fontSize: '1.25rem' }} />
+        <Stack spacing={1} direction="row" alignItems="center">
+          <PrecisionManufacturing color="action" sx={{ fontSize: '1.25rem' }} />
           <Typography
             variant="body2"
             color="textPrimary"
-            sx={{ fontSize: '0.875rem' }}
-            textTransform="capitalize"
+            sx={{
+              fontSize: '0.875rem',
+              textTransform: 'capitalize',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}
           >
-            asd
+            {row.solution ?? 'Esperando solução'}
           </Typography>
         </Stack>
-        <Stack spacing={1} flexDirection="row" alignItems="center">
-          <SettingsIcon color="action" sx={{ fontSize: '1.25rem' }} />
+        <Stack spacing={1} direction="row" alignItems="center">
+          <CrisisAlert color="action" sx={{ fontSize: '1.25rem' }} />
           <Typography
             variant="body2"
             color="textPrimary"
-            sx={{ fontSize: '0.875rem' }}
-            textTransform="capitalize"
+            sx={{
+              fontSize: '0.875rem',
+              textTransform: 'capitalize',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}
           >
             {row.sector}
           </Typography>

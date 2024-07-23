@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '@mui/material/Card';
-import { Button, FormControl, Grid, InputAdornment, InputLabel, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Button, FormControl, Grid, Hidden, InputAdornment, InputLabel, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { CalendarMonth, LibraryAdd } from '@mui/icons-material';
 import CustomOutlinedInput from '../../styles/theme/custom-outlined-input';
 
@@ -39,7 +39,7 @@ export function HistoricFilters({
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2}>
-        <Grid item sm={12} md={3}>
+        <Grid item xs={6}>
           <FormControl fullWidth>
             <InputLabel>Filtrar por Data</InputLabel>
             <CustomOutlinedInput
@@ -57,7 +57,7 @@ export function HistoricFilters({
           </FormControl>
         </Grid>
 
-        <Grid item sm={12} md={6}>
+        <Grid item xs={3}>
           <ToggleButtonGroup
             value={toogleRender}
             exclusive
@@ -72,21 +72,37 @@ export function HistoricFilters({
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
-        <Grid item sm={12} md={.5} />
-        <Grid item sm={12} md={2.5}>
-          <Button
-            variant="contained"
-            sx={{
-              height: '100%',
-              width: '100%'
-            }}
-            onClick={() => {
-              dispatch({ type: 'CHANGE-MODAL', payload: true })
-            }}
-            startIcon={<LibraryAdd />}
-          >
-            Solicite um Chamado
-          </Button>
+        <Grid item xs={3}>
+          <Hidden smUp>
+            <Button
+              variant="contained"
+              sx={{
+                height: 55,
+                width: 50,
+                ml: 3
+              }}
+              onClick={() => {
+                dispatch({ type: 'CHANGE-MODAL', payload: true });
+              }}
+            >
+              <LibraryAdd />
+            </Button>
+          </Hidden>
+          <Hidden smDown>
+            <Button
+              variant="contained"
+              sx={{
+                height: '100%',
+                width: '100%',
+              }}
+              onClick={() => {
+                dispatch({ type: 'CHANGE-MODAL', payload: true });
+              }}
+              startIcon={<LibraryAdd />}
+            >
+              Solicitar Chamado
+            </Button>
+          </Hidden>
         </Grid>
       </Grid>
     </Card>

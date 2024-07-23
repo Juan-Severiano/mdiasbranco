@@ -128,7 +128,7 @@ export default function StartupPortfolio() {
               <StartupCardDetails message='Socilitações Finalizadas' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={String(details?.finished_calls ?? 0)} />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <StartupCardDetails message='Colaboradores Internos' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={`${startup?.size ?? 1}`} />
+              <StartupCardDetails message='Colaboradores Internos' topmessage='Quadro de associados' trend="up" sx={{ height: '100%', background: "#f7f7fd", display: 'flex', alignItems: 'center', justifyContent: 'center' }} value={`${startup?.size ?? 1}`} />
             </Grid>
           </Grid>
         </Card>

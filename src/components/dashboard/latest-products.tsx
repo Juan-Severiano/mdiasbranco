@@ -31,7 +31,7 @@ export function RankingStartups({ startups = [], sx }: LatestProductsProps): Rea
           <ListItem divider={index < startups.length - 1} key={startup.position}>
             <Stack flexDirection='row' sx={{ width: '100%' }}>
               <Typography variant="h3" color="primary" fontWeight={600} sx={{ mr: 3 }}>
-                {startup.position}
+                {startup.position} °
               </Typography>
               <ListItemAvatar>
                 <Avatar src={`${baseURL}/startup/attachment/${startup?.startup?.attachments?.path}`} />

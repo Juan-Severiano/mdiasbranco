@@ -71,10 +71,16 @@ const CreateStartup: React.FC = () => {
           <Box sx={{ position: 'absolute', top: 10 }}>
             <Logo width={200} />
           </Box>
-          <Typography sx={{ md: { mt: 20 } }} variant="h1" fontWeight={800} textTransform="uppercase" color="white">
+          <Typography sx={{ mt: { xs: 20, md: -20 }, }} variant="h1" fontWeight={800} textTransform="uppercase" color="white">
             Cadastre a sua
           </Typography>
-          <Typography variant="h1" fontWeight={500} textTransform="uppercase" color="white">
+          <Typography
+            variant="h1"
+            fontWeight={500}
+            textTransform="uppercase"
+            color="white"
+            style={{ textShadow: '6px 6px 8px rgba(0, 0, 0, 0.5)' }}
+          >
             Startup na nossa base de dados
           </Typography>
           <a href="https://mdiasbranco.com.br" target="_blank" rel="noopener noreferrer">
@@ -156,14 +162,14 @@ const CreateStartup: React.FC = () => {
                             name="cnpj"
                           >
                             {
-                            (inputProps: any) => (
-                              <CustomOutlinedInput
-                                {...inputProps}
-                                placeholder="CNPJ"
-                                type="text"
-                                sx={{ width: '100%' }}
-                              />
-                            )}
+                              (inputProps: any) => (
+                                <CustomOutlinedInput
+                                  {...inputProps}
+                                  placeholder="CNPJ"
+                                  type="text"
+                                  sx={{ width: '100%' }}
+                                />
+                              )}
                           </InputMask>
                           {touched.cnpj && errors.cnpj ? (
                             <FormHelperText>{errors.cnpj}</FormHelperText>

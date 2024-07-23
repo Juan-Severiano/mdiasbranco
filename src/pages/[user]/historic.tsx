@@ -2,7 +2,7 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { Problem } from '../../types/problem';
 import { useCustomContext } from '../../contexts/context';
-import { getCalls } from '../../services/requests/call';
+import { getHistoricCalls } from '../../services/requests/call';
 import { HistoricFilters } from '../../components/historic/filter';
 import NotFoundItem from '../(errors)/not-found-item';
 import { ProblemsGridUser } from '../../components/call-user/table-grid';
@@ -18,7 +18,7 @@ export default function UserHistoric(): React.JSX.Element {
   const { state } = useCustomContext()
 
   const fetch = async () => {
-    const res = await getCalls();
+    const res = await getHistoricCalls();
     setProblems(res)
   }
 

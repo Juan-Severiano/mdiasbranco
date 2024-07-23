@@ -49,7 +49,7 @@ export function CallFilters({
   return (
     <Card sx={{ py: 2, display: 'flex', justifyContent: 'space-between', backgroundColor: 'transparent' }}>
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={6} sm={3} md={4}>
+        <Grid item xs={6} sm={4} md={4}>
           <FormControl fullWidth sx={{ backgroundColor: 'white', borderRadius: 1 }}>
             {!isSmallScreen && <InputLabel>Área de Atuação</InputLabel>}
             <CustomSelect
@@ -67,7 +67,7 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-        <Grid item xs={3} sm={2} md={5}>
+        <Grid item xs={3} sm={4} md={5}>
           <Stack direction="row" spacing={2} alignItems="center">
             <ToggleButtonGroup
               value={toogleRender}

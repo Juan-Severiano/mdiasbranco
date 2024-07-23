@@ -19,6 +19,7 @@ import { createCall } from '../../services/requests/call';
 import { formSchema } from '../../schema/call';
 import { Sector } from '../../types/problem';
 import SelectField, { CustomInput } from '../custom/custom-input';
+import { Logo } from '../core/logo';
 
 function StepForm() {
   const { dispatch, state } = useCustomContext();
@@ -79,6 +80,11 @@ function StepForm() {
         <Grid item xs={11} md={6}>
           <Card>
             <CardHeader
+              title={
+                <Stack width='100%' flexDirection='row' justifyContent='center'>
+                  <Logo theme='dark' width={200} />
+                </Stack>
+              }
               action={
                 <IconButton onClick={handleClose} aria-label="Fechar">
                   <Close />

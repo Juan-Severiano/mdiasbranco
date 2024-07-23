@@ -53,7 +53,7 @@ export function CallFilters({
     const date = event.target.value;
     setSelectedDate(date);
   };
-  
+
   const [status, setStatus] = useState(selectedStatus);
 
   useEffect(() => {
@@ -192,23 +192,24 @@ export function CallFilters({
             </CustomSelect>
           </FormControl>
         </Grid>
-
-        <Grid item xs={2} sm={1} md={1}>
-          <ToggleButtonGroup
-            value={toogleRender}
-            exclusive
-            aria-label="file-toggle-buttons"
-            sx={{ bgcolor: '#fff', height: '100%' }}
-          >
-            <ToggleButton sx={{ border: 'none' }} value="grid" onClick={handleRenderFile1}>
-              <WindowOutlinedIcon />
-            </ToggleButton>
-            <ToggleButton sx={{ border: 'none' }} value="list" onClick={handleRenderFile2}>
-              <FormatListBulletedOutlinedIcon />
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Grid>
-        <Grid item xs={1.5}>
+        <Hidden smDown>
+          <Grid item xs={2} sm={1} md={1}>
+            <ToggleButtonGroup
+              value={toogleRender}
+              exclusive
+              aria-label="file-toggle-buttons"
+              sx={{ bgcolor: '#fff', height: '100%' }}
+            >
+              <ToggleButton sx={{ border: 'none' }} value="grid" onClick={handleRenderFile1}>
+                <WindowOutlinedIcon />
+              </ToggleButton>
+              <ToggleButton sx={{ border: 'none' }} value="list" onClick={handleRenderFile2}>
+                <FormatListBulletedOutlinedIcon />
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Grid>
+        </Hidden>
+        <Grid item xs={3.5} sm={2} md={1} lg={2}>
           <Tooltip title='Limpar filtros' sx={{ height: '100%' }}>
             <Stack alignItems='center' justifyContent='center'>
               <IconButton onClick={handleClearFilters}>
@@ -217,7 +218,7 @@ export function CallFilters({
             </Stack>
           </Tooltip>
         </Grid>
-        <Grid item xs={2} sm={3} md={2.5}>
+        <Grid item xs={2} sm={3} md={3} lg={3}>
           <Hidden smUp>
             <Button
               variant="contained"

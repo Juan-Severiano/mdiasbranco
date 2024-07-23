@@ -7,6 +7,7 @@ import { getCalls } from '../../../services/requests/call';
 import { useCustomContext } from '../../../contexts/context';
 import { CallFilters } from '../../../components/call/filter';
 import NotFoundItem from '../../(errors)/not-found-item';
+import { Hidden } from '@mui/material';
 
 export default function ManagerHome(): React.JSX.Element {
   const [problems, setProblems] = React.useState<Problem[]>([])
@@ -57,11 +58,11 @@ export default function ManagerHome(): React.JSX.Element {
       console.log(error);
     }
   };
-  
+
   React.useEffect(() => {
     applyFilters();
   }, [searchKeyword, selectedDate, selectedPriority, selectedStatus]);
-  
+
 
   React.useEffect(() => {
     applyFilters();
@@ -85,19 +86,32 @@ export default function ManagerHome(): React.JSX.Element {
       />
       {problems.length > 0 ?
         (
-          toogleRender === 'grid' ? <ProblemsGrid
-            count={problems.length}
-            page={page}
-            rows={problems}
-            rowsPerPage={rowsPerPage}
-            reload={fetch}
-          /> : <CustomersTable
-            reload={fetch}
-            count={problems.length}
-            page={page}
-            rows={problems}
-            rowsPerPage={rowsPerPage}
-          />
+          <>
+            <Hidden smDown>
+              {toogleRender === 'grid' ? <ProblemsGrid
+                count={problems.length}
+                page={page}
+                rows={problems}
+                rowsPerPage={rowsPerPage}
+                reload={fetch}
+              /> : <CustomersTable
+                reload={fetch}
+                count={problems.length}
+                page={page}
+                rows={problems}
+                rowsPerPage={rowsPerPage}
+              />}
+            </Hidden>
+            <Hidden smUp>
+              <ProblemsGrid
+                count={problems.length}
+                page={page}
+                rows={problems}
+                rowsPerPage={rowsPerPage}
+                reload={fetch}
+              />
+            </Hidden>
+          </>
         ) : <NotFoundItem message='Não foi encontrado nenhum chamado aqui' />
       }
     </Stack>

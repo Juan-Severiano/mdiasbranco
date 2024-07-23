@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const SimpleLayout = () => {
   return (
     <Box sx={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Container maxWidth='lg' sx={{ zIndex: 2, flex: 1 }}>
+      <Container maxWidth='xl' sx={{ zIndex: 2, flex: 1 }}>
         <Outlet />
       </Container>
       <Box

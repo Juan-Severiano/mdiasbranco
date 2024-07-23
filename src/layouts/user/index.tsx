@@ -5,6 +5,7 @@ import StepForm from "../../components/form/modal-step"
 import ModalProblem from "../../components/modal"
 import { localClient } from "../../lib/local/client"
 import { useEffect } from "react"
+import { getUserById } from "../../services/requests/auth"
 
 const DefaultLayout = () => {
   const { data: user } = localClient.getUser()
@@ -17,7 +18,17 @@ const DefaultLayout = () => {
     }
   }, [user])
 
+  async function getUser() {
+    if (user) {
+      const newUser = await getUserById(String(user?.id!))
+      if (newUser) {
+        localClient.addUser(newUser)
+      }
+    }
+  }
+
   useEffect(() => {
+    getUser()
     if (user?.role === 'manager') {
       navigate('/manager/home')
     } else if (user?.role === 'base') {

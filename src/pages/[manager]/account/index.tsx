@@ -8,13 +8,13 @@ export default function ManagerAccount(): React.JSX.Element {
   return (
     <Stack spacing={3}>
       <Grid container spacing={3}>
-        <Grid spacing={5} lg={4} md={6} xs={12}>
-          <Grid xs={12}>
+        <Grid item spacing={5} lg={4} md={6} xs={12}>
+          <Grid item xs={12}>
             <AccountInfo />
           </Grid>
         </Grid>
-        <Grid container spacing={3} lg={8} md={6} xs={12}>
-          <Grid xs={12}>
+        <Grid item container spacing={3} lg={8} md={6} xs={12}>
+          <Grid item xs={12}>
             <AccountDetails />
           </Grid>
           {/* <Grid xs={12}>
