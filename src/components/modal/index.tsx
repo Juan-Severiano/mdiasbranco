@@ -89,7 +89,7 @@ function ModalProblem() {
     >
       <Grid container justifyContent='center' alignItems='center' >
         <Grid item xs={11} md={9}>
-          <Card sx={{ position: 'relative', mt: 2, maxHeight: '97vh', overflowY: 'auto' }}>
+          <Card sx={{ position: 'relative', mt: 2, maxHeight: '90vh', overflowY: 'auto' }}>
             <CardHeader
               sx={{ position: 'absolute', right: 0 }}
               action={

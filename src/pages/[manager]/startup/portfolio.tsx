@@ -13,6 +13,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { geocodeAddress } from '../../../lib/geocode-address';
 import { Email } from '@mui/icons-material';
+import { Icon } from 'leaflet';
 
 export default function StartupPortfolio() {
   const [startup, setStartup] = useState<Startup | null>(null);
@@ -28,6 +29,11 @@ export default function StartupPortfolio() {
       console.log(err)
     }
   }
+
+  const customIcon = new Icon({
+    iconUrl: 'https://cdn-icons-png.flaticon.com/128/684/684908.png',
+    iconSize: [38, 38],
+  })
 
   async function getdet() {
     const res = await getStartupDetails(Number(id!))
@@ -54,9 +60,9 @@ export default function StartupPortfolio() {
   }, [startup]);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ overflowX: 'hidden' }}>
       <Grid item xs={12} md={9}>
-        <Card>
+        <Card sx={{ width: '100%' }}>
           <Box
             sx={{
               display: 'flex',
@@ -246,7 +252,7 @@ export default function StartupPortfolio() {
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                <Marker position={[location.lat, location.lon]}>
+                <Marker icon={customIcon} position={[location.lat, location.lon]}>
                   <Popup>
                     A localização da startup cadastrada.
                   </Popup>
