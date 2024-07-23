@@ -28,10 +28,11 @@ interface CustomersTableProps {
   page?: number;
   rows?: Startup[];
   rowsPerPage?: number;
+  reload: () => Promise<void>;
 }
 
 export function StartupTable({
-  rows = [],
+  rows = [], reload
 }: CustomersTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
@@ -54,6 +55,7 @@ export function StartupTable({
       if (confirm) {
         await deleteStartup(`${id}`)
         setConfirm(false);
+        await reload()
       }
     }
     confirmDelete();

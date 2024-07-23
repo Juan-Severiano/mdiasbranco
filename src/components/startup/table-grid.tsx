@@ -22,9 +22,10 @@ interface CustomersTableProps {
 
 interface StartupCardProps {
   startup: Startup;
+  reload: () => Promise<void>;
 }
 
-const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
+const StartupCard: React.FC<StartupCardProps> = ({ startup, reload }) => {
   const navigate = useNavigate();
   const confirmPopover = usePopover<HTMLButtonElement>();
   const [confirm, setConfirm] = React.useState<boolean>(false);
@@ -42,6 +43,7 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
       if (confirm) {
         await deleteStartup(`${id}`)
         setConfirm(false);
+        await reload()
       }
     }
     confirmDelete();
@@ -64,7 +66,7 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
               {startup.name}
             </Typography>
             <Stack direction="row" spacing={1}>
-              <IconButton color="info">
+              <IconButton color="info" onClick={() => navigate(`/manager/startup/edit/${startup?.id!}`)}>
                 <EditIcon />
               </IconButton>
               <IconButton color="error" onClick={() => handleDelete(startup.id!, startup.name!)}>
@@ -112,13 +114,13 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup }) => {
   );
 };
 
-export const StartupGrid: React.FC<CustomersTableProps> = ({ rows = [] }) => {
+export const StartupGrid: React.FC<CustomersTableProps> = ({ rows = [], reload }) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container alignItems='center' justifyContent='flex-start' spacing={1.5} columns={{ xs: 4, sm: 8, md: 12 }}>
         {rows.map((row) => (
-          <StartupCard key={row.id} startup={row} />
+          <StartupCard key={row.id} startup={row} reload={reload} />
         ))}
       </Grid>
     </Box>

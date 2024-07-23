@@ -11,11 +11,12 @@ export default function ManagerStartup() {
   const [startups, setStartups] = React.useState<Startup[]>([])
   const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
 
+  const get = async () => {
+    const res = await getStartups()
+    setStartups(res)
+  }
+
   React.useEffect(() => {
-    const get = async () => {
-      const res = await getStartups()
-      setStartups(res)
-    }
     get()
   }, [])
 
@@ -27,13 +28,13 @@ export default function ManagerStartup() {
       <CallFilters
         setToogleRender={setToogleRender}
         toogleRender={toogleRender} setSearchKeyword={function (_: React.SetStateAction<string>): void {
-          
+
         }} setSelectedDate={function (_: React.SetStateAction<string>): void {
-          
+
         }} setSelectedPriority={function (_: React.SetStateAction<string>): void {
-          
+
         }} setSelectedStatus={function (_: React.SetStateAction<string>): void {
-          
+
         }} />
       {
         startups.length > 0 ? (
@@ -42,11 +43,10 @@ export default function ManagerStartup() {
               count={startups.length}
               page={page}
               rows={startups}
-              rowsPerPage={rowsPerPage} reload={function (): Promise<void> {
-                throw new Error('Function not implemented.');
-              }} />
+              rowsPerPage={rowsPerPage} reload={get} />
           ) : (
             <StartupTable
+              reload={get}
               count={startups.length}
               page={page}
               rows={startups}
