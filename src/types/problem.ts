@@ -87,7 +87,7 @@ export interface DashData {
   countUsers: {
     count: number
   }
-  countStartups: {
+  countStartups?: {
     total: number
     sectors: {
       [x: string]: {

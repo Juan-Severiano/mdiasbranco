@@ -28,7 +28,7 @@ export function Budget({ diff, trend, sx, value }: BudgetProps): React.JSX.Eleme
               </Typography>
               <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={1}>
                 <Typography variant="h3" color="primary" fontWeight={600}>
-                  {value}
+                  {value ?? 11}
                 </Typography>
                 <Typography variant="inherit"  fontSize={12} color="primary">
                   Startups Cadastradas
