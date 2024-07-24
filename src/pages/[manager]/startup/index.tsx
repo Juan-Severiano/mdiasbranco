@@ -6,22 +6,27 @@ import { CallFilters } from '../../../components/startup/filter';
 import { getStartups } from '../../../services/requests/startup';
 import { StartupGrid } from '../../../components/startup/table-grid';
 import NotFoundItem from '../../(errors)/not-found-item';
+import { Pagination } from '@mui/material';
 
 export default function ManagerStartup() {
   const [startups, setStartups] = React.useState<Startup[]>([])
   const [toogleRender, setToogleRender] = React.useState<'list' | 'grid'>('list');
-
+  const [page, setPage] = React.useState(1);
+  const [totalProblems, setTotalProblems] = React.useState(0);
+  const [rowsPerPage] = React.useState(10);
   const get = async () => {
-    const res = await getStartups()
-    setStartups(res)
+    const res = await getStartups(page, rowsPerPage)
+    setStartups(res.data)
+    setTotalProblems(res.total)
   }
 
   React.useEffect(() => {
     get()
-  }, [])
+  }, [page])
 
-  const page = 0;
-  const rowsPerPage = 10;
+  const handlePageChange = (_: unknown, newPage: number) => {
+    setPage(newPage);
+  };
 
   return (
     <Stack spacing={3}>
@@ -53,6 +58,14 @@ export default function ManagerStartup() {
               rowsPerPage={rowsPerPage} />
           )) : <NotFoundItem message='Nenhuma startup aqui ainda' />
       }
+      <Stack width='100%' flexDirection='row' justifyContent='center'>
+        <Pagination
+          count={Math.ceil(totalProblems / rowsPerPage)}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </Stack>
     </Stack>
   );
 }

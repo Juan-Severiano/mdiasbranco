@@ -135,6 +135,7 @@ interface SelectPureProps {
 }
 
 export function SelectPure({ options, value, onChange, onBlur, sx, startAdornment }: SelectPureProps) {
+  const theme = useTheme()
   return (
     <>
       <CustomSelect

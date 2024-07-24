@@ -31,7 +31,7 @@ export function WriteComment({ comments, setComments, reload }: WriteCommentProp
         problem: state.modalDetails.problem?.title!,
         user: data.id
       });
-      setComments(prevComments => [...prevComments, res]);
+      setComments(prevComments => [...prevComments, {...res, user: data}]);
       setMessage('');
       if (reload) reload()
     } catch (error) {
@@ -74,9 +74,9 @@ export function WriteComment({ comments, setComments, reload }: WriteCommentProp
       <Box maxHeight={100} sx={{ overflow: 'auto' }}>
         {showComments && comments?.map((item, index) => (
           <Stack key={index} flexDirection='row' width='90%' alignItems='center' sx={{ mt: 2, ml: 6 }}>
-            <Avatar sx={{ width: 30, height: 30, mr: 2 }} />
+            <Avatar src={`${baseURL}/user/attachment/${item.user?.image_id?.path}`} sx={{ width: 30, height: 30, mr: 2 }} />
             <Box>
-              <Typography fontWeight={600}>Dono do comentário</Typography>
+              <Typography fontWeight={600}>{item.user.name}</Typography>
               <Typography>{item.message}</Typography>
             </Box>
             <IconButton sx={{ ml: 'auto' }} color='error' onClick={() => handleDelete(item.id!)}>

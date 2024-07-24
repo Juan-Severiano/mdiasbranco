@@ -1,10 +1,14 @@
 import { Startup } from "../../types/problem";
 import { api } from "../api";
 
-export async function getStartups() {
-  const response = await api.get('/startup')
-  return response.data
-}
+export const getStartups = async (page: number = 1, limit: number = 10) => {
+  const response = await api.get('/startup', {
+    params: {
+      page, limit
+    }
+  })
+  return await response.data;
+};
 
 export async function getStartupById(id: string) {
   const response = await api.get(`/startup/${id}`)

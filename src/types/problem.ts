@@ -106,7 +106,9 @@ interface SectorsGraph {
 }
 
 export interface FilterParams {
-  status: string
-  date: string
-  keySector: string
+  status?: string
+  date?: string
+  keySector?: string
+  page?: number
+  limit?: number
 }

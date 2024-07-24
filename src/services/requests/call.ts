@@ -54,7 +54,9 @@ export async function getCalls(search?: string, params?: FilterParams) {
       params: {
         search: search,
         ...params,
-        date: params?.date ? dayjs(params.date).add(1, 'day').toISOString() : ''
+        date: params?.date ? dayjs(params.date).add(-3, 'hours').toISOString() : '',
+        page: params?.page,
+        limit: params?.limit
       }
     });
     console.log(response.data);
