@@ -13,12 +13,12 @@ function MarkDownEditor({ content, handleBlur, handleEditorChange }: MarkDownEdi
     <Box sx={{ width: '100%', maxHeight: 200, my: 1, overflow: 'auto' }}>
       <CKEditor
         editor={ClassicEditor}
-        data={content}
+        data={content ?? ''}
         onReady={(editor: any) => {
           console.log('Editor is ready to use!', editor);
         }}
         onChange={(_: any, editor: any) => {
-          const data = editor.getData();
+          const data = editor?.getData();
           handleEditorChange({ text: data });
         }}
         onBlur={() => {

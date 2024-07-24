@@ -148,7 +148,7 @@ function ModalProblem() {
                     <MarkDownEditor
                       handleBlur={handleBlur}
                       handleEditorChange={handleEditorChange}
-                      content={markdownContent}
+                      content={markdownContent ?? ''}
                     />
                     <Stack>
                       <Chip
