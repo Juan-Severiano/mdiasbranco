@@ -66,7 +66,7 @@ export default function UserHistoric(): React.JSX.Element {
         setToogleRender={setToogleRender}
         toogleRender={toogleRender}
       />
-      {problems.length > 0 ?
+      {problems?.length > 0 ?
         (
           toogleRender === 'grid' ? <ProblemsGridUser
             count={problems.length}

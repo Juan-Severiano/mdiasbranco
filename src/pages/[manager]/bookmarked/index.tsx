@@ -34,7 +34,7 @@ export default function ManagerBookmarked(): React.JSX.Element {
 
   return (
     <Stack spacing={3}>
-      {problems.length > 0 ?
+      {problems?.length > 0 ?
         <CustomersTable
           reload={fetch}
           count={problems.length}

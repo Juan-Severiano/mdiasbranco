@@ -88,7 +88,7 @@ export default function ManagerHome(): React.JSX.Element {
         setToogleRender={setToogleRender}
         toogleRender={toogleRender}
       />
-      {problems.length > 0 ? (
+      {problems?.length > 0 ? (
         <>
           <Hidden smDown>
             {toogleRender === 'grid' ? (
