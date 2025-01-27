@@ -11,7 +11,7 @@ export async function createCall(data: CreateProblem) {
   formData.append('title', data.title);
   formData.append('description', data.description);
   formData.append('sector', data.sector);
-  formData.append('user_id', String(user.id));
+  formData.append('user_id', String(user?.id));
 
   if (data.files) {
     data.files.forEach((file) => {

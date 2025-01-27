@@ -29,7 +29,7 @@ export function WriteComment({ comments, setComments, reload }: WriteCommentProp
         call: state.modalDetails.problem?.id!,
         message: message,
         problem: state.modalDetails.problem?.title!,
-        user: data.id
+        user: data?.id!
       });
       setComments(prevComments => [...prevComments, {...res, user: data}]);
       setMessage('');

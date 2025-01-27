@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { localClient } from "../../lib/local/client";
 import { Sector } from "../../types/problem";
 import { LoginParams, RegisterUser } from "../../types/user";

@@ -37,7 +37,7 @@ export function AccountDetails(): React.JSX.Element {
           validationSchema={optionalSchema}
           onSubmit={async function (values, { setErrors }) {
             try {
-              const response = await patchUser(values, data.id);
+              const response = await patchUser(values, data?.id!);
               localClient.addUser(response)
               location.reload()
             } catch (error) {
