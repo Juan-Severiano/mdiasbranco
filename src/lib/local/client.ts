@@ -4,7 +4,11 @@ class LocalClient {
   getUser(): { data: User | null, error?: string } {
     const client = localStorage.getItem('user')!
 
-    const user = JSON.parse(client) as  User;
+    if (!client) {
+      return { data: null, error: 'no user found' }
+    }
+
+    const user = JSON.parse(client) as User;
 
     if (user !== null) {
       return { data: user };
