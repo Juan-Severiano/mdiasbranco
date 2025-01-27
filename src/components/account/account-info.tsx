@@ -15,6 +15,7 @@ import { AddIcCall, Assignment, PermContactCalendar } from '@mui/icons-material'
 
 export function AccountInfo(): React.JSX.Element {
   const { data } = localClient.getUser();
+  console.log("aqui a data",data)
   const [loading, setLoading] = React.useState(false)
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event)

@@ -10,6 +10,7 @@ import { PasswordInput, CustomInput } from '../../../components/custom/custom-in
 import { Email } from '@mui/icons-material';
 import { StyledLink } from '../../../styles/theme/components/styled-link';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { localClient } from '../../../lib/local/client';
 
 const LoginForm: React.FC = () => {
   const { dispatch } = useCustomContext();
@@ -48,11 +49,14 @@ const LoginForm: React.FC = () => {
           setErrors({ submit: 'Erro ao fazer login. Verifique suas credenciais.' });
           return;
         } else if (response.message === 'Sucesso ao realizar o Login.!') {
-          const user = await getUserById(response.data.user.id)
+          const user = await getUserById(response?.data?.user?.id)
+          console.log(user)
+          localClient.addUser(user)
+          console.log("sucesso crlh,",user)
           dispatch({
             type: 'SIGN_IN', payload: {
               user,
-              access: response.data.token
+              access: response?.data?.token
             }
           });
           setSuccess(true);

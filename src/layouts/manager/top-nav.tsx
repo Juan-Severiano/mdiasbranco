@@ -10,6 +10,7 @@ export default function TopNav() {
   // const { toggleTheme, mode } = useTheme();
   // const { state } = useCustomContext()
   const { data: user } = localClient.getUser()
+  console.log("user aqui caecete", user)
   // const toggleTheme = () => {
   //   const newTheme = state.theme.theme === 'dark' ? 'light': 'dark'
   //   dispatch({ type: 'CHANGE_THEME', payload: newTheme })

@@ -19,7 +19,7 @@ export default function ManagerHome(): React.JSX.Element {
 
   const fetch = async (search?: string) => {
     const res = await getCalls(search);
-    setProblems(res)
+    setProblems(res.data)
   }
 
   React.useEffect(() => {

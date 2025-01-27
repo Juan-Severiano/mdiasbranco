@@ -1,12 +1,15 @@
 import { User } from "../../types/user";
 
 class LocalClient {
-  getUser(): { data: User, error?: string } {
+  getUser(): { data: User | null, error?: string } {
     const client = localStorage.getItem('user')!
 
-    const user = JSON.parse(client) as User;
+    const user = JSON.parse(client) as  User;
 
-    return { data: user };
+    if (user !== null) {
+      return { data: user };
+    }
+    return { data: null, error: 'no user found' }
   }
   addUser(values: User): void {
     localStorage.setItem('user', JSON.stringify(values))

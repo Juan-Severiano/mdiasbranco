@@ -1,6 +1,6 @@
 import { Avatar, Chip, MenuItem, SelectChangeEvent, Stack, Typography } from "@mui/material";
 import { updateCallPartial } from "../../services/requests/call";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useCustomContext } from "../../contexts/context";
 import { Startup } from "../../types/problem";
 import { getStartups } from "../../services/requests/startup";
@@ -18,7 +18,8 @@ export function SelectStartup({ atualStartup }: { atualStartup: string }) {
   async function get() {
     try {
       const res = await getStartups()
-      setStartups(res)
+      console.log("oh as startup ae", res)
+      setStartups(res.data)
     } catch (error) {
       console.log(error)
     }
@@ -37,35 +38,37 @@ export function SelectStartup({ atualStartup }: { atualStartup: string }) {
   };
 
   return (
-    <Stack>
-      <Typography variant="h6">Startups</Typography>
-      {
-        edit ? (
-          <CustomSelect
-            label="Status"
-            sx={{ maxHeight: 30 }}
-            onBlur={() => setEdit(false)}
-            onChange={handleChange}
-            aria-label="Startups"
-            value={value}
-          >
-            {startups?.map((startup) => (
-              <MenuItem key={startup.id} value={startup.name}>
-                <Stack alignItems='center' flexDirection='row' width='100%'>
-                  <Avatar sx={{ width: 25, height: 25, mr: 2 }} src={`${baseURL}/startup/attachment/${startup.attachments?.path}`} alt={`${startup.name}`} />
-                  <Typography fontSize={15}>{startup.name}</Typography>
-                </Stack>
-              </MenuItem>
-            ))}
-          </CustomSelect>
-        ) : (
-          <Chip onClick={() => setEdit(true)} sx={{ height: 40, fontSize: 14 }} label={
-            <Stack flexDirection='row' alignItems='center'>
-              <Typography variant="body2" fontWeight={500}>{value}</Typography>
-            </Stack>
-          } />
-        )
-      }
-    </Stack>
+    <Suspense fallback={<p>Loading...</p>}>
+      <Stack>
+        <Typography variant="h6">Startups</Typography>
+        {
+          edit ? (
+            <CustomSelect
+              label="Status"
+              sx={{ maxHeight: 30 }}
+              onBlur={() => setEdit(false)}
+              onChange={handleChange}
+              aria-label="Startups"
+              value={value}
+            >
+              {startups?.map((startup) => (
+                <MenuItem key={startup.id} value={startup.name}>
+                  <Stack alignItems='center' flexDirection='row' width='100%'>
+                    <Avatar sx={{ width: 25, height: 25, mr: 2 }} src={`${baseURL}/startup/attachment/${startup.attachments?.path}`} alt={`${startup.name}`} />
+                    <Typography fontSize={15}>{startup.name}</Typography>
+                  </Stack>
+                </MenuItem>
+              ))}
+            </CustomSelect>
+          ) : (
+            <Chip onClick={() => setEdit(true)} sx={{ height: 40, fontSize: 14 }} label={
+              <Stack flexDirection='row' alignItems='center'>
+                <Typography variant="body2" fontWeight={500}>{value}</Typography>
+              </Stack>
+            } />
+          )
+        }
+      </Stack>
+    </Suspense>
   )
 }

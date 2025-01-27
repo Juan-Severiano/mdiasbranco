@@ -11,12 +11,10 @@ const DefaultLayout = () => {
   const { data: user } = localClient.getUser()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    console.log(user)
-    if (!user) {
-      navigate('/auth/login')
-    }
-  }, [user])
+  console.log(user)
+  if (!user) {
+    navigate('/auth/login')
+  }
 
   async function getUser() {
     if (user) {

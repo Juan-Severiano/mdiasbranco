@@ -10,7 +10,7 @@ export const userReducer = (state: UserState, action: ActionType): UserState => 
   switch (action.type) {
     case 'SIGN_IN':
       localStorage.setItem('token', action.payload.access!)
-      localClient.addUser(action.payload.user)
+      localStorage.setItem('user', JSON.stringify(action.payload.user))
       return action.payload
     case 'SIGN_OUT':
       localStorage.setItem('token', '')

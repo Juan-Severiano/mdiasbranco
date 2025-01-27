@@ -33,12 +33,12 @@ export async function updateUserImage(file: File) {
   const { data } = localClient.getUser();
   formData.append('file', file);
   console.log(formData)
-  const response = await api.patch(`/user/attachment/${data.image_id.path}`, formData);
+  const response = await api.patch(`/user/attachment/${data?.image_id.path}`, formData);
   console.log(response)
   localClient.addUser({
     ...data,
     image_id: {
-      id: data.image_id.id,
+      id: data?.image_id.id,
       path: file.name
     }
   })
