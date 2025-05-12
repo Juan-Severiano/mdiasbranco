@@ -14,7 +14,7 @@ export function AnimatedLogo({ height, width, theme }: LogoProps) {
 
   return (
     <motion.img
-      alt="M. Dias Branco"
+      alt="PMenosLab"
       height={height ?? 'auto'}
       src={logo}
       width={width ?? '90%'}
@@ -29,5 +29,5 @@ export function Logo({ height, width, theme }: LogoProps) {
   if (theme === 'dark') {
     logo = '/logo-white.png'
   }
-  return <img alt="M. Dias Branco" height={height ?? 'auto'} src={logo} width={width ?? '90%'} />;
+  return <img alt="PMenosLab" height={height ?? 'auto'} src={logo} width={width ?? '90%'} />;
 }
